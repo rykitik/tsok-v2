@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Машиностроение: Виртуальный тренажер</title>
+    <link rel="icon" href="../img/icon.png" />
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+</head>
+
+<body>
+    <header class="flex col">
+        <div class="container flex row">
+            <div class="logo"><img src="../img/logo1.svg" alt="logo"></div>
+            <div class="flex col ml-90 w100">
+                <div class="header-first_content flex w100 space-between">
+                    <div class="title">
+                        <h2 class="white">Машиностроение</h2>
+                    </div>
+                    <div class="buttons flex align-center mt-10">
+                        <a href="#ex1" class="btn-nav btn-contacts" rel="modal:open">Информация о контенте</a>
+                        <a href="#ex2" class="btn-nav btn-words" rel="modal:open">Ключевые слова</a>
+                    </div>
+
+                </div>
+                <div class="header-second_content">
+                    <h3 class="subtitle_header">Выбор оборудования, инструмента и технологической оснастки</h3>
+                </div>
+            </div>
+        </div>
+        <div class="header-second"></div>
+    </header>
+    <div class="bg_color_block flex col ">
+
+
+        <div class="flex justify-center align-center">
+            <div class="content1 flex col max-content w100">
+                <div class="flex align-center justify-center mt-30"><img src="../img/right alignment.png" alt="arrow"
+                        class="mr-10"><a href="../index.html" class="text_home"> На главную</a></div>
+
+                <div class="container1">
+                    <div class="container_header">
+                        <div class="flex align-center space-between">
+                            <p class="container_title"> Динамическая инфографика </p>
+                            <p class="counter_exercise"></p>
+                        </div>
+                        <div class="flex tab_exercise_container">
+
+                        </div>
+                    </div>
+                    <!-- <div class="container-exercise"> -->
+                    <!-- <div class="flex space-between"><p class="text-zadanie"></p></div>
+                    
+                    <div class="flex container-filling align-center justify-center">
+                        <div class="img-exercise"><img src="" alt="" class="img-exercise1"></div>
+                        <div class="flex col">
+                            <p class="text-exercise">
+                                </p>
+                        </div>
+                       
+                        
+                    </div>
+                    <div class="arrows1"><button  class="prevbutton"><img src="../img/ArrowLeft.png" ></button><button  id="next-button"><img src="../img/ArrowRight.png" alt="ArrowRight"></button></div> -->
+
+
+                    <div class="container-exercises">
+                        <div style="padding-top: 50px;">
+                            <div style="display: flex; flex-direction: row; margin: 20px; flex-wrap: wrap; justify-content: center;">
+                                <a href="#modal1" rel="modal:open" class="modal-container">
+                                    <img src="../img/1_2/icon1.jpg" alt="Картинка 1"
+                                        style="cursor: pointer; margin:10px auto 20px; width: 190px; height: 110px;">
+                                    <br>
+                                    <span
+                                        style="font-size: 16px; padding-top: 10px; color:#3B5571; font-weight: 700;">Назначение,
+                                        <br>виды и классификация <br>металлорежущего <br>оборудования</span><br></br>
+                                </a>
+
+                                <a href="#modal2" rel="modal:open" class="modal-container">
+                                    <img src="../img/1_2/icon2.jpg" alt="Картинка 2"
+                                        style="cursor: pointer; margin:10px auto 20px; width: 190px; height: 110px;">
+                                    <br>
+                                    <span style="font-size: 16px; padding-top: 10px; color:#3B5571; font-weight: 700;">Выбор
+                                    металлорежущего <br>оборудования для <br>реализации <br>технологического
+                                    <br>процесса</span><br></br>
+                                </a>
+
+                                <a href="#modal3" rel="modal:open" class="modal-container">
+                                    <img src="../img/1_2/icon3.jpg" alt="Картинка 3"
+                                        style="cursor: pointer; margin:10px auto 20px; width: 190px; height: 110px;">
+                                    <br>
+                                    <span style="font-size: 16px; padding-top: 10px; color:#3B5571; font-weight: 700;">Режущий
+                                    инструмент: <br>типы, виды <br>исполнения и <br>материалы режущей <br>части
+                                    инструмента</span><br></br>
+                                </a>
+
+                                <a href="#modal4" rel="modal:open" class="modal-container">
+                                    <img src="../img/1_2/icon4.jpg" alt="Картинка 4"
+                                        style="cursor: pointer; margin:10px auto 20px; width: 190px; height: 110px;">
+                                    <br>
+                                    <span style="font-size: 16px; padding-top: 10px; color:#3B5571; font-weight: 700;">Основы
+                                    выбора <br>инструмента и материалов <br>режущей части</span><br></br>
+                                </a>
+
+                                <a href="#modal5" rel="modal:open" class="modal-container">
+                                    <img src="../img/1_2/icon5.jpg" alt="Картинка 5"
+                                        style="cursor: pointer; margin:10px auto 20px; width: 180px; height: 110px;">
+                                    <br>
+                                    <span
+                                        style="font-size: 16px; padding-top: 10px; color:#3B5571; font-weight: 700;">Назначение,
+                                        виды<br> и классификация <br>технологических <br>приспособлений</span>
+                                </a>
+
+                                <a href="#modal6" rel="modal:open" class="modal-container">
+                                    <img src="../img/1_2/icon6.jpg" alt="Картинка 6" style="cursor: pointer; margin:10px auto 20px; width: 190px; height: 110px;">
+                                    <br>
+                                    <span style="font-size: 16px; padding-top: 10px; color:#3B5571; font-weight: 700;">Основы
+                                    выбора <br>технологических <br>приспособлений</span>
+                                </a>
+
+                                <a href="#modal7" rel="modal:open" class="modal-container">
+                                    <img src="../img/1_2/icon7.jpg" alt="Картинка 7" style="cursor: pointer; margin:10px auto 20px; width: 190px; height: 110px;">
+                                    <br>
+                                    <span style="font-size: 16px; padding-top: 10px; color:#3B5571; font-weight: 700;">Измерительный
+                                    <br>инструмент: <br>виды и <br>классификация</span>
+                                </a>
+
+                                <a href="#modal8" rel="modal:open" class="modal-container">
+                                    <img src="../img/1_2/icon8.jpg" alt="Картинка 8" style="cursor: pointer; margin:10px auto 20px; width: 190px; height: 110px;">
+                                    <br>
+                                    <span style="font-size: 16px; padding-top: 10px; color:#3B5571; font-weight: 700;">Основы выбора<br>
+                                    измерительного<br> инструмента</span>
+                                </a>                             
+
+                            </div>
+
+                            <div id="modal1" class="modal_aom1">
+                                <div style="background-color: #fefefe; padding: 20px; overflow: auto;">
+                                    <!-- <span
+                                        style="cursor: pointer; float: right; font-size: 70px; top: 10%; right: 18%; position: fixed; color:#fefefe;"
+                                        onclick="closeModal('modal1')">&times;</span> -->
+                                    <br>
+                                    <h3 style="text-align: center;">Назначение, виды и классификация металлорежущего оборудования</h3>
+                                    <br><br>
+                                    <p id="modalText1">
+                                    <p style="text-indent: 50px;">
+                                        Металлорежущий станок – оборудование, на котором на котором путем снятия
+                                        припуска
+                                        с заготовки в виде стружки получают деталь с
+                                        заданными размерами, формой, взаимным расположением и шероховатостью
+                                        поверхностей
+                                        Виды (группы) металлорежущих станков:
+                                        <br><br> <p style="text-align: center;">1 - токарные
+                                        <br><br>
+                                        <img src="../img/1_2/img1_1.jpg" alt=""
+                                            style="display:block; margin: auto; width:400px;">
+                                        <br>
+
+                                        <br><br>2 - сверлильные и расточные
+                                        <br><br>
+                                        <img src="../img/1_2/img1_2.jpg" alt=""
+                                            style="display:block; margin: auto; width:400px;">
+                                        <br><br>
+
+
+                                        <br><br>3 - шлифовальные, полировальные, доводочные, заточные
+                                        <br><br>
+                                        <img src="../img/1_2/img1_3.jpg" alt=""
+                                            style="display:block; margin: auto; width:400px;">
+                                        <br><br>
+
+                                        <br><br>4 - электрофизические и электрохимические
+                                        <br><br>
+                                        <img src="../img/1_2/img1_4.jpg" alt=""
+                                            style="display:block; margin: auto; width:400px;">
+                                        <br><br>
+
+                                        <br><br>5 - зубо- и резьбообрабатывающие
+                                        <br><br>
+                                        <img src="../img/1_2/img1_5.jpg" alt=""
+                                            style="display:block; margin: auto; width:400px;">
+                                        <br><br>
+
+                                        <br><br>6 - фрезерные
+                                        <br><br>
+                                        <img src="../img/1_2/img1_6.jpg" alt=""
+                                            style="display:block; margin: auto; width:400px;">
+                                        <br><br>
+
+                                        <br><br>7 - строгальные, долбежные, протяжные
+                                        <br><br>
+                                        <img src="../img/1_2/img1_7.jpg" alt=""
+                                            style="display:block; margin: auto; width:400px;">
+                                        <br><br>
+
+                                        <br><br>8 - разрезные
+                                        <br><br>
+                                        <img src="../img/1_2/img1_8.jpg" alt=""
+                                            style="display:block; margin: auto; width:400px;">
+                                        <br><br>
+
+                                        <br><br>9 – разные
+                                        <br><br>
+                                        <img src="../img/1_2/img1_9.jpg" alt=""
+                                            style="display:block; margin: auto; width:400px;">
+                                        <br><br>
+                                    </p>
+                                    <p style="text-indent: 50px;">В свою очередь, каждая группа подразделяется на 10 типов (подгрупп),
+                                        характери¬зующих
+                                        назначение станков, их компоновку, степень автоматизации или вид применяе¬мого
+                                        инструмента.</p>
+                                    Для измерения величины R переключатель выставляют в диапазон Ω. В комплекте к такому
+                                    прибору идет
+                                    один комплект щупов, имеющих разную расцветку. Принято красный щуп вставлять в
+                                    отверстие com, а
+                                    черный – VΩCX+.
+                                    <br><br>
+                                    <img src="../img/1_2/img1_10.jpg" alt="" style="display:block; margin: auto; width:1000px;">
+                                    <br>
+                                    <p style="text-indent: 50px;">Классификация металлорежущих станков по классу точности:</p>
+                                    <ul>
+                                        <li>(Н) нормальной точности</li>
+                                        <li>(П) повышенной точности</li>
+                                        <li>(В) высокой точности</li>
+                                        <li>(А) особо высокой точности</li>
+                                        <li>(С) особо точные станки (мастер-станки)</li>
+                                    </ul>
+                                    <br>
+                                    <p style="text-indent: 50px;">Классификация металлорежущих станков по массе:</p>
+                                    <ul>
+                                        <li>легкие (˂ 1 т)</li>
+                                        <li>средние (1-10 т)</li>
+                                        <li>тяжелые (> 10 т)</li>
+                                        <li>уникальные (> 100 т)</li>
+                                    </ul>
+                                    <br>
+                                    <p style="text-indent: 50px;">Классификация металлорежущих станков по степени автоматизации:</p>
+                                    <ul>
+                                        <li>ручные</li>
+                                        <li>полуавтоматы</li>
+                                        <li>автоматы</li>
+                                        <li>станки с ЧПУ</li>
+                                        <li>гибкие производственные системы</li>
+                                    </ul>
+                                    <br>
+                                    <p style="text-indent: 50px;">Классификация металлорежущих станков по степени специализации:</p>
+                                    <ul>
+                                        <li>универсальные</li>
+                                        <li>специализированные</li>
+                                        <li>специальные</li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                            <br>
+                            <div id="modal2" class="modal_aom1">
+                                <div
+                                    style="background-color: #fefefe; padding: 20px; max-width: 100%; max-height: fit-content; overflow: auto;">
+                                    <!-- <span
+                                        style="cursor: pointer; float: right; font-size: 70px; top: 10%; right: 18%; position: fixed; color:#fefefe;"
+                                        onclick="closeModal('modal2')">&times;</span> -->
+                                    <br>
+                                    <h3 style="text-align: center;">Выбор металлорежущего оборудования для реализации технологического процесса</h3>
+                                    <br>
+                                    <br>
+                                    <p id="modalText2">
+
+                                    <p style="text-indent: 50px;">При выборе металлорежущего оборудования необходимо учитывать:
+                                    <ol>
+                                        <li>Объем выпускаемой продукции, тип производства</li>
+                                        <li>Размеры детали и расположение обрабатываемых поверхностей</li>
+                                        <li>Требования к точности, качеству и экономичностиобработки</li>
+                                        <li>Наиболее полное использование станке по мощности и загрузке (времени работы)
+                                        </li>
+                                        <li>Удобство управления и обслуживания станка</li>
+                                        <li>Стоимость станка</li>
+                                        <li>Необходимость использования имеющихся станков</li>
+                                        <li>Ориентацию на применение станков отечественного производства</li>
+                                    </ol>
+                                    <p style="text-indent: 50px;">Техническая характеристика станка должна отвечать требованиям:
+                                    <ol>
+                                        <li>Рабочая зона станка (высота центров, расстояние между центрами, размер стола
+                                            и т.п.) должна соответствовать габаритам обрабатываемой детали</li>
+                                        <li>Мощность, жесткость и кинематические возможности станка позволять вести
+                                            работу на оптимальных режимах резания</li>
+                                        <li>Производительность станка соответствовать заданному объему выпуска изделий
+                                        </li>
+                                    </ol>
+                                    <p style="text-indent: 50px;">При проектировании технологических процессов выбирают наиболее технически и
+                                        экономически подходящее оборудование. Как правило, в единичном производстве
+                                        используется универсальное оборудова¬ние, в мелкосерийном - станки с ЧПУ и
+                                        универсальные, в среднесерийном - станки с ЧПУ и обрабатывающие центры. В
+                                        крупносерийном - станки с ЧПУ, обрабатывающие центры, полуавтоматы, автоматы. В
+                                        массовом производстве - обрабатывающие центры, автоматы, автоматические линии,
+                                        роторные и роторно-конвейерные линии.
+                                        <br><br>
+                                </div>
+                            </div>
+                            <br>
+
+
+                            <div id="modal3" class="modal_aom1">
+                                <div
+                                    style="background-color: #fefefe; padding: 20px; max-width: 100%; max-height: 80%; overflow: auto;">
+                                    <!-- <span
+                                        style="cursor: pointer; float: right; font-size: 70px; top: 10%; right: 18%; position: fixed; color:#fefefe;"
+                                        onclick="closeModal('modal3')">&times;</span> -->
+                                    <br>
+                                    <h3 style="text-align: center;">Режущий инструмент: типы, виды исполнения и материалы режущей части инструмента
+                                    </h3>
+                                    <br><br>
+                                    <p id="modalText3">
+
+
+                                        Режущий инструмент – инструмент, предназначенный для изменения формы и размеров
+                                        заготовки
+                                        путём удаления
+                                        части материала в виде стружки с целью получения готовой детали или
+                                        полуфабриката.
+
+                                        <br><br>
+                                    <p style="text-indent: 50px;">По характеру обработкирежущие инструменты различают:</p>
+                                    <ul>
+                                        <li>лезвийные – срезают лишний материал</li>
+                                        <li>абразивные – истирают поверхность, доводя ее до нужной геометрии путем
+                                            шлифования</li>
+                                        <li>отделочно-упрочняющей - обрабатывают поверхности пластическим
+                                            деформированием</li>
+                                    </ul>
+                                    <p style="text-indent: 50px;">По конструктивному исполнению они могут быть:</p>
+                                    <ul>
+                                        <li>цельные – полностью выполнены из одной заготовки</li>
+                                        <li>составные – изготавливаются из нескольких деталей, соединение неразъемное
+                                        </li>
+                                        <li>сборные – детали инструмента можно разъединить</li>
+                                    </ul>
+                                    <br><br>По варианту крепления выделяют насадные и хвостовые
+                                    <br><br>
+                                    <p style="text-indent: 50px;">В зависимости от формы обрабатываемой поверхности лезвийный инструмент
+                                        подразделяется на:</p>
+                                    <ul>
+                                        <li>резцы токарные и строгальные</li>
+                                        <li>сверла, зенкеры, развертки, цековки и зенковки</li>
+                                        <li>фрезы</li>
+                                        <li>протяжки и прошивки</li>
+                                        <li>зубообрабатывающий инструмент</li>
+                                        <li>резьбообрабатывающий инструмент</li>
+                                        <li>комбинированный инструмент</li>
+                                    </ul>
+                                    <br><br>
+                                    <p style="text-indent: 50px;">Резцы токарные в зависимости от обрабатываемой поверхности могут быть:</p>
+                                    <ul>
+                                        <li>проходные - для обработки наружных цилиндрических поверхностей</li>
+                                        <li>отрезные - для отрезки заготовок</li>
+                                        <li>канавочные-для проточки канавок</li>
+                                        <li>расточные - для расточки отверстий</li>
+                                        <li>фасонные - для обработки фасонных поверхностей</li>
+                                    </ul>
+                                    <br><br>
+                                    <img src="../img/1_2/img1.jpg" alt="" style="display:block; margin: auto; width:900px;">
+                                    <br><br>
+
+                                    <p style="text-indent: 50px;">Сверла используются для получения отверстий в сплошном материале или для их
+                                        рассверливания
+                                        <br>Зенкеры и развертки применяют для обработки отверстий с целью повышения их
+                                        качества
+                                        <br>Цековки - для обработки торцовой поверхности отверстий
+                                        <br>Все эти инструменты с успехом применяются как на сверлильных, так и на
+                                        токар¬ных станках
+                                    </p>
+                                    <br><br>
+                                    <img src="../img/1_2/img2.jpg" alt="" style="display:block; margin: auto; width:900px;">
+                                    <br><br>
+
+                                    <p style="text-indent: 50px;">Фрезы, в зависимости от формы обрабатываемых поверхностей, могут быть:</p>
+                                    <ul>
+                                        <li>торцевыми и цилиндрическими - для обработки плоских поверхностей</li>
+                                        <li>дисковыми концевыми - для обработки различных пазов и уступов</li>
+                                        <li>шпоночными - для обработки шпоночных канавок</li>
+                                        <li>Т-образными фрезами - для обработки Т-образных пазов</li>
+                                        <li>прорезными и отрезными - для прорезки канавок и отрезки</li>
+                                        <li>фасонными и угловыми - для обработки фасонных и угловых поверхностей</li>
+                                    </ul>
+                                    <br><br>
+                                    <img src="../img/1_2/img3.jpg" alt="" style="display:block; margin: auto; width:900px;">
+                                    <br><br>
+                                    <p style="text-indent: 50px;">Протяжки и прошивки бывают:</p>
+                                    <ul>
+                                        <li>цилиндрическими - для обработки внутренних цилиндрических поверхностей</li>
+                                        <li>шпоночными - для обработки шпоночных пазов </li>
+                                        <li>шлицевыми - для обработки шлицев </li>
+                                        <li>многогранными и фасонными - для обработки многогранных и фасонных
+                                            поверхностей</li>
+                                    </ul>
+                                    <br><br>
+                                    <img src="../img/1_2/img4.jpg" alt="" style="display:block; margin: auto; width:900px;">
+                                    <br><br>
+                                    <p style="text-indent: 50px;">Зубообрабатывающий лезвийный инструмент в зависимости от методов обработки зубьев
+                                        (копирования или обкатки) подразделяют на:</p>
+                                    <ul>
+                                        <li>дисковые модульные фрезы</li>
+                                        <li>пальцевые модульные фрезы</li>
+                                        <li>червячные фрезы</li>
+                                        <li>зубообрабатывающие долбяки</li>
+                                        <li>зубострогальные резцы, резцовые и зуборезные головки - для обработки
+                                            кони¬ческих зубчатых колес</li>
+                                        <li>шеверы - для чистовой обработки зубьев</li>
+                                    </ul>
+                                    <br><br>
+                                    <img src="../img/1_2/img5.jpg" alt="" style="display:block; margin: auto; width:900px;">
+                                    <br><br>
+                                    <p style="text-indent: 50px;">Резьбообрабатывающий инструмент в зависимости от размеров и положения
+                                        ци¬линдрической поверхности (наружная или внутренняя) подразделяют на:</p>
+                                    <ul>
+                                        <li>плашки и плоские резьбонарезные гребенки - для наружных резьб диаметром до
+                                            105 мм</li>
+                                        <li>резьбонарезные самораскрывающиеся головки с круглыми гребенками - для
+                                            на¬ружных резьб диаметром до 60 мм</li>
+                                        <li>гребенчатые резьбовые фрезы - для наружных резьб диаметром 32... 100 мм в
+                                            крупносерийном и массовом производстве</li>
+                                        <li>дисковые резьбовые фрезы - для трапецеидальных наружных резьб диаметром
+                                            80... 100 мм и шагом до 24 мм</li>
+                                        <li>вихревые резьбонарезные головки - для наружных резьб диаметром 20... 200 мм
+                                            и шагом более 4 мм</li>
+                                        <li>резьбовые резцы</li>
+                                        <li>метчики - для внутренних резьб</li>
+                                        <li>концевые гребенчатые резьбовые фрезы - для обработки внутренних резьб
+                                            диа¬метром до 200 мм</li>
+                                    </ul>
+                                    <br><br>
+                                    <img src="../img/1_2/img6.jpg" alt="" style="display:block; margin: auto; width:900px;">
+                                    <br><br>
+
+                                    <p style="text-indent: 50px;">Комбинированный инструмент чаще всего изготавливается для обработки отвер¬стий:
+                                    <ul>
+                                        <li>сверло-зенкер</li>
+                                        <li>зенкер-развертка</li>
+                                        <li>сверло-развертка</li>
+                                        <li>зенкер-зенковка и т.д.</li>
+                                    </ul>
+                                    <br><br>
+                                    <img src="../img/1_2/img7.jpg" alt="" style="display:block; margin: auto; width:900px;">
+                                    <br><br>
+
+                                    <p style="text-indent: 50px;">При подборе материала для изготовления режущей части инструмента требуется
+                                        учитывать следующие критерии:
+                                    <ul>
+                                        <li>конструкцию инструмента</li>
+                                        <li>технологию производства режущего инструмента</li>
+                                        <li>частоту использования</li>
+                                    </ul>
+                                    Материалы для режущего инструмента должны обладать высокой твердостью и
+                                    износостойкостью, достаточной прочностью и вязкостью, способностью сохранять большую
+                                    твердость при высоких температурах нагрева. При черновой обработке материал
+                                    инструмента должен иметь в первую очередь высокую прочность и достаточную вязкость;
+                                    при чистовой, окончательной обработке — главным образом износостойкость; при
+                                    обработке высоколегированных сталей и сплавов — теплостойкость.
+                                    </p>
+                                    <br><br>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div id="modal4" class="modal_aom1">
+                                <div
+                                    style="background-color: #fefefe; padding: 20px; max-width: 100%; max-height: 80%; overflow: auto;">
+                                    <!-- <span
+                                        style="cursor: pointer; float: right; font-size: 70px; top: 10%; right: 18%; position: fixed; color:#fefefe;"
+                                        onclick="closeModal('modal4')">&times;</span> -->
+                                    <br>
+                                    <h3 style="text-align: center;">Основы выбора инструмента и материалов режущей части</h3>
+                                    <br><br>
+                                    <p id="modalText4"></p>
+                                    <p style="text-indent: 50px;">При выборе режущего инструмента необходимо учитывать:
+                                    <ul>
+                                        <li>способ обработки и тип станка</li>
+                                        <li>точность и качество обработки</li>
+                                        <li>форму и размеры обрабатываемых поверхностей</li>
+                                        <li>материал заготовки и его механических свойств</li>
+                                        <li>заданную производительность</li>
+                                        <li>период стойкости инструмента</li>
+                                    </ul>
+                                    <br><br>
+                                    <p style="text-indent: 50px;">Режущие инструменты (особенно для станков с ЧПУ) должныобладать высокой режущей
+                                        способностью (стабильной размерной стойкостью при высоких режимах резания),
+                                        обеспечить возможность быстрой и удобной замены, наладки в процессе работы,
+                                        формировать транспортабельную стружку и отводить ее от зоны обработки без
+                                        нарушения нормальной работы оборудования
+                                    <p style="text-indent: 50px;">В качестве материала режущей части применяют:
+                                    <ul>
+                                        <li>инструментальные стали – углеродистые стали У10, У12 для сверл, метчиков,
+                                            плашек, легированные стали ХВ5, ХВГ для протяжек и фрез</li>
+                                        <li>быстрорежущие стали – Р6М5, Р18, Р9К5, Р9Ф5, Р9К10 для обработки вязких, но
+                                            прочных сталей (жаропрочных), для резьбонарезного и рассверливающего
+                                            инструмента </li>
+                                        <li>твердые сплавы – вольфрамокобальтовые ВК3, ВК6, ВК8 в режущих инструментах
+                                            для обработки чугуна, титанокобальтовые Т5К10, Т15К6, Т30К6 для обработки
+                                            стали </li>
+                                        <li>минералокерамические сплавы – микролит (ЦМ332) и термокорунд (ЦВ14) при
+                                            чистовой обработке жестких заготовок из чугуна и стали</li>
+                                        <li>абразивные материалы – электрокорунд, карбид кремния, эльбор и др. для
+                                            шлифования, хонингования</li>
+                                        <li>искусственные алмазы и сверхтвердые материалы – для выглаживания</li>
+                                    </ul>
+                                    <br><br>
+
+
+                                    </p>
+                                </div>
+                            </div>
+                            <br>
+                            <div id="modal5" class="modal_aom1">
+                                <div
+                                    style="background-color: #fefefe; padding: 20px; max-width: 100%; max-height: 80%; overflow: auto;">
+                                    <!-- <span
+                                        style="cursor: pointer; float: right; font-size: 70px; top: 10%; right: 18%; position: fixed; color:#fefefe;"
+                                        onclick="closeModal('modal5')">&times;</span> -->
+                                    <br>
+                                    <h3 style="text-align: center;">Назначение, виды и классификация технологических приспособлений</h3>
+                                    <br><br>
+                                    <p id="modalText5">
+
+
+                                    <p style="text-indent: 50px;">Технологические приспособления – вспомогательные устройства к технологическому
+                                        оборудованию, используемые при выполнении операций механической обработки,
+                                        сборки и контроля
+                                        <br><br><p style="text-indent: 50px;">По целевому назначению приспособления делят на:</p>
+                                    <ul>
+                                        <li>станочные приспособления – для установки и закрепления обрабатываемых
+                                            заготовок на станках
+                                            <br><br><img src="../img/1_2/img8.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>приспособления для крепления режущего инструмента
+                                            <br><br><img src="../img/1_2/img9.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>сборочные приспособления – используют при выполнении сборочных операций
+                                            <br><br><img src="../img/1_2/img10.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>контрольно-измерительные приспособления – применяют для контроля заготовок,
+                                            промежуточного
+                                            и окончательного контроля, а также для проверки собранных узлов и машин
+                                            <br><br><img src="../img/1_2/img11.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>приспособления для захвата, перемещения и перевертывания обрабатываемых
+                                            заготовок,
+                                            а также отдельных деталей и узлов при сборке
+                                            <br><br><img src="../img/1_2/img12.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                    </ul>
+                                    <br><br>
+
+                                    <p style="text-indent: 50px;">По степени специализации приспособления делят на:
+                                    <ul>
+                                        <li>универсальные приспособления (УП) – используют для расширения
+                                            технологических возможностей металлорежущих станков. К ним относятся
+                                            универсальные, поворотные, делительные столы, самоцентрирующие патроны
+                                            <br><br><img src="../img/1_2/img13.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>универсальные безналадочные приспособления (УБП) – применяются для
+                                            базирования и закрепления однотипных заготовок. К этому типу принадлежат
+                                            универсальные патроны с неразъемными кулачками, универсальные фрезерные и
+                                            слесарные тиски
+                                            <br><br><img src="../img/1_2/img14.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>универсально-наладочные приспособления (УНП) – используют для базирования и
+                                            закрепления заготовок в условиях многономенклатурного производства, состоят
+                                            из постоянного корпуса с приводом и сменной наладки, изготавливаемой в
+                                            соответствии с контуром заготовки. К ним относятся универсальные патроны со
+                                            сменными кулачками, универсальные тиски, скальчатые кондукторы
+                                            <br><br><img src="../img/1_2/img15.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>специализированные безналадочные приспособления (СБП) используют для
+                                            базирования и закрепления заготовок, близких по конструктивным признакам и
+                                            требующих одинаковой обработки. К таким приспособлениям принадлежат
+                                            приспособления для обработки ступенчатых валиков, втулок, фланцев, дисков,
+                                            корпусных деталей и др.
+                                            <br><br><img src="../img/1_2/img16.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>специализированные наладочные приспособления (СНП) применяют для базирования
+                                            и закрепления заготовок, близких по конструктивно-технологическим признакам
+                                            и требующих для их обработки выполнения однотипных операций и специальных
+                                            наладок
+                                            <br><br><img src="../img/1_2/img17.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>универсально-сборные приспособления (УСП) сборно-разборные приспособления
+                                            (СРП) компонуют из нормализованных обратимых деталей и узлов, допускающих
+                                            многократную перекомпоновку собираемых конструкций
+                                            <br><br><img src="../img/1_2/img18.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>неразборные специальные приспособления (НСП) используют для выполнения
+                                            определенной операции и при обработке конкретной детали. Такие
+                                            приспособления называются одноцелевыми
+                                            <br><br><img src="../img/1_2/img19.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                    </ul>
+                                    <br><br>
+                                    <p style="text-indent: 50px;">По степени механизации и автоматизации приспособления подразделяют на:
+                                    <ul>
+                                        <li>ручные</li>
+                                        <li>механизированные</li>
+                                        <li>полуавтоматические</li>
+                                        <li>автоматические</li>
+                                    </ul>
+                                    По технологическому назначению в зависимости от типа используемого оборудования:
+                                    токарные, фрезерные, шлифовальные и другие
+
+                                    </p>
+                                </div>
+                            </div>
+                            <br>
+                            <div id="modal6" class="modal_aom1">
+                                <div
+                                    style="background-color: #fefefe; padding: 20px; max-width: 100%; max-height: 80%; overflow: auto;">
+                                    <!-- <span
+                                        style="cursor: pointer; float: right; font-size: 70px; top: 10%; right: 18%; position: fixed; color:#fefefe;"
+                                        onclick="closeModal('modal6')">&times;</span> -->
+                                    <br>
+                                    <h3 style="text-align: center;">Основы выбора технологических приспособлений</h3>
+                                    <br>
+                                    <br>
+                                    <p id="modalText6">
+
+                                    <p style="text-indent: 50px;">Выбор технологических приспособлений зависит от формы, габаритных размеров и
+                                        технических требований, предъявляемых к обрабатываемым деталям, а также от типа
+                                        производства и программы выпуска изделий.</p>
+                                     <p style="text-indent: 50px;">Выбор типа приспособления в основном зависит от серийности производства.</p>
+                                       <p style="text-indent: 50px;"> В условиях единичного и мелкосерийного производства экономически
+                                        выгодны универсальные приспособления систем УБП и УСП, ручные.</p>
+                                        <p style="text-indent: 50px;"> В условиях серийного и крупносерийного производства -
+                                        специализированные приспособления систем СНП, СРП и УНП, механизированные и
+                                        автоматизированные.</p>
+                                        <p style="text-indent: 50px;"> В условиях массового производства - специальные приспособления системы
+                                        НСП, автоматические.</p>
+                                        <p style="text-indent: 50px;">При обработке заготовок на автоматических линиях используются
+                                        приспособления-спутники, которые одновременно служат и для транспортировки
+                                        заготовки с одной позиции на другую.
+
+                                    </p>
+
+                                </div>
+                            </div>
+                            <br>
+                            <div id="modal7" class="modal_aom1">
+                                <div
+                                    style="background-color: #fefefe; padding: 20px; max-width: 100%; max-height: 80%; overflow: auto;">
+                                    <!-- <span
+                                        style="cursor: pointer; float: right; font-size: 70px; top: 10%; right: 18%; position: fixed; color:#fefefe;"
+                                        >&times;</span> -->
+                                    <br>
+                                    <h3 style="text-align: center;">Измерительный инструмент: виды и классификация</h3>
+                                    <br>
+                                    <br>
+
+                                    <p id="modalText7">
+
+                                    <p style="text-indent: 50px;">
+                                        Измерительные инструменты - специальные устройства для точного
+                                        определения размеров, а также других геометрических характеристик деталей
+                                        и предметов
+
+                                    </p>
+
+                                    <p style="text-indent: 50px;">В зависимости от назначения применяют следующие измерительные инструменты:
+                                    <ul>
+                                        <li>микрометрыгладкие, рычажные, листовые, трубные, призматические и другие,
+                                            предназначены для определения линейных размеров. Точность измерения до сотых
+                                            долей мм
+                                            <br><br><img src="../img/1_2/img20.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>нутромеры, предназначены для определения размеров пазов, отверстий и
+                                            внутренних отверстий, различают микрометрические и индикаторные. Точность
+                                            измерения до 0,01 мм.
+                                            <br><br><img src="../img/1_2/img21.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>кронциркули, предназначены измерения линейных размеров сравнением реальных
+                                            значений с эталонными
+                                            <br><br><img src="../img/1_2/img22.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>концевые меры длины, состоят из наборов плиток соединенных посредством сил
+                                            трения. Используются для контроля точности измерительных приборов, разметки
+                                            и других операций
+                                            <br><br><img src="../img/1_2/img23.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>штангенциркули, предназначены для определения наружных и внутренних размеров
+                                            деталей с точностью до 0,1 мм. При наличии глубиномера могут использоваться
+                                            для замера глубины отверстия.
+                                            <br><br><img src="../img/1_2/img24.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>штангенглубиномеры, предназначены для определения глубин пазов и отверстий с
+                                            точностью 0,05–0,1 мм
+                                            <br><br><img src="../img/1_2/img25.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>штангензубомер, предназначен для определения размера зубьев шестеренок и
+                                            реек с помощью горизонтальной и вертикальной штанг
+                                            <br><br><img src="../img/1_2/img26.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>штангенрейсмас, используются для определения высоты выступа и разметки
+                                            деталей
+                                            <br><br><img src="../img/1_2/img27.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>угломеры, используются для проверки точности углов
+                                            <br><br><img src="../img/1_2/img28.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>калибры-пробки, предназначены дляконтроля гладких и резьбовых отверстий
+                                            <br><br><img src="../img/1_2/img29.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+
+                                        <li>калибры-скобы, предназначены для контроля валов
+                                            <br><br><img src="../img/1_2/img30.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>шаблоны радиусные и резьбовые, предназначены для определения,
+                                            соответственно, радиуса кривизны детали или шага резьбы путем приложения к
+                                            контролируемым поверхностям
+                                            <br><br><img src="../img/1_2/img31.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                        <li>образцы шероховатости поверхностей, предназначены для определенияпараметра
+                                            шероховатости деталей
+                                            <br><br><img src="../img/1_2/img32.jpg" alt=""
+                                                style="display:block; margin: auto; width:350px;">
+                                        </li>
+                                    </ul>
+                                    <br><br>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div id="modal8" class="modal_aom1">
+                                <div
+                                    style="background-color: #fefefe; padding: 20px; max-width: 100%; max-height: 80%; overflow: auto;">
+                                    <!-- <span
+                                        style="cursor: pointer; float: right; font-size: 70px; top: 10%; right: 18%; position: fixed; color:#fefefe;"
+                                        onclick="closeModal('modal8')">&times;</span> -->
+                                    <br>
+                                    <h3 style="text-align: center;">Основы выбора измерительного инструмента</h3>
+                                    <br><br>
+                                    <p id="modalText8"></p>
+                                    <p style="text-indent: 50px;">Правильный выбор измерительного инструмента обеспечивает получение достоверной
+                                        информации об измеряемом объекте, позволяет оптимизировать затраты производства
+                                        на контрольные операции
+                                    <p style="text-indent: 50px;">При выборе измерительного инструмента необходимо учитывать:</p>
+
+                                    <ul>
+                                        <li>величину допуска на изготовление измеряемого размера</li>
+                                        <li>номинальный размер</li>
+                                        <li>допускаемую погрешность измерения данной детали</li>
+                                        <li>общий контур детали</li>
+                                        <li>способ производства при изготовлении детали</li>
+                                        <li>предельную (допустимую) погрешность измерения</li>
+                                    </ul>
+                                    <br><br>
+                                    <p style="text-indent: 50px;">Правильный выбор измерительного инструмента обеспечивает соответствие его
+                                        метрологической характеристики:
+                                    <ul>
+                                        <li>диапазон измерения и показаний должен быть больше измеряемого размера</li>
+                                        <li>предельная погрешность выбранного средства измерений должна быть меньше
+                                            допускаемой погрешности измерения</li>
+                                    </ul>
+                                    <br><br>
+
+                                    <p style="text-indent: 50px;">На выбор средств измерений влияет характер производства:
+                                    <ul>
+                                        <li>в мелкосерийном и единичном производстве используют универсальные
+                                            измерительного инструменты, регулируемые калибры, применение специальных
+                                            приспособлений и предельных калибров экономически невыгодно</li>
+                                        <li>всерийном производствеиспользуют специальные контрольные приспособления,
+                                            предельные калибры и реже – универсальные средства измерений</li>
+                                        <li>в массовом и крупносерийном производствеиспользуют механизированные и
+                                            автоматизированные средства измерений, специальные контрольные
+                                            приспособления и предельные калибры</li>
+                                    </ul>
+                                    <br><br>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- <script>
+                                function openModal(modalNumber, text) {
+                                    // Заполнить содержимое модального окна текстом
+                                    const modalContent = document.getElementById('modalText' + modalNumber);
+                                    modalContent.innerText = text;
+
+                                    // Показать соответствующее модальное окно
+                                    document.getElementById('modal' + modalNumber).style.display = 'flex';
+                                }
+
+                                function closeModal(modalId) {
+                                    // Скрыть модальное окно
+                                    document.getElementById(modalId).style.display = 'none';
+                                }
+                            </script> -->
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            <!-- <div class="flex justify-center align-center">
+            <div class="container2 hide">
+              <div class="container_header">
+                <div class="flex align-center justify-center"><p class="container_title text-center">  </p> 
+                    <div class="counter_exercise" id="pages">--><!-- 2/8 --> <!--</div>
+                </div>
+              </div>
+                <div class="flex center-results col mt-100 align-center justify-center">
+                 
+                  <p class="text-center">Вы завершили прохождение виртуального тренажера</p>
+                  <p class="text-center"><b><a href="../index.html">Нажмите, чтобы вернуться на главную</b></p>
+                </div>
+        </div>          -->
+
+        </div>
+    </div>
+
+    <div class="flex triangle">
+        <div class="triangle1_img"><img src="../img/Group 12.png" alt="tri"></div>
+    </div>
+    <!-- modal -->
+    <div id="ex1" class="modal">
+        <p class="text-zadanie mb-5">Федеральный государственный образовательный стандарт среднего профессионального
+            образования по специальности 15.02.16</p>
+        <p class="mt-10">Технология машиностроения, утвержден Приказом Минпросвещения России от 14 июня 2022 г. № 444</p>
+        <p class="text-zadanie mb-5">ПОП Профессионалитета</p>
+        <p class="mt-10">15.02.16 Технология машиностроения</p>
+        <p class="text-zadanie mb-5">ПМ. 01</p>
+        <p class="mt-10">Разработка технологических процессов изготовления деталей машин</p>
+        <p class="text-zadanie mt-20 mb-5">МДК 01.01</p>
+        <p class="mt-10"> Разработка технологических процессов изготовления деталей машин с применением систем
+            автоматизированного проектирования</p>
+        <p class="text-zadanie mt-20 mb-5">Раздел</p>
+        <p class="mt-10">Технологические процессы изготовления деталей машин </p>
+        <p class="text-zadanie mt-20 mb-5">Тема</p>
+        <p class="mt-10">Выбор оборудования, инструмента и технологической оснастки</p>
+    
+    </div>
+    <div id="ex2" class="modal">
+        <p class="text-zadanie">Ключевые слова</p>
+        <p class="mt-10"><b>Оборудование</b> - любое необходимое производству машины или приборы.</p>
+        <p class="mt-10"><b>Технологическая оснастка</b> - средства технологического оснащения, дополняющие технологическое
+            оборудование, для выполненияопределенной части технологического процесса.</p>
+        <p class="mt-10"><b>Измерительный инструмент</b> - специальное устройство для точного определения размеров, а также
+            других геометрических характеристик деталей и предметов.</p>
+        <p class="mt-10"><b>Станочные приспособления</b> - дополнительные оборудования к металлообрабатывающему станку,
+            предназначенные для закрепления в нем обрабатываемой заготовки и надежной связи его со станком.</p>
+    </div>
+    <!-- <div class="flex triangle">
+    <div class="triangle_img"><img src="../img/Group 12.png" alt="tri" ></div>
+</div> -->
+    <!-- <script src="../js/questions1.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script src="../js/virtual1.js"></script>
+</body>
+
+</html>

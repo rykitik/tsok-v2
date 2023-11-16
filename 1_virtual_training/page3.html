@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Машиностроение: Интерактивная мини-игра</title>
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../img/icon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="../js/selector.js"></script>
+    <script type="text/javascript">
+     
+    </script>
+    <style>
+        #numbers{
+            font-weight: 700;
+            font-size: 2rem;
+            user-select: none;
+        }
+        #variable{
+            font-weight: 700;
+            font-size: 1rem;
+            user-select: none;
+        }
+        #choice{
+            width: 100%;
+            height: 100%;
+        }
+        #droppable{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+  </head>
+</head>
+<body>
+    <header class="flex col">
+        <div class="container flex row">
+            <div class="logo"><img src="../img/logo1.svg" alt="logo"></div>
+            <div class="flex col ml-90 w100">
+                <div class="header-first_content flex w100 space-between">
+                    <div class="title"><h2 class="white">Машиностроение</h2></div>
+                    <div class="buttons flex align-center mt-10">
+                        <a href="#ex1" class="btn-nav btn-contacts" rel="modal:open">Информация о контенте</a>
+                        <a href="#ex2" class="btn-nav btn-words" rel="modal:open">Ключевые слова</a>
+                    </div>
+                    
+                </div>
+                <div class="header-second_content">
+                    <h3 class="subtitle_header">Выбор оборудования, инструмента и технологической оснастки</h3>
+                 </div>
+            </div>
+        </div>
+            <div class="header-second"></div>      
+    </header>
+<div class="bg_color_block flex col ">
+    
+        
+        <div class="flex justify-center align-center">
+            <div class="content1 flex col max-content w100">
+                <div class="flex align-center justify-center mt-30"><img src="../img/right alignment.png" alt="arrow" class="mr-10"><a href="../index.html" class="text_home"> На главную</a></div>
+            
+            <div class="container1">
+                <div class="container_header">
+                    <div class="flex align-center space-between"><p class="container_title"> Интерактивная мини-игра </p> <div class="counter_exercise" id="pages"><!-- 2/8 --></div></div>
+                    <div class="flex tab_exercise_container">
+                       <!--  <div class="tab"></div>
+                        <div class="tab" id="active_tab"></div>
+                        <div class="tab"></div>
+                        <div class="tab"></div>
+                        <div class="tab"></div> -->
+                    </div>
+                </div>
+                <div class="container-exercise display-container">
+                    <div class="timer"><div class="timer_container"><div class="time-counter"><!-- 1:00 --> </div><img src="../img/stopwatch.png" alt=""></div></div>
+                    <div class="balls"><!-- 0 баллов --> </div>
+                    <div class="flex space-between"><p class="text-zadanie"></p></div>
+                    
+                    <div class="flex container-filling align-center justify-center quest-container">
+                        
+                        <div class="flex col fixDan" id="left-list">
+                           
+                        </div>
+                        <div class="flex col option-list" id="drag">
+                           
+                        </div>
+                        <div id="choiceContent" class="choice">
+                           
+                        </div>
+                    </div>
+                       
+                    </div>
+                    <div class="arrows1"><button class="prevbutton"><img src="../img/ArrowLeft.png"></button>
+                        <a rel="modal:open"><button id="next-button"><img src="../img/ArrowRight.png" alt="ArrowRight"></button></a>
+                    </div>
+                </div>
+            </div>   
+        </div>
+               
+
+            <div class="score-container hide">
+                <div id="user-score">Demo Score</div>
+                <button id="restart">Restart</button>
+              </div>
+
+            <!-- results -->
+        <div class="flex justify-center align-center">
+              <div class="container2 hide">
+                <div class="container_header">
+                    <div class="flex align-center justify-center"><p class="container_title text-center"> Результаты </p> <div class="counter_exercise" id="pages"><!-- 2/8 --></div></div>
+                </div>
+                    <div class="flex center-results col mt-100 align-center justify-center">
+                    <div class="flex container_box align-center justify-center">
+                        <div class="box_1">
+                            <p class="mb-10 box_1_text">Количество очков</p>
+                            <p class=" mb-30 box_number" id="resPoints"></p>
+                        </div>
+                        <div class="box_1" style="width: 600px;">
+                            <p class="mb-10 box_1_text" id="resText"></p>
+                        </div>
+                        <!-- <div class="box_1 ">
+                            <p class="mb-10 box_1_text">Времени осталось</p>
+                            <p class="time_after box_number"> оставшееся время </p>
+                        </div> -->
+                    </div>
+                    
+                    
+                    <!-- график -->
+                    <!-- <div id="piechart" class="mt-20"></div> -->
+
+                    
+                   </div>
+                    
+               
+            </div>
+        </div>
+</div>     
+        
+    <div class="flex triangle">
+        <div class="triangle1_img"><img src="../img/Group 12.png" alt="tri" ></div>
+    </div> 
+    <div id="ex1" class="modal">
+        <p class="text-zadanie mb-5">Федеральный государственный образовательный стандарт среднего профессионального
+            образования по специальности 15.02.16</p>
+        <p class="mt-10">Технология машиностроения, утвержден Приказом Минпросвещения России от 14 июня 2022 г. № 444</p>
+        <p class="text-zadanie mb-5">ПОП Профессионалитета</p>
+        <p class="mt-10">15.02.16 Технология машиностроения</p>
+        <p class="text-zadanie mb-5">ПМ. 01</p>
+        <p class="mt-10">Разработка технологических процессов изготовления деталей машин</p>
+        <p class="text-zadanie mt-20 mb-5">МДК 01.01</p>
+        <p class="mt-10"> Разработка технологических процессов изготовления деталей машин с применением систем
+            автоматизированного проектирования</p>
+        <p class="text-zadanie mt-20 mb-5">Раздел</p>
+        <p class="mt-10">Технологические процессы изготовления деталей машин </p>
+        <p class="text-zadanie mt-20 mb-5">Тема</p>
+        <p class="mt-10">Выбор оборудования, инструмента и технологической оснастки</p>
+    
+    </div>
+    <div id="ex2" class="modal">
+        <p class="text-zadanie">Ключевые слова</p>
+        <p class="mt-10"><b>Оборудование</b> - любое необходимое производству машины или приборы.</p>
+        <p class="mt-10"><b>Технологическая оснастка</b> - средства технологического оснащения, дополняющие технологическое
+            оборудование, для выполненияопределенной части технологического процесса.</p>
+        <p class="mt-10"><b>Измерительный инструмент</b> - специальное устройство для точного определения размеров, а также
+            других геометрических характеристик деталей и предметов.</p>
+        <p class="mt-10"><b>Станочные приспособления</b> - дополнительные оборудования к металлообрабатывающему станку,
+            предназначенные для закрепления в нем обрабатываемой заготовки и надежной связи его со станком.</p>
+    </div>
+    <div id="resOne" class="modal">
+        
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<script src="../js/questions3.js"></script>
+<script src="../js/virtual3.js"></script>
+</body>
+</html>
