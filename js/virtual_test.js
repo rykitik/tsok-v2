@@ -63,6 +63,7 @@ buttonNext.onclick = () => {
 }
 
 buttonPrev.onclick = () => {
+  if (que_numb === 1) return;
   document.querySelector('.text-zadanie').innerHTML=''
   document.querySelector('.option-list').innerHTML=''
   console.log("нажата кнопка");

@@ -64,6 +64,10 @@ const tab = document.querySelector(".tab");
 
 function startTimer(time) {
   if (isTimeStarted) return;
+  if (counter) {
+    clearInterval(counter);
+    counter = null;
+  }
   counter = setInterval(timer, 1000);
   isTimeStarted = true;
   localStorage.setItem('isTimeStarted', isTimeStarted);
@@ -80,9 +84,7 @@ function startTimer(time) {
     localStorage.setItem('timerTime', time);
 
     if (time < 0) {
-      container1.classList.add("hide");
-      container2.classList.remove("hide");
-      stopTimer(counter);
+      openResultWindow()
     }
   }
 }
@@ -91,11 +93,15 @@ function stopTimer() {
   // if (!isTimeStarted) return;
   time = ALLOTED_TIME;
   timeCount.innerHTML = "";
+  if (counter) {
+    clearInterval(counter);
+    counter = null;
+  };
   localStorage.removeItem('isTimeStarted');
   localStorage.removeItem('timerTime');
   localStorage.removeItem('queCount');
   localStorage.removeItem('queNumb');
-  clearInterval(counter);
+  isTimeStarted = false;
 }
 function setBallsCountText(balls) {
   ballsCount.innerHTML = balls + " баллов";
@@ -114,30 +120,30 @@ buttonNext.onclick = ()=>{
     queNumb ++;
     showQuestions(queCount);
     queCounter(queNumb);
+  } else openResultWindow();
+}
+function openResultWindow() {
+  stopTimer();
+  localStorage.removeItem("storage");
+  container1.classList.add("hide");
+  container2.classList.remove("hide");
+  resPoints.innerHTML=userScore
+  if (userScore>=1300) {
+    resText.innerHTML=`Поздравляем! Вы успешно завершили данный этап!`
+    attemptNumber = 1;
+    localStorage.removeItem("attemptNumber");
   } else {
-    stopTimer();
-    localStorage.removeItem("storage");
-    container1.classList.add("hide");
-    container2.classList.remove("hide");
-    resPoints.innerHTML=userScore
-    if (userScore>=1300) {
-      resText.innerHTML=`Поздравляем! Вы успешно завершили данный этап!`
-      attemptNumber = 1;
-      localStorage.removeItem("attemptNumber");
-    } else {
-      if (ATTEMPT_MAX_COUNT < attemptNumber) {
-        resText.innerHTML=`У вас больше нет попыток. Результат не учтен <br/>
-                            <button onclick="resetTryes()" class="tryagain-btn"> Обнулить попытки и вернуться</button> `;
-        return;
-      }
-      resText.innerHTML=`Рекомендуется повторить материал.<br>Нужно пройти ещё раз<br><br> Осталось ${ATTEMPT_MAX_COUNT - attemptNumber} попыток <br>
-                          <button onclick="tryAgain()" class="tryagain-btn"> Попробовать еще раз</button> `
-      attemptNumber++;
-      localStorage.setItem("attemptNumber", attemptNumber);
+    if (ATTEMPT_MAX_COUNT < attemptNumber) {
+      resText.innerHTML=`У вас больше нет попыток. Результат не учтен <br/>
+                          <button onclick="resetTryes()" class="tryagain-btn"> Обнулить попытки и вернуться</button> `;
+      return;
     }
-    console.log("Question completed");
+    resText.innerHTML=`Рекомендуется повторить материал.<br>Нужно пройти ещё раз<br><br> Осталось ${ATTEMPT_MAX_COUNT - attemptNumber} попыток <br>
+                        <button onclick="tryAgain()" class="tryagain-btn"> Попробовать еще раз</button> `
+    attemptNumber++;
+    localStorage.setItem("attemptNumber", attemptNumber);
   }
-  
+  console.log("Question completed");
 }
 function resetTryes() {
   attemptNumber = 1;
@@ -198,24 +204,24 @@ function showQuestions(index){
         left_list.innerHTML = storage[currentQuestion.id].left
         option_list.innerHTML = storage[currentQuestion.id].options
         for (let a of left_list.children) {
-          a.onclick=()=>{selectOptL(a)}
+          a.onclick=()=>{selectOpt(a, true)}
         }
         for (let a of option_list.children) {
-          a.onclick=()=>{selectOptR(a)}
+          a.onclick=()=>{selectOpt(a, false)}
         }
       } else {
         for (let a of currentQuestion.left) {
           let opt = document.createElement('div')
           opt.setAttribute('class','option')
           opt.innerHTML='<span>'+a+'</span>'
-          opt.onclick=()=>{selectOptL(opt)}
+          opt.onclick=()=>{selectOpt(opt, true)}
           left_list.append(opt)
         }
         for (let a of currentQuestion.options) {
           let opt = document.createElement('div')
           opt.setAttribute('class','option')
           opt.innerHTML='<span>'+a+'</span>'
-          opt.onclick=()=>{selectOptR(opt)}
+          opt.onclick=()=>{selectOpt(opt, false)}
           option_list.append(opt)
         }
       }
@@ -228,24 +234,24 @@ function showQuestions(index){
         console.log(left_list.children)
         for (let a of left_list.children) {
           console.log(a)
-          a.onclick=()=>{selectOptL(a)}
+          a.onclick=()=>{selectOpt(a, true)}
         }
         for (let a of option_list.children) {
-          a.onclick=()=>{selectOptR(a)}
+          a.onclick=()=>{selectOpt(a, false)}
         }
       } else {
         for (let a of currentQuestion.left) {
           let opt = document.createElement('div')
           opt.setAttribute('class','option')
           opt.innerHTML='<span>'+a+'</span>'
-          opt.onclick=()=>{selectOptL(opt)}
+          opt.onclick=()=>{selectOpt(opt, true)}
           left_list.append(opt)
         }
         for (let a of currentQuestion.options) {
           let opt = document.createElement('div')
           opt.setAttribute('class','option')
           opt.innerHTML='<span id="choice"><img class=option_img src=../img/3_3/'+a+'.jpg></span>'
-          opt.onclick=()=>{selectOptR(opt)}
+          opt.onclick=()=>{selectOpt(opt, false)}
           option_list.append(opt)
         }
       }
@@ -291,7 +297,7 @@ function checkChoice(p, o) {
   document.querySelector('#select_' + o).style='padding:0; margin:0;'
   if (!(currentQuestion.id in storage)) {
     storage[currentQuestion.id]={}
-    localStorage.removeItem("storage");
+    // localStorage.removeItem("storage");
   }
   storage[currentQuestion.id]['select_' + o]={style: document.querySelector('#select_' + o).classList.value, value: p}
   // localStorage.setItem("storage", JSON.stringify(storage));
@@ -301,20 +307,15 @@ function checkChoice(p, o) {
   if (Object.keys(currentQuestion.correct).length === Object.keys(storage[currentQuestion.id]).length) userScoreAdd(currentQuestion.cost);
 }
 let lastOptLeft = lastOptRight = null
-function selectOptL(opt) {
+let lastOpt = { left: null, right: null };
+function selectOpt(opt, isLeft) {
+  const selectedClass = isLeft ? 'left' : 'right';
+
   if (!opt.classList.contains('correct') && !opt.classList.contains('incorrect')) {
-    if (lastOptLeft) lastOptLeft.classList.remove('selected')
-    lastOptLeft=opt
-    opt.classList.add('selected')
-    checkAnswer()
-  }
-}
-function selectOptR(opt) {
-  if (!opt.classList.contains('correct') && !opt.classList.contains('incorrect')) {
-    if (lastOptRight) lastOptRight.classList.remove('selected')
-    lastOptRight=opt
-    opt.classList.add('selected')
-    checkAnswer()
+    if (lastOpt[selectedClass]) lastOpt[selectedClass].classList.remove('selected');
+    lastOpt[selectedClass] = opt;
+    opt.classList.add('selected');
+    checkAnswer();
   }
 }
 function checkAnswer() {
@@ -362,12 +363,11 @@ function checkAnswer() {
 let myanswers = []
 function optionSelected(answer){ // DO: FIX IT
   if (!answer.classList.contains('incorrect') && !answer.classList.contains('correct') && !answer.classList.contains('disabled')) {
-    // stopTimer();
-let userAns = answer.textContent;
-let correctAns = questions[queCount].correct;
-console.log(correctAns)
-let allOptions = option_list.children.length;
-if (typeof correctAns == 'object') {
+  let userAns = answer.textContent;
+  let correctAns = questions[queCount].correct;
+  console.log(correctAns)
+  let allOptions = option_list.children.length;
+  if (typeof correctAns == 'object') {
   if (correctAns.includes(userAns)) {
     console.log(userScore);
     answer.classList.add("correct");

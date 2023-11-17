@@ -622,7 +622,7 @@ video{
         z-index: 2;
         max-width: 500px;
         box-sizing: border-box;
-        width: 70% !important;
+        width: 65% !important;
         background: #fff;
         padding: 15px 30px;
         text-align: left;
@@ -632,6 +632,8 @@ video{
         -ms-border-radius: 0px !important;
         -o-border-radius: 0px !important;
         box-shadow: none !important;
+        overflow-x: unset !important;
+        overflow-y: unset !important;
 }
 
 .modal_container {
