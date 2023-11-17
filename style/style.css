@@ -11,8 +11,8 @@ position: relative;
 a{
     text-decoration: none !important;
     color: inherit;
-    
 }
+
 h2{
     margin: 0;
     font-size: 32px;
@@ -32,7 +32,7 @@ h5{
     font-weight: 700;
 }
 p{
-    margin: 0px;
+    margin: 0px !important;
     display: block;
    
 }
@@ -234,6 +234,11 @@ width: 100%;
 .mb-5{
     margin-bottom: 5px !important;
 }
+
+.mb-5_modal {
+    margin-bottom: 5px !important;
+}
+
 .mb-10{
 margin-bottom: 10px;
 }
@@ -259,7 +264,7 @@ margin-bottom: 10px;
     margin-right: 10px;
 }
 .ml-20{
-    margin-left: 20px;
+    margin-left: 20px !important;
 }
 .wrap{
     flex-wrap: wrap;
@@ -318,7 +323,7 @@ padding-left: 28px;
     min-width: 400px;
     background-color: #fff;
     min-height: 670px;
-    /* height: fit-content; */
+    height: fit-content;
     border-radius: 15px;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
@@ -370,6 +375,7 @@ padding-left: 28px;
     width: 100%;
     min-width: 400px;
     margin: 0px 20px;
+    
 }
 .container_title{
     font-weight: bold;
@@ -395,7 +401,7 @@ padding-left: 28px;
 }
 .counter_exercise{
     color: #fff;
-    padding: 20px 20px 5px;
+    padding: 20px;
 }
 .tab-exercise-container{
     padding:  0px 30px;
@@ -491,6 +497,7 @@ ul.list-dashed > li {
 .timer_container{
     width: 70px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -615,7 +622,7 @@ video{
         z-index: 2;
         max-width: 500px;
         box-sizing: border-box;
-        width: 90%;
+        width: 70% !important;
         background: #fff;
         padding: 15px 30px;
         text-align: left;
@@ -626,6 +633,24 @@ video{
         -o-border-radius: 0px !important;
         box-shadow: none !important;
 }
+
+.modal_container {
+        max-width: 1000px !important;        
+}
+
+/* .modal_flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: 20px;
+} */
+
+/* 
+
+a.close-modal {
+    top: 5px !important;
+    z-index: 100 !important;
+} */
 
 .modal_aom1 {
     display: none;

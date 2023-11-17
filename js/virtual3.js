@@ -1,3 +1,7 @@
+// CONSTANTS
+const ALLOTED_TIME = 1200;    // Время на выполнение всех задание
+
+// ELEMENTS
 const option_list = document.querySelector(".option-list");
 const left_list = document.querySelector("#left-list")
 const timeCount = document.querySelector(".time-counter");
@@ -9,17 +13,25 @@ const buttonPrev = document.querySelector(".prevbutton");
 const time_after = document.querySelector(".time_after");
 // const img = document.querySelector(".img-exercise1");
 const text_zadanie = document.querySelector(".text-zadanie");
+const tab_exercise_container = document.querySelector(".tab_exercise_container");
+ 
+// VARIABLES
 let currentQuestion = null;
 let userScore = 0;
 let storage = {}
-const tab_exercise_container = document.querySelector(".tab_exercise_container");
+let queCount = 0;
+let queNumb = 1;
+let counter;
+
+// VARIABLES FLAGS
+  isTimeStarted = localStorage.getItem('isTimeStarted') || false;
+
+// START FUNCTIONS
 tabsShow();
 showQuestions(0);
 queCounter(1);
 
-let que_count = 0;
-let que_numb = 1;
-let counter;
+
 
 function tabsShow(){
   let tab_tag = "";
@@ -32,7 +44,9 @@ function tabsShow(){
 
 const tab = document.querySelector(".tab");
 function startTimer(time) {
+  if (isTimeStarted) return;
   let counter = setInterval(timer, 1000);
+  isTimeStarted = true;
 
   function timer() {
     var minutes = Math.floor(time / 60);
@@ -47,29 +61,33 @@ function startTimer(time) {
       container1.classList.add("hide");
       container2.classList.remove("hide");
 
-      clearInterval(counter);
+      stopTimer(counter);
     }
   }
 }
+
+function stopTimer(timer) {
+  if (!isTimeStarted) return;
+  clearInterval(timer);
+}
 function setBallsCountText(balls) {
-  debugger
   ballsCount.innerHTML = balls + " баллов";
 }
 function userScoreAdd(score) {
   setBallsCountText(userScore + score);
   userScore = userScore + score;
 }
-startTimer(1200)
+
 setBallsCountText(userScore);
 
 //if next btn clicked
 buttonNext.onclick = ()=>{
-  if(que_count < questions.length - 1){
-    que_count ++;
-    que_numb ++;
-    showQuestions(que_count);
-    queCounter(que_numb);
-    clearInterval(counter);
+  if(queCount < questions.length - 1){
+    queCount ++;
+    queNumb ++;
+    showQuestions(queCount);
+    queCounter(queNumb);
+    stopTimer(counter);
     
   }else{
     
@@ -87,12 +105,13 @@ buttonNext.onclick = ()=>{
 }
 buttonPrev.onclick = ()=>{
   console.log("нажата кнопка");
-  que_count --;
-  que_numb --;
-  showQuestions(que_count);
-  queCounter(que_numb);
+  queCount --;
+  queNumb --;
+  showQuestions(queCount);
+  queCounter(queNumb);
 }
 function showQuestions(index){
+  if (Object.keys(storage).length === 0 && queNumb === 2) startTimer(ALLOTED_TIME);
   currentQuestion = questions[index]
   option_list.innerHTML=''
   left_list.innerHTML=''
@@ -180,14 +199,14 @@ function showQuestions(index){
       }
     } break
     case 'choice': {
-      let offer = currentQuestion.offer
+      let offer = currentQuestion.offer;
       for (let o in currentQuestion.options) {
         offer=offer.replace('{'+o+'}', '<div id="select_'+o+'"></div>')
       }
       choiceContent.innerHTML=offer
       for (let o in currentQuestion.options) {
         let arr = currentQuestion.options[o]
-        let pss = createSelect('select_'+o, '  ---  ', arr, ()=>{
+        let pss = createSelect('select_' + o, '  ---  ', arr, ()=>{
           if (!document.querySelector('#select_'+o).classList.contains('disabled')) {
             checkChoice(pss.children[0].innerHTML, o)
           }
@@ -207,22 +226,23 @@ function showQuestions(index){
   // img.src= img_tag;
 }
 function checkChoice(p, o) {
-  if (p==currentQuestion.correct[o]) {
-    document.querySelector('#select_'+o).classList.add('correct')
+  let isCorrect = false;
+  for (key in currentQuestion.correct) {
+    if (currentQuestion.correct[key] === p) isCorrect = true;
+  }
+  if (isCorrect) {
+    document.querySelector('#select_' + o).classList.add('correct')
   } else {
-    document.querySelector('#select_'+o).classList.add('incorrect')
+    document.querySelector('#select_' + o).classList.add('incorrect')
   }
-  document.querySelector('#select_'+o).classList.add('disabled')
-  document.querySelector('#select_'+o).style='padding:0; margin:0'
-
+  document.querySelector('#select_' + o).classList.add('disabled')
+  document.querySelector('#select_' + o).style='padding:0; margin:0;'
   if (!(currentQuestion.id in storage)) storage[currentQuestion.id]={}
-  storage[currentQuestion.id]['select_'+o]={style: document.querySelector('#select_'+o).classList.value, value: p}
-  if (Object.keys(storage[currentQuestion.id]).length==Object.keys([currentQuestion.correct]).length) {
-    for (let i in storage[currentQuestion.id]) {
-      if (storage[currentQuestion.id][i].style.includes('incorrect')) return
-    }
-    userScoreAdd(currentQuestion.cost);
+  storage[currentQuestion.id]['select_' + o]={style: document.querySelector('#select_' + o).classList.value, value: p}
+  for (let i in storage[currentQuestion.id]) {
+    if (storage[currentQuestion.id][i].style.includes('incorrect')) return null;
   }
+  if (Object.keys(currentQuestion.correct).length === Object.keys(storage[currentQuestion.id]).length) userScoreAdd(currentQuestion.cost);
 }
 let lastOptLeft = lastOptRight = null
 function selectOptL(opt) {
@@ -276,24 +296,25 @@ function checkAnswer() {
       for (let el of els) {
         el.classList.add('disabled')
       }
-      userScore+=currentQuestion.cost
+      userScoreAdd(currentQuestion.cost);
     }
     console.log(userScore)
   }
   storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
 }
 let myanswers = []
-function optionSelected(answer){
+function optionSelected(answer){ // DO: FIX IT
   if (!answer.classList.contains('incorrect') && !answer.classList.contains('correct') && !answer.classList.contains('disabled')) {
-      clearInterval(counter);
+    stopTimer(counter);
 let userAns = answer.textContent;
-let correctAns = questions[que_count].correct;
+let correctAns = questions[queCount].correct;
 console.log(correctAns)
 let allOptions = option_list.children.length;
 if (typeof correctAns == 'object') {
   if (correctAns.includes(userAns)) {
     console.log(userScore);
     answer.classList.add("correct");
+    // userScoreAdd(questions[queCount].cost); // DO: FIX IT
     console.log("Answer is correct");
   } else {
     answer.classList.add("incorrect");
@@ -302,11 +323,11 @@ if (typeof correctAns == 'object') {
   myanswers.push(userAns)
   if (myanswers.length>=correctAns.length) {
     //selected the correct answer
-    for (let i = 0; i < allOptions; i++) {
-      if(correctAns.includes(option_list.children[i].textContent)){
-        option_list.children[i].setAttribute("class", "correct");
-      }
-    }
+    // for (let i = 0; i < allOptions; i++) {
+    //   if(correctAns.includes(option_list.children[i].textContent)){
+    //     option_list.children[i].setAttribute("class", "correct");
+    //   }
+    // }
     //once user selected disabled all options
     for (let i = 0; i < allOptions; i++) {
       option_list.children[i].classList.add("disabled");
@@ -318,7 +339,7 @@ if (typeof correctAns == 'object') {
         break
       }
     }
-    if (bool) userScore+=currentQuestion.cost
+    if (bool) userScoreAdd(currentQuestion.cost);
     buttonNext.classList.remove("hide");
     myanswers=[]
   }
@@ -333,11 +354,11 @@ if (typeof correctAns == 'object') {
     answer.classList.add("incorrect");
     console.log("Answer is wrong");
     //selected the correct answer
-    for (let i = 0; i < allOptions; i++) {
-      if(option_list.children[i].textContent == correctAns){
-        option_list.children[i].setAttribute("class", "correct");
-      }
-    }
+    // for (let i = 0; i < allOptions; i++) {
+    //   if(option_list.children[i].textContent == correctAns){
+    //     option_list.children[i].setAttribute("class", "correct");
+    //   }
+    // }
   }
 //once user selected disabled all options
   for (let i = 0; i < allOptions; i++) {
@@ -350,9 +371,9 @@ if (typeof correctAns == 'object') {
 
 }
 // function optionSelected(answer){
-//   clearInterval(counter);
+//   stopTimer(counter);
 //   let userAns = answer.textContent;
-//   let correctAns = questions[que_count].correct;
+//   let correctAns = questions[queCount].correct;
 //   let allOptions = option_list.children.length;
   
 //   if(userAns == correctAns){
