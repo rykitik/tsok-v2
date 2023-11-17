@@ -760,8 +760,14 @@ a.close-modal {
     right: 10px;
 }
 
-
-
+.tryagain-btn {
+    cursor: pointer;
+    color: #43698F;
+    font-weight: bold;
+}
+.tryagain-btn:hover {
+    opacity: .9;
+}
 @media (max-width: 900px) {
     .container-filling{
         flex-wrap: wrap;

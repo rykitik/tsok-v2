@@ -1,5 +1,6 @@
 // CONSTANTS
-const ALLOTED_TIME = 1200;    // Время на выполнение всех задание
+const ALLOTED_TIME = 1200;    // Время на выполнение всех заданий
+const ATTEMPT_MAX_COUNT = 10;     // Количество попыток
 
 // ELEMENTS
 const option_list = document.querySelector(".option-list");
@@ -18,20 +19,38 @@ const tab_exercise_container = document.querySelector(".tab_exercise_container")
 // VARIABLES
 let currentQuestion = null;
 let userScore = 0;
-let storage = {}
-let queCount = 0;
-let queNumb = 1;
-let counter;
+let storage = JSON.parse(localStorage.getItem('user')) || {}
+let queCount = localStorage.getItem('queCount') ? Number(localStorage.getItem('queCount')) : 0;
+let queNumb = localStorage.getItem('queNumb') ? Number(localStorage.getItem('queNumb')) : 1;
+let counter = null;
+let time = localStorage.getItem('timerTime') ? Number(localStorage.getItem('timerTime')) : ALLOTED_TIME;
+let attemptNumber = localStorage.getItem('attemptNumber') ? Number(localStorage.getItem('attemptNumber')) : 1;
 
 // VARIABLES FLAGS
-  isTimeStarted = localStorage.getItem('isTimeStarted') || false;
+isTimeStarted = localStorage.getItem('isTimeStarted') || false;
 
-// START FUNCTIONS
-tabsShow();
-showQuestions(0);
-queCounter(1);
+// START APP
+startApp();
 
+if (isTimeStarted) {
+  isTimeStarted = false;
+  startTimer(time);
+}
 
+function startApp() {
+  tabsShow();
+  showQuestions(queCount);
+  queCounter(queNumb);
+}
+
+function updateTabs(index) {
+  for (let i = 0; i < questions.length; i++) {
+    tab_exercise_container.children[i].removeAttribute("class", "active_tab");
+    tab_exercise_container.children[i].setAttribute("class", "tab");
+  }
+  tab_exercise_container.children[index].removeAttribute("class", "tab");
+  tab_exercise_container.children[index].setAttribute("class", "active_tab");
+}
 
 function tabsShow(){
   let tab_tag = "";
@@ -41,12 +60,13 @@ function tabsShow(){
   }
   tab_exercise_container.innerHTML = tab_tag;
 }
-
 const tab = document.querySelector(".tab");
+
 function startTimer(time) {
   if (isTimeStarted) return;
-  let counter = setInterval(timer, 1000);
+  counter = setInterval(timer, 1000);
   isTimeStarted = true;
+  localStorage.setItem('isTimeStarted', isTimeStarted);
 
   function timer() {
     var minutes = Math.floor(time / 60);
@@ -57,18 +77,25 @@ function startTimer(time) {
       timeCount.innerHTML = minutes + ":0" + seconds, 200, 190;
     /* timeCount.innerHTML = time; */
     time--;
+    localStorage.setItem('timerTime', time);
+
     if (time < 0) {
       container1.classList.add("hide");
       container2.classList.remove("hide");
-
       stopTimer(counter);
     }
   }
 }
 
-function stopTimer(timer) {
-  if (!isTimeStarted) return;
-  clearInterval(timer);
+function stopTimer() {
+  // if (!isTimeStarted) return;
+  time = ALLOTED_TIME;
+  timeCount.innerHTML = "";
+  localStorage.removeItem('isTimeStarted');
+  localStorage.removeItem('timerTime');
+  localStorage.removeItem('queCount');
+  localStorage.removeItem('queNumb');
+  clearInterval(counter);
 }
 function setBallsCountText(balls) {
   ballsCount.innerHTML = balls + " баллов";
@@ -87,23 +114,46 @@ buttonNext.onclick = ()=>{
     queNumb ++;
     showQuestions(queCount);
     queCounter(queNumb);
-    stopTimer(counter);
-    
-  }else{
-    
+  } else {
+    stopTimer();
+    localStorage.removeItem("storage");
     container1.classList.add("hide");
-      container2.classList.remove("hide");
-      resPoints.innerHTML=userScore
-      if (userScore>=1300) {
-        resText.innerHTML=`Поздравляем! Вы успешно завершили данный этап!`
-      } else {
-        resText.innerHTML=`Рекомендуется повторить материал.<br>Нужно пройти ещё раз`
+    container2.classList.remove("hide");
+    resPoints.innerHTML=userScore
+    if (userScore>=1300) {
+      resText.innerHTML=`Поздравляем! Вы успешно завершили данный этап!`
+      attemptNumber = 1;
+      localStorage.removeItem("attemptNumber");
+    } else {
+      if (ATTEMPT_MAX_COUNT < attemptNumber) {
+        resText.innerHTML=`У вас больше нет попыток. Результат не учтен <br/>
+                            <button onclick="resetTryes()" class="tryagain-btn"> Обнулить попытки и вернуться</button> `;
+        return;
       }
+      resText.innerHTML=`Рекомендуется повторить материал.<br>Нужно пройти ещё раз<br><br> Осталось ${ATTEMPT_MAX_COUNT - attemptNumber} попыток <br>
+                          <button onclick="tryAgain()" class="tryagain-btn"> Попробовать еще раз</button> `
+      attemptNumber++;
+      localStorage.setItem("attemptNumber", attemptNumber);
+    }
     console.log("Question completed");
   }
   
 }
+function resetTryes() {
+  attemptNumber = 1;
+  localStorage.removeItem("attemptNumber");
+  stopTimer();
+  tryAgain();
+}
+function tryAgain() {
+  queCount = 0;
+  queNumb = 1;
+  startApp();
+  container1.classList.remove("hide");
+  container2.classList.add("hide");
+}
 buttonPrev.onclick = ()=>{
+  if (queNumb === 1) return;
   console.log("нажата кнопка");
   queCount --;
   queNumb --;
@@ -111,14 +161,16 @@ buttonPrev.onclick = ()=>{
   queCounter(queNumb);
 }
 function showQuestions(index){
-  if (Object.keys(storage).length === 0 && queNumb === 2) startTimer(ALLOTED_TIME);
-  currentQuestion = questions[index]
+  if (index < 0 || questions.length === index) return;
+  updateTabs(index);
+  localStorage.setItem("queCount", index);
+  if ((Object.keys(storage).length === 0 && queNumb >= 2)) startTimer(time);
+  currentQuestion = questions[index];
   option_list.innerHTML=''
   left_list.innerHTML=''
   choiceContent.innerHTML=''
   const que_text = document.querySelector(".text-zadanie");
   
-  tab_exercise_container.children[index].setAttribute("class", "active_tab")
   let que_tag = '<span>'+ currentQuestion.question+'</span>';
   
   que_text.innerHTML = que_tag;
@@ -237,8 +289,12 @@ function checkChoice(p, o) {
   }
   document.querySelector('#select_' + o).classList.add('disabled')
   document.querySelector('#select_' + o).style='padding:0; margin:0;'
-  if (!(currentQuestion.id in storage)) storage[currentQuestion.id]={}
+  if (!(currentQuestion.id in storage)) {
+    storage[currentQuestion.id]={}
+    localStorage.removeItem("storage");
+  }
   storage[currentQuestion.id]['select_' + o]={style: document.querySelector('#select_' + o).classList.value, value: p}
+  // localStorage.setItem("storage", JSON.stringify(storage));
   for (let i in storage[currentQuestion.id]) {
     if (storage[currentQuestion.id][i].style.includes('incorrect')) return null;
   }
@@ -301,11 +357,12 @@ function checkAnswer() {
     console.log(userScore)
   }
   storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
+  // localStorage.setItem("storage", JSON.stringify(storage));
 }
 let myanswers = []
 function optionSelected(answer){ // DO: FIX IT
   if (!answer.classList.contains('incorrect') && !answer.classList.contains('correct') && !answer.classList.contains('disabled')) {
-    stopTimer(counter);
+    // stopTimer();
 let userAns = answer.textContent;
 let correctAns = questions[queCount].correct;
 console.log(correctAns)
@@ -367,11 +424,12 @@ if (typeof correctAns == 'object') {
   buttonNext.classList.remove("hide");
   }
   storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
+  // localStorage.setItem("storage", JSON.stringify(storage));
   }
 
 }
 // function optionSelected(answer){
-//   stopTimer(counter);
+//   stopTimer();
 //   let userAns = answer.textContent;
 //   let correctAns = questions[queCount].correct;
 //   let allOptions = option_list.children.length;
@@ -412,6 +470,8 @@ function ShowResult(){
 
 
 function queCounter(index){
+  if (index < 1) return;
+  localStorage.setItem("queNumb", index);
   const ques_counter  = document.querySelector(".counter_exercise");
   let totalQuesTag = ''+ index +'/'+ questions.length +'';
   ques_counter.innerHTML = totalQuesTag;
