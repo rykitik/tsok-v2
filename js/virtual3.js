@@ -306,7 +306,6 @@ function checkChoice(p, o) {
   }
   if (Object.keys(currentQuestion.correct).length === Object.keys(storage[currentQuestion.id]).length) userScoreAdd(currentQuestion.cost);
 }
-let lastOptLeft = lastOptRight = null
 let lastOpt = { left: null, right: null };
 function selectOpt(opt, isLeft) {
   const selectedClass = isLeft ? 'left' : 'right';
