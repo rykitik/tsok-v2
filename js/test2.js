@@ -182,7 +182,7 @@ const questions = [
     {
       id: "8",
       // img:"../img/t_3/img2.PNG",
-      question: "9. Изучите основные типы измерительных инструментов для контроля размеров. <p style=font-weight:normal><br><br>Измерительные инструменты для контроля наружных и внутренних размеров: <br><div class=slider-container><div class=slider><img src=../img/t_3/9_1.PNG><img src=../img/t_3/9_2.PNG><img src=../img/t_3/9_31.PNG><img src=../img/t_3/9_4.PNG><img src=../img/t_3/9_5.PNG><img src=../img/t_3/9_6.PNG><img src=../img/t_3/9_7.PNG><img src=../img/t_3/9_8.PNG></div><button class=prev-button>&lt;</button><button class=next-button>&gt</button></div></main><script src=script.js></script>",
+      question: "9. Изучите основные типы измерительных инструментов для контроля размеров. <p style=font-weight:normal><br><br>Измерительные инструменты для контроля наружных и внутренних размеров: <br><div class=slider-container><div class=slider><img src=../img/t_3/9_1.PNG><img src=../img/t_3/9_2.PNG><img src=../img/t_3/9_31.PNG><img src=../img/t_3/9_4.PNG><img src=../img/t_3/9_5.PNG><img src=../img/t_3/9_6.PNG><img src=../img/t_3/9_7.PNG><img src=../img/t_3/9_8.PNG></div><button class=prev-button>&lt;</button><button class=next-button>&gt</button></div></main></script>",
       options: ["продолжить"],
       correct: "продолжить",
     },

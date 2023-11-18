@@ -424,16 +424,6 @@ padding-left: 28px;
     max-width: 1120px;
 }
 
-.text-zadanie_1 {
-    color: #251212;
-    font-weight: 700;
-    font-size: 22px;
-    margin-bottom: 20px;
-    margin-left: 0px;
-    max-width: 1120px;
-    z-index: 3;
-}
-
 .img-exercise img{
     width: 100%;
 }
@@ -710,6 +700,7 @@ a.close-modal {
     margin-bottom: 20px;
     margin-left: 0px;
     max-width: 1120px;
+    z-index: 3;
 }
 
 .modal-container {
