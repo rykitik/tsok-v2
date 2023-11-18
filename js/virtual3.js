@@ -18,8 +18,8 @@ const tab_exercise_container = document.querySelector(".tab_exercise_container")
  
 // VARIABLES
 let currentQuestion = null;
-let userScore = 0;
-let storage = JSON.parse(localStorage.getItem('user')) || {}
+let userScore = localStorage.getItem('userScore') ? Number(localStorage.getItem('userScore')) : 0;;
+let storage = JSON.parse(localStorage.getItem('storage')) || {}
 let queCount = localStorage.getItem('queCount') ? Number(localStorage.getItem('queCount')) : 0;
 let queNumb = localStorage.getItem('queNumb') ? Number(localStorage.getItem('queNumb')) : 1;
 let counter = null;
@@ -42,6 +42,7 @@ function startApp() {
   showQuestions(queCount);
   queCounter(queNumb);
 }
+setBallsCountText(userScore);
 
 function updateTabs(index) {
   for (let i = 0; i < questions.length; i++) {
@@ -79,7 +80,6 @@ function startTimer(time) {
       timeCount.innerHTML = minutes + ":" + seconds, 200, 190;
     else
       timeCount.innerHTML = minutes + ":0" + seconds, 200, 190;
-    /* timeCount.innerHTML = time; */
     time--;
     localStorage.setItem('timerTime', time);
 
@@ -90,7 +90,6 @@ function startTimer(time) {
 }
 
 function stopTimer() {
-  // if (!isTimeStarted) return;
   time = ALLOTED_TIME;
   timeCount.innerHTML = "";
   if (counter) {
@@ -109,9 +108,9 @@ function setBallsCountText(balls) {
 function userScoreAdd(score) {
   setBallsCountText(userScore + score);
   userScore = userScore + score;
+  localStorage.setItem("userScore", userScore);
 }
 
-setBallsCountText(userScore);
 
 //if next btn clicked
 buttonNext.onclick = ()=>{
@@ -124,8 +123,8 @@ buttonNext.onclick = ()=>{
 }
 function openResultWindow() {
   stopTimer();
-  localStorage.removeItem("storage");
   storage={}
+  localStorage.setItem("storage", JSON.stringify(storage));
   container1.classList.add("hide");
   container2.classList.remove("hide");
   resPoints.innerHTML=userScore
@@ -145,6 +144,7 @@ function openResultWindow() {
     if (attemptNumber) localStorage.setItem("attemptNumber", attemptNumber);
   }
   userScore = 0;
+  localStorage.removeItem("userScore")
   setBallsCountText(userScore);
   console.log("Question completed");
 }
@@ -300,10 +300,10 @@ function checkChoice(p, o) {
   document.querySelector('#select_' + o).style='padding:0; margin:0;'
   if (!(currentQuestion.id in storage)) {
     storage[currentQuestion.id]={}
-    // localStorage.removeItem("storage");
+    localStorage.setItem("storage", JSON.stringify(storage));
   }
   storage[currentQuestion.id]['select_' + o]={style: document.querySelector('#select_' + o).classList.value, value: p}
-  // localStorage.setItem("storage", JSON.stringify(storage));
+  localStorage.setItem("storage", JSON.stringify(storage));
   for (let i in storage[currentQuestion.id]) {
     if (storage[currentQuestion.id][i].style.includes('incorrect')) return null;
   }
@@ -331,7 +331,7 @@ function checkAnswer() {
       opts[1].classList.remove('hidden');
     }
     setTimeout(addOpts, 400);
-    
+
     let ci=0
     for (let q of currentQuestion.left) {
       if (opts[0].innerHTML.includes(q)) {
@@ -358,13 +358,12 @@ function checkAnswer() {
       }
       userScoreAdd(currentQuestion.cost);
     }
-    console.log(userScore)
   }
   storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
-  // localStorage.setItem("storage", JSON.stringify(storage));
+  localStorage.setItem("storage", JSON.stringify(storage));
 }
 let myanswers = []
-function optionSelected(answer){ // todo: FIX IT
+function optionSelected(answer){
   if (!answer.classList.contains('incorrect') && !answer.classList.contains('correct') && !answer.classList.contains('disabled')) {
   let userAns = answer.textContent;
   let correctAns = questions[queCount].correct;
@@ -372,9 +371,7 @@ function optionSelected(answer){ // todo: FIX IT
   let allOptions = option_list.children.length;
   if (typeof correctAns == 'object') {
   if (correctAns.includes(userAns)) {
-    console.log(userScore);
     answer.classList.add("correct");
-    // userScoreAdd(questions[queCount].cost); // todo: FIX IT
     console.log("Answer is correct");
   } else {
     answer.classList.add("incorrect");
@@ -407,11 +404,9 @@ function optionSelected(answer){ // todo: FIX IT
 } else {
   if(userAns == correctAns){
     userScoreAdd(currentQuestion.cost);
-    console.log(userScore);
     answer.classList.add("correct");
     console.log("Answer is correct");
   } else {
-
     answer.classList.add("incorrect");
     console.log("Answer is wrong");
     //selected the correct answer
@@ -428,7 +423,7 @@ function optionSelected(answer){ // todo: FIX IT
   buttonNext.classList.remove("hide");
   }
   storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
-  // localStorage.setItem("storage", JSON.stringify(storage));
+  localStorage.setItem("storage", JSON.stringify(storage));
   }
 
 }
@@ -467,9 +462,7 @@ function optionSelected(answer){ // todo: FIX IT
 
   
 function ShowResult(){
- 
-  result_box.innerHTML = userScore; 
-  
+  result_box.innerHTML = userScore;   
 }
 
 

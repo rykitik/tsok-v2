@@ -20,7 +20,6 @@ let counter;
 
 function tabsShow(){
   let tab_tag = "";
-  console.log(questions.length);
   for(let i = 0; i < questions.length; i++){
     tab_tag += '<div class="tab"></div>';
   }
