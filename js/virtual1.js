@@ -36,17 +36,11 @@ buttonNext.onclick = ()=>{
     showQuestions(que_count);
     queCounter(que_numb);
     clearInterval(counter);
-    
   }else{
-    
     container1.classList.add("hide");
       container2.classList.remove("hide");
-     
-  
-
     console.log("Question completed");
   }
-  
 }
 buttonPrev.onclick = ()=>{
   console.log("нажата кнопка");
