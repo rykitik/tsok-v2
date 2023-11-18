@@ -312,7 +312,6 @@ function checkChoice(p, o) {
 let lastOpt = { left: null, right: null };
 function selectOpt(opt, isLeft) {
   const selectedClass = isLeft ? 'left' : 'right';
-
   if (!opt.classList.contains('correct') && !opt.classList.contains('incorrect')) {
     if (lastOpt[selectedClass]) lastOpt[selectedClass].classList.remove('selected');
     lastOpt[selectedClass] = opt;
@@ -323,25 +322,27 @@ function selectOpt(opt, isLeft) {
 function checkAnswer() {
   let opts = document.querySelectorAll('.selected')
   if (opts.length==2) {
-    left_list.append(opts[0])
-    option_list.append(opts[1])
+    opts[0].classList.add('hidden');
+    opts[1].classList.add('hidden');
+    function addOpts() {
+      left_list.append(opts[0])
+      option_list.append(opts[1]);
+      opts[0].classList.remove('hidden');
+      opts[1].classList.remove('hidden');
+    }
+    setTimeout(addOpts, 400);
+    
     let ci=0
     for (let q of currentQuestion.left) {
       if (opts[0].innerHTML.includes(q)) {
         console.log(ci)
-        if (opts[1].innerHTML.includes(currentQuestion.options[ci])) {
-          opts[0].classList.remove('selected')
-          opts[1].classList.remove('selected')
-          opts[0].classList.add('correct')
-          opts[1].classList.add('correct')
-        } else {
-          opts[0].classList.remove('selected')
-          opts[1].classList.remove('selected')
-          opts[0].classList.add('incorrect')
-          opts[1].classList.add('incorrect')
-        }
+        let className = opts[1].innerHTML.includes(currentQuestion.options[ci]) ? 'correct' : 'incorrect';
+        opts[0].classList.remove('selected');
+        opts[1].classList.remove('selected');
+        opts[0].classList.add(className);
+        opts[1].classList.add(className);
       }
-      ci++
+      ci++;
     }
     let bool = true
     let els = document.querySelectorAll('.option')
@@ -363,7 +364,7 @@ function checkAnswer() {
   // localStorage.setItem("storage", JSON.stringify(storage));
 }
 let myanswers = []
-function optionSelected(answer){ // DO: FIX IT
+function optionSelected(answer){ // todo: FIX IT
   if (!answer.classList.contains('incorrect') && !answer.classList.contains('correct') && !answer.classList.contains('disabled')) {
   let userAns = answer.textContent;
   let correctAns = questions[queCount].correct;
@@ -373,12 +374,13 @@ function optionSelected(answer){ // DO: FIX IT
   if (correctAns.includes(userAns)) {
     console.log(userScore);
     answer.classList.add("correct");
-    // userScoreAdd(questions[queCount].cost); // DO: FIX IT
+    // userScoreAdd(questions[queCount].cost); // todo: FIX IT
     console.log("Answer is correct");
   } else {
     answer.classList.add("incorrect");
     console.log("Answer is wrong");
   }
+
   myanswers.push(userAns)
   if (myanswers.length>=correctAns.length) {
     //selected the correct answer
