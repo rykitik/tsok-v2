@@ -125,10 +125,11 @@ buttonNext.onclick = ()=>{
 function openResultWindow() {
   stopTimer();
   localStorage.removeItem("storage");
+  storage={}
   container1.classList.add("hide");
   container2.classList.remove("hide");
   resPoints.innerHTML=userScore
-  if (userScore>=1300) {
+  if (userScore>=1300 && ATTEMPT_MAX_COUNT >= attemptNumber) {
     resText.innerHTML=`Поздравляем! Вы успешно завершили данный этап!`
     attemptNumber = 1;
     localStorage.removeItem("attemptNumber");
@@ -141,8 +142,10 @@ function openResultWindow() {
     resText.innerHTML=`Рекомендуется повторить материал.<br>Нужно пройти ещё раз<br><br> Осталось ${ATTEMPT_MAX_COUNT - attemptNumber} попыток <br>
                         <button onclick="tryAgain()" class="tryagain-btn"> Попробовать еще раз</button> `
     attemptNumber++;
-    localStorage.setItem("attemptNumber", attemptNumber);
+    if (attemptNumber) localStorage.setItem("attemptNumber", attemptNumber);
   }
+  userScore = 0;
+  setBallsCountText(userScore);
   console.log("Question completed");
 }
 function resetTryes() {
