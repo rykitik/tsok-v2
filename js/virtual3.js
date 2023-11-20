@@ -329,6 +329,8 @@ function checkAnswer() {
       option_list.append(opts[1]);
       opts[0].classList.remove('hidden');
       opts[1].classList.remove('hidden');
+      storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
+      localStorage.setItem("storage", JSON.stringify(storage));
     }
     setTimeout(addOpts, 400);
 
@@ -359,8 +361,6 @@ function checkAnswer() {
       userScoreAdd(currentQuestion.cost);
     }
   }
-  storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
-  localStorage.setItem("storage", JSON.stringify(storage));
 }
 let myanswers = []
 function optionSelected(answer){
