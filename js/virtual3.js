@@ -1,7 +1,23 @@
 // CONSTANTS
 const ALLOTED_TIME = 1200;    // Время на выполнение всех заданий
 const ATTEMPT_MAX_COUNT = 10;     // Количество попыток
+const shuffle = (array) => {
+  let m = array.length, t, i;
 
+  // Пока есть элементы для перемешивания
+  while (m) {
+
+    // Взять оставшийся элемент
+    i = Math.floor(Math.random() * m--);
+
+    // И поменять его местами с текущим элементом
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  return array;
+}
 // ELEMENTS
 const option_list = document.querySelector(".option-list");
 const left_list = document.querySelector("#left-list")
@@ -193,7 +209,8 @@ function showQuestions(index){
           a.onclick=()=>{optionSelected(a)}
         }
       } else {
-        for (let a of currentQuestion.options) {
+        let options = shuffle(currentQuestion.options)
+        for (let a of options) {
           let opt = document.createElement('div')
           opt.setAttribute('class','option')
           opt.innerHTML='<span>'+a+'</span>'
@@ -213,14 +230,16 @@ function showQuestions(index){
           a.onclick=()=>{selectOpt(a, false)}
         }
       } else {
-        for (let a of currentQuestion.left) {
+        let leftQuestions = shuffle(currentQuestion.left)
+        for (let a of leftQuestions) {
           let opt = document.createElement('div')
           opt.setAttribute('class','option')
           opt.innerHTML='<span>'+a+'</span>'
           opt.onclick=()=>{selectOpt(opt, true)}
           left_list.append(opt)
         }
-        for (let a of currentQuestion.options) {
+        let options = shuffle(currentQuestion.options)
+        for (let a of options) {
           let opt = document.createElement('div')
           opt.setAttribute('class','option')
           opt.innerHTML='<span>'+a+'</span>'
@@ -243,14 +262,16 @@ function showQuestions(index){
           a.onclick=()=>{selectOpt(a, false)}
         }
       } else {
-        for (let a of currentQuestion.left) {
+        let leftQuestions = shuffle(currentQuestion.left)
+        for (let a of leftQuestions) {
           let opt = document.createElement('div')
           opt.setAttribute('class','option')
           opt.innerHTML='<span>'+a+'</span>'
           opt.onclick=()=>{selectOpt(opt, true)}
           left_list.append(opt)
         }
-        for (let a of currentQuestion.options) {
+        let options = shuffle(currentQuestion.options)
+        for (let a of options) {
           let opt = document.createElement('div')
           opt.setAttribute('class','option')
           opt.innerHTML='<span id="choice"><img class=option_img src=../img/3_3/'+a+'.jpg></span>'
@@ -264,9 +285,9 @@ function showQuestions(index){
       for (let o in currentQuestion.options) {
         offer=offer.replace('{'+o+'}', '<div id="select_'+o+'"></div>')
       }
-      choiceContent.innerHTML=offer
+      choiceContent.innerHTML = offer;
       for (let o in currentQuestion.options) {
-        let arr = currentQuestion.options[o]
+        let arr = currentQuestion.options[o];
         let pss = createSelect('select_' + o, '  ---  ', arr, ()=>{
           if (!document.querySelector('#select_'+o).classList.contains('disabled')) {
             checkChoice(pss.children[0].innerHTML, o)
@@ -283,8 +304,6 @@ function showQuestions(index){
       }
     } break
   }
-  // option_list.innerHTML = opisanie_tag;
-  // img.src= img_tag;
 }
 function checkChoice(p, o) {
   let isCorrect = false;
@@ -309,7 +328,8 @@ function checkChoice(p, o) {
   }
   if (Object.keys(currentQuestion.correct).length === Object.keys(storage[currentQuestion.id]).length) userScoreAdd(currentQuestion.cost);
 }
-let lastOpt = { left: null, right: null };
+let lastOpt  = { left: null, right: null };
+
 function selectOpt(opt, isLeft) {
   const selectedClass = isLeft ? 'left' : 'right';
   if (!opt.classList.contains('correct') && !opt.classList.contains('incorrect')) {
@@ -334,27 +354,27 @@ function checkAnswer() {
     }
     setTimeout(addOpts, 400);
 
-    let ci=0
-    for (let q of currentQuestion.left) {
-      if (opts[0].innerHTML.includes(q)) {
-        console.log(ci)
-        let className = opts[1].innerHTML.includes(currentQuestion.options[ci]) ? 'correct' : 'incorrect';
-        opts[0].classList.remove('selected');
-        opts[1].classList.remove('selected');
-        opts[0].classList.add(className);
-        opts[1].classList.add(className);
-      }
-      ci++;
-    }
-    let bool = true
+    let answer = {};
+    let optionImg = opts[1]?.children[0]?.children[0]?.src;
+    let secondOption = optionImg ? getFileName(optionImg) : opts[1].innerText
+    answer[opts[0].innerText] = secondOption;
+    let isCorrect = currentQuestion.correct.some(obj => {
+      return JSON.stringify(obj) === JSON.stringify(answer);
+    });
+    let className = isCorrect ? 'correct' : 'incorrect';
+    opts[0].classList.remove('selected');
+    opts[1].classList.remove('selected');
+    opts[0].classList.add(className);
+    opts[1].classList.add(className);
+    let isQuestionCorrect = true
     let els = document.querySelectorAll('.option')
     for (let el of els) {
       if (el.classList.contains('incorrect') || !el.classList.contains('correct')) {
-        bool=false
+        isQuestionCorrect=false
         break
       }
     }
-    if (bool) {
+    if (isQuestionCorrect) {
       for (let el of els) {
         el.classList.add('disabled')
       }
@@ -474,3 +494,7 @@ function queCounter(index){
   ques_counter.innerHTML = totalQuesTag;
 }
 
+function getFileName(src) {
+  let srcArray = src.split("/");
+  return srcArray[srcArray.length-1].split(".")[0];
+}

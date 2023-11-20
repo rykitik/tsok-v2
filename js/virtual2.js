@@ -89,8 +89,6 @@ function showQuestions(index) {
       option_tag += '<div class="option"><span>' + questions[index].options[i] + '</span></div>';
     }
     img_tag = questions[index].img;
-
-    img.src = img_tag;
   }
   if (questions[index].dnd) {
     que_text.innerHTML = que_tag;

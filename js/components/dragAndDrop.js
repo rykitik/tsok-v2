@@ -4,7 +4,7 @@ document.addEventListener('mousedown', (e)=>{
 	let obj=null
 	if (e.target.classList.contains('drag')) obj=e.target
 	if (e.target.parentNode.classList.contains('drag')) obj=e.target.parentNode
-	if (obj) {
+	if (obj && !obj.classList.contains('disabled')) {
 		obj.classList.add('zTop')
 		dragElement.object = obj
 		dragElement.x = e.pageX - (dragElement.object.getBoundingClientRect().left + pageXOffset)

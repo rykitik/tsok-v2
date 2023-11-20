@@ -61,7 +61,6 @@ function showQuestions(index){
 	
   que_text.innerHTML = que_tag;
   option_list.innerHTML = opisanie_tag;
-  img.src= img_tag;
 }
 
 
