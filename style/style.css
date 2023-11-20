@@ -1040,8 +1040,9 @@ a.close-modal {
     height: 100%;
     display: flex;
     flex-wrap: wrap;
-    column-gap: 20px;
-    row-gap: 40px;
+    column-gap: 40px;
+    row-gap: 20px;
+    justify-content: center;
 }
 
 .game-card {
@@ -1052,4 +1053,32 @@ a.close-modal {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition-duration: .3s;
+    box-sizing: border-box;
+    border: 3px solid rgba(0,0,0, .2);
+    border-radius: 5%;
+}
+
+.game-card--correct{
+    background-color: #9ee7d5;
+}
+.game-card--incorrect{
+    background-color: pink;
+}
+.game-card--correct, .game-card--incorrect:hover {
+    cursor:not-allowed !important;
+    transform: unset !important;
+    transition-duration: unset !important;
+}
+
+.game-card:hover {
+    transform: scale(1.2);
+    transition-duration: .3s;
+    cursor: pointer;
+
+}
+
+.game-card p{
+    font-size: 28px;
+    font-weight: lighter;
 }
