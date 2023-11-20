@@ -314,7 +314,8 @@ function showQuestions(index){
         ++id
       }
       id=0
-      drags = document.querySelector('.dragContainer')
+      dragsElement = document.querySelector('.dragContainer')
+      
       let dragArr = []
       for (let d of questions[index].items) {
         let drag = createDragElement(id,null,(drag, drop)=>{
@@ -339,11 +340,11 @@ function showQuestions(index){
       id=0
       for (let d of dragArr) {
         d.style.top=220+(id*50)+'px'
-        drags.append(d)
+        dragsElement.append(d)
         id++
       }
-      drags.style.width=drags.offsetWidth+'px'
-      drags.style.height=drags.offsetHeight+'px'
+      dragsElement.style.width=dragsElement.offsetWidth+'px'
+      dragsElement.style.height=dragsElement.offsetHeight+'px'
     } break
     case 'dragline': {
       let div = document.createElement('div')

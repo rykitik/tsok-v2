@@ -995,7 +995,6 @@ a.close-modal {
     margin: 5px;
 }
 .dragContainer {
-    position: absolute;
     display: flex;
     width: 50%;
     flex-direction: column;
