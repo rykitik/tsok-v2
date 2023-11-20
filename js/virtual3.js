@@ -28,7 +28,6 @@ const container1 = document.querySelector(".container1");
 const container2 = document.querySelector(".container2");
 const buttonPrev = document.querySelector(".prevbutton");
 const time_after = document.querySelector(".time_after");
-// const img = document.querySelector(".img-exercise1");
 const text_zadanie = document.querySelector(".text-zadanie");
 const tab_exercise_container = document.querySelector(".tab_exercise_container");
  
@@ -303,6 +302,106 @@ function showQuestions(index){
         }
       }
     } break
+    case 'dragdrop': {
+      let id=0
+      for (let d of questions[index].droppable) {
+        let div = document.createElement('div')
+        let drop = createDropElement(id)
+        div.classList.add('dropRow')
+        div.innerHTML='<div class="dropText">'+d+'</div>'
+        div.append(drop)
+        option_list.append(div)
+        ++id
+      }
+      id=0
+      drags = document.querySelector('.dragContainer')
+      let dragArr = []
+      for (let d of questions[index].items) {
+        let drag = createDragElement(id,null,(drag, drop)=>{
+          let dragId = drag.id.split('_')[1]
+          let dropId = drop.id.split('_')[1]
+          console.log(dragId, dropId)
+          if (questions[index].answers.includes(dragId+'-'+dropId)) { //если выбор правильный
+            drag.children[0].classList.add('bgCorrect')
+            drag.children[0].classList.remove('bgInCorrect')
+          } else {
+            drag.children[0].classList.add('bgInCorrect')
+            drag.children[0].classList.remove('bgCorrect')
+          }
+        })
+        drag.style.top=220+(id*50)+'px'
+        drag.style.left=800+'px'
+        drag.innerHTML='<div id="circle"></div><span class="ps-3 fw-light">'+d+'</span>'
+        dragArr.push(drag)
+        ++id
+      }
+      shuffle(dragArr)
+      id=0
+      for (let d of dragArr) {
+        d.style.top=220+(id*50)+'px'
+        drags.append(d)
+        id++
+      }
+      drags.style.width=drags.offsetWidth+'px'
+      drags.style.height=drags.offsetHeight+'px'
+    } break
+    case 'dragline': {
+      let div = document.createElement('div')
+      div.style.width=1100+'px'
+      for (let d of questions[index].droppable) {
+        let drop = createDropElement(id)
+        div.append(d)
+        div.append(drop)
+        ++id
+      }
+      id=0
+      let div1 = document.createElement('div')
+      let dragArr = []
+      let linkArr = {}
+      for (let d of questions[index].items) {
+        let drag = createDragElement(id,null,(drag, drop)=>{
+          let dragId = drag.id.split('_')[1]
+          let dropId = drop.id.split('_')[1]
+          console.log(dragId, dropId)
+          if (questions[index].answers.includes(dragId+'-'+dropId)) { //если выбор правильный
+            drag.classList.add('bgCorrect')
+            drag.classList.remove('bgInCorrect')
+          } else {
+            drag.classList.add('bgInCorrect')
+            drag.classList.remove('bgCorrect')
+          }
+          drag.style.width='auto'
+          drop.style.width=drag.offsetWidth-15+'px'
+          for (let i in linkArr) {
+            if (linkArr[i]==dragId) delete linkArr[i]
+          }
+          linkArr[dropId]=dragId
+          for (let i in linkArr) {
+            if (linkArr[i] != dragElement.object.id.split('_')[1]) {
+              let drag1 = document.querySelector('#drag_'+linkArr[i])
+              let drop1 = document.querySelector('#drop_'+i)
+              drag1.style.left = (drop1.offsetLeft-14)+'px'
+              drag1.style.top = (drop1.offsetTop+drop1.offsetHeight/2 - (drag1.offsetHeight/2)) -5 +'px'
+            }
+          }
+        })
+        drag.style.top=400+(id*50)+'px'
+        drag.style.left=100+'px'
+        drag.style.padding=0
+        drag.innerHTML='<span class="ps-3 fw-light" style="padding-right: 15px">'+questions[index].items[id]+'</span>'
+        dragArr.push(drag)
+        ++id
+      }
+      shuffle(dragArr)
+      id=0
+      for (let d of dragArr) {
+        d.style.top=400+(id*50)+'px'
+        div1.append(d)
+        ++id
+      }
+      option_list.append(div)
+      option_list.append(div1)
+    } break
   }
 }
 function checkChoice(p, o) {
@@ -400,13 +499,6 @@ function optionSelected(answer){
 
   myanswers.push(userAns)
   if (myanswers.length>=correctAns.length) {
-    //selected the correct answer
-    // for (let i = 0; i < allOptions; i++) {
-    //   if(correctAns.includes(option_list.children[i].textContent)){
-    //     option_list.children[i].setAttribute("class", "correct");
-    //   }
-    // }
-    //once user selected disabled all options
     for (let i = 0; i < allOptions; i++) {
       option_list.children[i].classList.add("disabled");
     }
@@ -429,12 +521,6 @@ function optionSelected(answer){
   } else {
     answer.classList.add("incorrect");
     console.log("Answer is wrong");
-    //selected the correct answer
-    // for (let i = 0; i < allOptions; i++) {
-    //   if(option_list.children[i].textContent == correctAns){
-    //     option_list.children[i].setAttribute("class", "correct");
-    //   }
-    // }
   }
 //once user selected disabled all options
   for (let i = 0; i < allOptions; i++) {
@@ -445,41 +531,7 @@ function optionSelected(answer){
   storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
   localStorage.setItem("storage", JSON.stringify(storage));
   }
-
 }
-// function optionSelected(answer){
-//   stopTimer();
-//   let userAns = answer.textContent;
-//   let correctAns = questions[queCount].correct;
-//   let allOptions = option_list.children.length;
-  
-//   if(userAns == correctAns){
-//     userScoreAdd(currentQuestion.cost);
-//     console.log(userScore);
-//     answer.classList.add("correct");
-//     console.log("Answer is correct");
-   
-//   }else{
-    
-//     answer.classList.add("incorrect");
-//     console.log("Answer is wrong");
-//     //selected the correct answer
-//     for (let i = 0; i < allOptions; i++) {
-//       if(option_list.children[i].textContent == correctAns){
-//         option_list.children[i].setAttribute("class", "correct");
-//       }
-//     }
-   
-//   }
-//   //once user selected disabled all options
-// for (let i = 0; i < allOptions; i++) {
-//   option_list.children[i].classList.add("disabled");
-
-// }
-//  buttonNext.classList.remove("hide");
-//  storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
-// }
-
   
 function ShowResult(){
   result_box.innerHTML = userScore;   
