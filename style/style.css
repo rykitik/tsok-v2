@@ -1040,7 +1040,8 @@ a.close-modal {
     height: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    column-gap: 20px;
+    row-gap: 40px;
 }
 
 .game-card {
@@ -1051,7 +1052,4 @@ a.close-modal {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.game-spacer {
-    flex-grow: 1;
 }
