@@ -23,13 +23,10 @@ const option_list = document.querySelector(".option-list");
 const left_list = document.querySelector("#left-list")
 const timeCount = document.querySelector(".time-counter");
 const ballsCount = document.querySelector(".balls")
-const buttonNext = document.getElementById("next-button");
 const container1 = document.querySelector(".container1");
 const container2 = document.querySelector(".container2");
-const buttonPrev = document.querySelector(".prevbutton");
 const time_after = document.querySelector(".time_after");
 const text_zadanie = document.querySelector(".text-zadanie");
-const tab_exercise_container = document.querySelector(".tab_exercise_container");
  
 // VARIABLES
 let currentQuestion = null;
@@ -53,30 +50,10 @@ if (isTimeStarted) {
 }
 
 function startApp() {
-  tabsShow();
   showQuestions(queCount);
   queCounter(queNumb);
 }
 setBallsCountText(userScore);
-
-function updateTabs(index) {
-  for (let i = 0; i < questions.length; i++) {
-    tab_exercise_container.children[i].removeAttribute("class", "active_tab");
-    tab_exercise_container.children[i].setAttribute("class", "tab");
-  }
-  tab_exercise_container.children[index].removeAttribute("class", "tab");
-  tab_exercise_container.children[index].setAttribute("class", "active_tab");
-}
-
-function tabsShow(){
-  let tab_tag = "";
-  console.log(questions.length);
-  for(let i = 0; i < questions.length; i++){
-    tab_tag += '<div class="tab"></div>';
-  }
-  tab_exercise_container.innerHTML = tab_tag;
-}
-const tab = document.querySelector(".tab");
 
 function startTimer(time) {
   if (isTimeStarted) return;
@@ -128,14 +105,14 @@ function userScoreAdd(score) {
 
 
 //if next btn clicked
-buttonNext.onclick = ()=>{
-  if(queCount < questions.length - 1){
-    queCount ++;
-    queNumb ++;
-    showQuestions(queCount);
-    queCounter(queNumb);
-  } else openResultWindow();
-}
+// buttonNext.onclick = ()=>{
+//   if(queCount < questions.length - 1){
+//     queCount ++;
+//     queNumb ++;
+//     showQuestions(queCount);
+//     queCounter(queNumb);
+//   } else openResultWindow();
+// }
 function openResultWindow() {
   stopTimer();
   storage={}
@@ -176,17 +153,16 @@ function tryAgain() {
   container1.classList.remove("hide");
   container2.classList.add("hide");
 }
-buttonPrev.onclick = ()=>{
-  if (queNumb === 1) return;
-  console.log("нажата кнопка");
-  queCount --;
-  queNumb --;
-  showQuestions(queCount);
-  queCounter(queNumb);
-}
+// buttonPrev.onclick = ()=>{
+//   if (queNumb === 1) return;
+//   console.log("нажата кнопка");
+//   queCount --;
+//   queNumb --;
+//   showQuestions(queCount);
+//   queCounter(queNumb);
+// }
 function showQuestions(index){
   if (index < 0 || questions.length === index) return;
-  updateTabs(index);
   localStorage.setItem("queCount", index);
   if ((Object.keys(storage).length === 0 && queNumb >= 2)) startTimer(time);
   currentQuestion = questions[index];
@@ -511,7 +487,7 @@ function optionSelected(answer){
       }
     }
     if (bool) userScoreAdd(currentQuestion.cost);
-    buttonNext.classList.remove("hide");
+    // buttonNext.classList.remove("hide");
     myanswers=[]
   }
 } else {
@@ -527,7 +503,7 @@ function optionSelected(answer){
   for (let i = 0; i < allOptions; i++) {
     option_list.children[i].classList.add("disabled");
   }
-  buttonNext.classList.remove("hide");
+  // buttonNext.classList.remove("hide");
   }
   storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
   localStorage.setItem("storage", JSON.stringify(storage));

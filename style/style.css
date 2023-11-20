@@ -411,6 +411,14 @@ padding-left: 28px;
     padding: 30px 50px 70px ;
     height: fit-content;
 }
+.cotnainer-exercide_header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.game-info {
+    min-width: 20%;
+}
 .container-filling{
     display: flex;
     gap: 30px;
@@ -1022,3 +1030,28 @@ a.close-modal {
     color: #000;
 }
 /*--------------------------*/
+.game {
+    width: 100%;
+    height: 100%;
+}
+
+.game-cards {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.game-card {
+    width: 200px;
+    height: 200px;
+    background-color: #f2f2f2;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.game-spacer {
+    flex-grow: 1;
+}
