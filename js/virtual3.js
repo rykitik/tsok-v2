@@ -518,9 +518,9 @@ function ShowResult(){
 function queCounter(index){
   if (index < 1) return;
   localStorage.setItem("queNumb", index);
-  const ques_counter  = document.querySelector(".counter_exercise");
+  // const ques_counter  = document.querySelector(".counter_exercise");
   let totalQuesTag = ''+ index +'/'+ questions.length +'';
-  ques_counter.innerHTML = totalQuesTag;
+  // ques_counter.innerHTML = totalQuesTag;
 }
 
 function getFileName(src) {

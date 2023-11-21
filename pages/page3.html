@@ -33,8 +33,13 @@
         .dragContainer {
             position: absolute;
         }
+        .container_header {
+            height: 65px;
+        }
+        .bg_color_block {
+            padding: 0;
+        }
     </style>
-  </head>
 </head>
 <body>
     <div id="loader" class="loader">
@@ -62,15 +67,30 @@
     <div class="bg_color_block flex col ">
         <div class="flex justify-center align-center">
             <div class="content1 flex col max-content w100">
-                <div class="flex align-center justify-center mt-30"><img src="../img/right alignment.png" alt="arrow" class="mr-10"><a href="../index.html" class="text_home"> На главную</a></div>
+                <div class="flex align-center justify-center mt-30">
+                    <img src="../img/right alignment.png" alt="arrow" class="mr-10">
+                    <a href="../index.html" class="text_home"> 
+                        На главную
+                    </a>
+                </div>
             
             <div class="container1">
                 <div class="container_header">
-                    <div class="flex align-center space-between"><p class="container_title"> Интерактивная мини-игра </p> <div class="counter_exercise" id="pages"><!-- 2/8 --></div></div>
+                    <div class="flex align-center space-between">
+                        <p class="container_title"> Интерактивная мини-игра </p> 
+                        <div class="counter_exercise" id="pages"><!-- 2/8 --></div>
+                    </div>
+                </div>
                 <div class="container-exercise display-container">
                     <div class="cotnainer-exercide_header">
-                        <div class="game-descrition">Перед вами задания различных уровней сложности по 5 группам. У вас 10 попыток и 20 минут, чтобы набрать не менее 1300 призовых баллов.
-                            Кликните на карточку, чтобы перейти к заданию. Выберите вариант(ы) ответа и нажмите кнопку "Ответить".</div>
+                        <div class="game-descrition">Перед вами 15 заданий различных уровней сложности по 5 группам. 
+                            Задания могут содержать вопросы: по выбору одного или нескольких правильных ответов, на установление соответствия, 
+                            вставку пропущенных слов. Ваша задача: набрать за всю игру не менее 1300 призовых очков.  
+                            В этом случае на экране появится сообщение «Поздравляем! Вы успешно завершили данный этап!». 
+                            Если вы набрали малое количество очков (менее 1300) – то игру необходимо пройти повторно (до 10 попыток). 
+                            Время прохождения игры- 20 мин. Кликните на карточку, чтобы перейти к заданию. Выберите вариант (варианты) 
+                            ответа и нажмите кнопку "Ответить"
+                        </div>
                         <div class="game-info">
                             <div class="timer"><div class="timer_container"><div class="time-counter">1:00 </div><img src="../img/stopwatch.png" alt=""></div></div>
                             <div class="balls">0 баллов </div>
@@ -102,44 +122,65 @@
                             <div class="game-card">
                                 <p>100</p>
                             </div>
+                            <div class="game-card">
+                                <p>100</p>
+                            </div>
+                            <div class="game-card">
+                                <p>100</p>
+                            </div>
+                            <div class="game-card">
+                                <p>100</p>
+                            </div>
+                            <div class="game-card">
+                                <p>100</p>
+                            </div>
+                            <div class="game-card">
+                                <p>100</p>
+                            </div>
+                            <div class="game-card">
+                                <p>100</p>
+                            </div>
+                            <div class="game-card">
+                                <p>100</p>
+                            </div>
                         </div>
                     </div>
-                    <!-- <div class="flex space-between"><p class="text-zadanie"></p></div> -->
+                    <div class="flex space-between">
+                        <p class="text-zadanie"></p>
+                    </div>
                     
                     <div class="flex container-filling align-center justify-center quest-container">
                         
                         <div class="flex col fixDan" id="left-list">
-                           
+                        
                         </div>
                         <div class="flex col option-list" id="drag">
-                           
+                        
                         </div>
                         <div id="choiceContent" class="choice">
-                           
+                        
                         </div>
                         <div class="dragContainer">
 
                         </div>
                     </div>
-                       
-                    </div>
                 </div>
             </div>   
         </div>
                
+        <div class="score-container hide">
+            <div id="user-score">Demo Score</div>
+            <button id="restart">Restart</button>
+        </div>
 
-            <div class="score-container hide">
-                <div id="user-score">Demo Score</div>
-                <button id="restart">Restart</button>
-              </div>
-
-            <!-- results -->
+        <!-- results -->
         <div class="flex justify-center align-center">
               <div class="container2 hide">
                 <div class="container_header">
-                    <div class="flex align-center justify-center"><p class="container_title text-center"> Результаты </p> <div class="counter_exercise" id="pages"><!-- 2/8 --></div></div>
+                    <div class="flex align-center justify-center"><p class="container_title text-center"> Результаты </p> </div>
+                    <!-- <div class="counter_exercise" id="pages">2/8</div> -->
                 </div>
-                    <div class="flex center-results col mt-100 align-center justify-center">
+                <div class="flex center-results col mt-100 align-center justify-center">
                     <div class="flex container_box align-center justify-center">
                         <div class="box_1">
                             <p class="mb-10 box_1_text">Количество очков</p>
@@ -153,20 +194,14 @@
                             <p class="time_after box_number"> оставшееся время </p>
                         </div> -->
                     </div>
-                    
-                    
                     <!-- график -->
                     <!-- <div id="piechart" class="mt-20"></div> -->
-
-                    
-                   </div>
-                    
-               
+                </div>    
             </div>
         </div>
-</div>     
+    </div>     
         
-    <div class="flex triangle">
+    <div class="flex triangle1">
         <div class="triangle1_img"><img src="../img/Group 12.png" alt="tri" ></div>
     </div> 
     <div id="ex1" class="modal">
@@ -202,7 +237,6 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <script src="../js/components/dragAndDrop.js"></script>
 <script src="../js/questions3.js"></script>
