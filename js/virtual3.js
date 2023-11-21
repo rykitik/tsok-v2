@@ -119,13 +119,13 @@ function addQuestionAnswerStatus(id,status) {
 //     queNumb ++;
 //     showQuestions(queCount);
 //     queCounter(queNumb); 
-//   } else openResultWindow(); // TODO: Проврека сделаны ли нужное вопросов
+//   } else openResultWindow();
 // }
 function openResultWindow() {
+  google.charts.setOnLoadCallback(drawChart(questStats));
   timeAfter.innerHTML = timeCount.textContent;
   stopTimer();
   storage={}
-  google.charts.setOnLoadCallback(drawChart());
   localStorage.removeItem("questStats");
   questStats = {};
   localStorage.setItem("storage", JSON.stringify(storage));
@@ -216,20 +216,19 @@ function showQuestions(index){
     case 'many':
     case 'one_of': { //один из
       if (currentQuestion.id in storage) {
-        left_list.innerHTML = storage[currentQuestion.id].left
         option_list.innerHTML = storage[currentQuestion.id].options
-        for (let a of option_list.querySelectorAll('.option')) {
+        option_list.querySelectorAll('.option').forEach(a => {
           a.onclick=()=>{optionSelected(a)}
-        }
+        });
       } else {
         let options = shuffle(currentQuestion.options)
-        for (let a of options) {
+        options.forEach(a => {
           let opt = document.createElement('div')
-          opt.setAttribute('class','option')
+          opt.classList.add('option');
           opt.innerHTML='<span>'+a+'</span>'
           opt.onclick=()=>{optionSelected(opt)}
           option_list.append(opt)
-        }
+        });
       }
     } break
     case 'matching': { //соответсвие
@@ -316,7 +315,7 @@ function showQuestions(index){
         }
       }
     } break
-    case 'dragdrop': {
+    case 'dragdrop': { // TODO: Fix drag and drop
       let id=0
       for (let d of questions[index].droppable) {
         let div = document.createElement('div')
@@ -519,9 +518,11 @@ function optionSelected(answer){
   if (correctAns.includes(userAns)) {
     answer.classList.add("correct");
     console.log("Answer is correct");
+    
   } else {
     answer.classList.add("incorrect");
     console.log("Answer is wrong");
+    addQuestionAnswerStatus(currentQuestion.id, false);
   }
 
   myanswers.push(userAns)
@@ -529,24 +530,23 @@ function optionSelected(answer){
     for (let i = 0; i < allOptions; i++) {
       option_list.children[i].classList.add("disabled");
     }
-    let bool = true
+    let isCorrect = true;
     for (let a of option_list.querySelectorAll('.option')) {
       if (a.classList.contains('incorrect')) {
-        bool = false
+        isCorrect = false
         break
       }
     }
-    if (bool) { 
+    if (isCorrect) { 
       userScoreAdd(currentQuestion);
       addQuestionAnswerStatus(currentQuestion.id, true);
     } else {
       addQuestionAnswerStatus(currentQuestion.id, false);
     }
-    // buttonNext.classList.remove("hide");
     myanswers=[]
   }
 } else {
-  if(userAns == correctAns){
+  if (userAns == correctAns){
     userScoreAdd(currentQuestion);
     addQuestionAnswerStatus(currentQuestion.id, true);
     answer.classList.add("correct");
@@ -557,10 +557,9 @@ function optionSelected(answer){
     console.log("Answer is wrong");
   }
 //once user selected disabled all options
-  for (let i = 0; i < allOptions; i++) {
-    option_list.children[i].classList.add("disabled");
-  }
-  // buttonNext.classList.remove("hide");
+  option_list.querySelectorAll('.option').forEach(a => {
+    a.classList.add('disabled');
+  });
   }
   storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
   localStorage.setItem("storage", JSON.stringify(storage));
@@ -575,10 +574,10 @@ function optionSelected(answer){
 //   ques_counter.innerHTML = totalQuesTag;
 // }
 
-function drawChart() { 
+function drawChart(questStats) { 
   let score = 0;
-  for (i=0; i< Object.keys(questStats).length; i++) {
-    if (questStats[i]) score++;
+  for (key in questStats) {
+    if (questStats[key]) score++;
   }
   let wrong_ans = questions.length - score;
   var data = google.visualization.arrayToDataTable([
