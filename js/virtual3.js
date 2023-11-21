@@ -22,16 +22,18 @@ const shuffle = (array) => {
 const option_list = document.querySelector(".option-list");
 const left_list = document.querySelector("#left-list")
 const timeCount = document.querySelector(".time-counter");
+const timeAfter = document.querySelector(".time_after");
 const ballsCount = document.querySelector(".balls")
 const container1 = document.querySelector(".container1");
 const container2 = document.querySelector(".container2");
-const time_after = document.querySelector(".time_after");
 const text_zadanie = document.querySelector(".text-zadanie");
- 
+const exercise_zone = document.querySelector(".exercise-zone");
+const game = document.querySelector(".game-bg"); 
 // VARIABLES
 let currentQuestion = null;
 let userScore = localStorage.getItem('userScore') ? Number(localStorage.getItem('userScore')) : 0;;
-let storage = JSON.parse(localStorage.getItem('storage')) || {}
+let storage = JSON.parse(localStorage.getItem('storage')) || {};
+let questStats = JSON.parse(localStorage.getItem('questStats')) || {};;
 let queCount = localStorage.getItem('queCount') ? Number(localStorage.getItem('queCount')) : 0;
 // let queNumb = localStorage.getItem('queNumb') ? Number(localStorage.getItem('queNumb')) : 1;
 let counter = null;
@@ -49,9 +51,10 @@ if (isTimeStarted) {
   startTimer(time);
 }
 setBallsCountText(userScore);
+google.charts.load('current', {'packages':['corechart']});
 
 function startApp() {
-  showQuestions(queCount);
+  showGameCards();
   // queCounter(queNumb);
 }
 
@@ -97,12 +100,17 @@ function stopTimer() {
 function setBallsCountText(balls) {
   ballsCount.innerHTML = balls + " баллов";
 }
-function userScoreAdd(score) {
-  setBallsCountText(userScore + score);
-  userScore = userScore + score;
+function userScoreAdd(currentQuestion) {
+  let resultScore = userScore + currentQuestion.cost;
+  setBallsCountText(resultScore);
+  userScore = resultScore;
   localStorage.setItem("userScore", userScore);
 }
 
+function addQuestionAnswerStatus(id,status) {
+  questStats[id] = status;
+  localStorage.setItem("questStats", JSON.stringify(questStats));
+}
 
 //if next btn clicked
 // buttonNext.onclick = ()=>{
@@ -114,8 +122,12 @@ function userScoreAdd(score) {
 //   } else openResultWindow(); // TODO: Проврека сделаны ли нужное вопросов
 // }
 function openResultWindow() {
+  timeAfter.innerHTML = timeCount.textContent;
   stopTimer();
   storage={}
+  google.charts.setOnLoadCallback(drawChart());
+  localStorage.removeItem("questStats");
+  questStats = {};
   localStorage.setItem("storage", JSON.stringify(storage));
   container1.classList.add("hide");
   container2.classList.remove("hide");
@@ -161,9 +173,35 @@ function tryAgain() {
 //   showQuestions(queCount);
 //   queCounter(queNumb);
 // }
+
+function showGameCards() {
+  const gameCards = document.querySelector(".game-cards");
+  const game = document.querySelector(".game-bg");
+  game.classList.remove("hide");
+  exercise_zone.classList.add("hide");
+  gameCards.innerHTML = '';
+  
+  let que_tag = '';
+  for (let i = 0; i < questions.length; i++) {
+    que_tag += `<div class="game-card ${ questions[i].id in questStats ? questStats[i] ? 'game-card--correct' : 'game-card--incorrect': ''}" onclick="openQuestion(${i})"><p>${questions[i].cost}</p></div>`
+  }
+  gameCards.innerHTML += que_tag;
+}
+
+function hideGameCards() {
+  const game = document.querySelector(".game-bg");
+  exercise_zone.classList.remove("hide");
+  game.classList.add("hide");
+}
+
+function openQuestion(index) {
+  hideGameCards();
+  showQuestions(index);
+}
 function showQuestions(index){
   if (index < 0 || questions.length === index) return;
   localStorage.setItem("queCount", index);
+  queCount = index;
   if ((Object.keys(storage).length === 0 )) startTimer(time); // && queNumb >= 2
   currentQuestion = questions[index];
   option_list.innerHTML=''
@@ -378,7 +416,11 @@ function showQuestions(index){
       }
       option_list.append(div)
       option_list.append(div1)
-    } break
+    } break;
+
+    default: {
+      console.warn('Такого типа задания не существует');
+    }
   }
 }
 function checkChoice(p, o) {
@@ -402,7 +444,12 @@ function checkChoice(p, o) {
   for (let i in storage[currentQuestion.id]) {
     if (storage[currentQuestion.id][i].style.includes('incorrect')) return null;
   }
-  if (Object.keys(currentQuestion.correct).length === Object.keys(storage[currentQuestion.id]).length) userScoreAdd(currentQuestion.cost);
+  if (Object.keys(currentQuestion.correct).length === Object.keys(storage[currentQuestion.id]).length) {
+    userScoreAdd(currentQuestion);
+    addQuestionAnswerStatus(currentQuestion.id, true);
+  } else {
+    addQuestionAnswerStatus(currentQuestion.id, false);
+  }
 }
 let lastOpt  = { left: null, right: null };
 
@@ -454,7 +501,10 @@ function checkAnswer() {
       for (let el of els) {
         el.classList.add('disabled')
       }
-      userScoreAdd(currentQuestion.cost);
+      userScoreAdd(currentQuestion);
+      addQuestionAnswerStatus(currentQuestion.id, true);
+    } else {
+      addQuestionAnswerStatus(currentQuestion.id, false);
     }
   }
 }
@@ -486,16 +536,23 @@ function optionSelected(answer){
         break
       }
     }
-    if (bool) userScoreAdd(currentQuestion.cost);
+    if (bool) { 
+      userScoreAdd(currentQuestion);
+      addQuestionAnswerStatus(currentQuestion.id, true);
+    } else {
+      addQuestionAnswerStatus(currentQuestion.id, false);
+    }
     // buttonNext.classList.remove("hide");
     myanswers=[]
   }
 } else {
   if(userAns == correctAns){
-    userScoreAdd(currentQuestion.cost);
+    userScoreAdd(currentQuestion);
+    addQuestionAnswerStatus(currentQuestion.id, true);
     answer.classList.add("correct");
     console.log("Answer is correct");
   } else {
+    addQuestionAnswerStatus(currentQuestion.id, false);
     answer.classList.add("incorrect");
     console.log("Answer is wrong");
   }
@@ -509,11 +566,6 @@ function optionSelected(answer){
   localStorage.setItem("storage", JSON.stringify(storage));
   }
 }
-  
-function ShowResult(){
-  result_box.innerHTML = userScore;   
-}
-
 
 // function queCounter(index){
 //   if (index < 1) return;
@@ -522,6 +574,28 @@ function ShowResult(){
 //   let totalQuesTag = ''+ index +'/'+ questions.length +'';
 //   ques_counter.innerHTML = totalQuesTag;
 // }
+
+function drawChart() { 
+  let score = 0;
+  for (i=0; i< Object.keys(questStats).length; i++) {
+    if (questStats[i]) score++;
+  }
+  let wrong_ans = questions.length - score;
+  var data = google.visualization.arrayToDataTable([
+    ['Task', 'Ответы'],
+    ['Верные',  score],
+    ['Неверные',  wrong_ans],
+
+  ]); 
+  var options = {
+    title: 'График ответов',
+    colors: ['#9ee7d5', 'pink'],
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+  chart.draw(data, options);
+} 
 
 function getFileName(src) {
   let srcArray = src.split("/");

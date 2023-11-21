@@ -85,60 +85,26 @@
                     <div class="cotnainer-exercide_header">
                         <div class="game-descrition">Перед вами 15 заданий различных уровней сложности по 5 группам. 
                             Задания могут содержать вопросы: по выбору одного или нескольких правильных ответов, на установление соответствия, 
-                            вставку пропущенных слов. Ваша задача<a href="#task-description" rel="modal:open" class="read-more">...Читать далее</a>
+                            вставку пропущенных слов. Ваша задача... <a href="#task-description" rel="modal:open" class="read-more"> Читать далее </a>
                         </div>
                         <div class="game-info">
-                            <div class="timer"><div class="timer_container"><div class="time-counter"> 0:00 </div><img src="../img/stopwatch.png" alt=""></div></div>
-                            <div class="balls"> 0 баллов </div>
+                            <div class="timer">
+                                <div class="timer_container">
+                                    <div class="time-counter"> 00:00 </div>
+                                    <img src="../img/stopwatch.png" alt="">
+                                </div>
+                            </div>
+                            <div class="balls"> Загрузка... </div>
                         </div>
                     </div>
-                    <div class="game">
-                        <div class="game-cards">
-                            <div class="game-card game-card--correct">
-                                <p>100</p>
+                    <div class="quest-container game-bg">
+                        <div class="game">
+                            <div class="game-cards">
+                                Loading..
                             </div>
-                            <div class="game-card game-card--incorrect">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
-                            <div class="game-card">
-                                <p>100</p>
-                            </div>
+                        </div>
+                        <div class="quest-container">
+                            <button class="exercise-btn" onclick="openResultWindow()"> Закончить </button>
                         </div>
                     </div>
                     <div class="exercise-zone hide">
@@ -146,32 +112,38 @@
                             <p class="text-zadanie"></p>
                         </div>
                         
-                        <div class="flex container-filling align-center justify-center quest-container">
-                            
-                            <div class="flex col fixDan" id="left-list">
-                            
+                        <div class="quest-container">
+                            <div class="optionTasks">
+                                <div class="flex col fixDan" id="left-list">
+                                
+                                </div>
+                                <div class="flex col option-list">
+                                
+                                </div>
                             </div>
-                            <div class="flex col option-list" id="drag">
-                            
-                            </div>
+                        </div>
+                        <div class="quest-container">
                             <div id="choiceContent" class="choice">
-                            
+                                
                             </div>
-                            <div class="dragContainer">
+                            <div class="dragContainer" id="drag">
 
                             </div>
                         </div>
+                        <div class="quest-container">
+                            <button class="exercise-btn" onclick="showGameCards()"> Ответить </button>
+                        </div>
                     </div>
                 </div>
-            </div>   
-        </div>
-
-        <!-- results -->
-        <div class="flex justify-center align-center">
-              <div class="container2 hide">
+            </div>
+            <!-- results -->
+            <div class="container2 hide">
                 <div class="container_header">
-                    <div class="flex align-center justify-center"><p class="container_title text-center"> Результаты </p> </div>
-                    <!-- <div class="counter_exercise" id="pages">2/8</div> -->
+                    <div class="flex align-center justify-center">
+                        <p class="container_title text-center"> 
+                            Результаты 
+                        </p> 
+                    </div>
                 </div>
                 <div class="flex center-results col mt-100 align-center justify-center">
                     <div class="flex container_box align-center justify-center">
@@ -182,20 +154,23 @@
                         <div class="box_1" style="width: 600px;">
                             <p class="mb-10 box_1_text" id="resText"></p>
                         </div>
-                        <!-- <div class="box_1 ">
+                        <div class="box_1 ">
                             <p class="mb-10 box_1_text">Времени осталось</p>
                             <p class="time_after box_number"> оставшееся время </p>
-                        </div> -->
+                        </div>
                     </div>
-                    <!-- график -->
-                    <!-- <div id="piechart" class="mt-20"></div> -->
+                    <!-- TODO: Починить значения в графике -->
+                    <!-- график  --> 
+                    <div id="piechart" class="mt-20"></div>
                 </div>    
             </div>
-        </div>
-    </div>     
+        </div> 
+    </div>
         
     <div class="flex triangle1">
-        <div class="triangle1_img"><img src="../img/Group 12.png" alt="tri" ></div>
+        <div class="triangle1_img">
+            <img src="../img/Group 12.png" alt="tri" >
+        </div>
     </div> 
     <div id="ex1" class="modal">
         <p class="modal__header mb-5">Федеральный государственный образовательный стандарт среднего профессионального
