@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap');
 
+
 body{
 margin: 0;
 font-family: 'Montserrat', sans-serif;
@@ -317,7 +318,7 @@ padding-left: 28px;
     width: 100%;
     min-width: 400px;
     background-color: #fff;
-    min-height: 770px;
+    min-height: 670px;
     height: fit-content;
     border-radius: 15px;
     -webkit-border-radius: 15px;
@@ -325,6 +326,7 @@ padding-left: 28px;
     -ms-border-radius: 15px;
     -o-border-radius: 15px;
     margin-top: 20px;
+    position: relative;
 }
 
 .container_header{
@@ -413,6 +415,7 @@ padding-left: 28px;
 .text-zadanie_1 {
     color: #251212;
     font-weight: 700;
+    width: fit-content;
     font-size: 22px;
     margin-bottom: 20px;
     margin-left: 0px;
@@ -981,6 +984,16 @@ a.close-modal {
     margin: 5px;
 }
 .dragContainer {
+    /* position: absolute; */
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-end;
+}
+
+.dragContainer2 {
+    position: absolute;
     display: flex;
     width: 50%;
     flex-direction: column;
