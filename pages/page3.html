@@ -85,15 +85,11 @@
                     <div class="cotnainer-exercide_header">
                         <div class="game-descrition">Перед вами 15 заданий различных уровней сложности по 5 группам. 
                             Задания могут содержать вопросы: по выбору одного или нескольких правильных ответов, на установление соответствия, 
-                            вставку пропущенных слов. Ваша задача: набрать за всю игру не менее 1300 призовых очков.  
-                            В этом случае на экране появится сообщение «Поздравляем! Вы успешно завершили данный этап!». 
-                            Если вы набрали малое количество очков (менее 1300) – то игру необходимо пройти повторно (до 10 попыток). 
-                            Время прохождения игры- 20 мин. Кликните на карточку, чтобы перейти к заданию. Выберите вариант (варианты) 
-                            ответа и нажмите кнопку "Ответить"
+                            вставку пропущенных слов. Ваша задача<a href="#task-description" rel="modal:open" class="read-more">...Читать далее</a>
                         </div>
                         <div class="game-info">
-                            <div class="timer"><div class="timer_container"><div class="time-counter">1:00 </div><img src="../img/stopwatch.png" alt=""></div></div>
-                            <div class="balls">0 баллов </div>
+                            <div class="timer"><div class="timer_container"><div class="time-counter"> 0:00 </div><img src="../img/stopwatch.png" alt=""></div></div>
+                            <div class="balls"> 0 баллов </div>
                         </div>
                     </div>
                     <div class="game">
@@ -145,32 +141,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex space-between">
-                        <p class="text-zadanie"></p>
-                    </div>
-                    
-                    <div class="flex container-filling align-center justify-center quest-container">
-                        
-                        <div class="flex col fixDan" id="left-list">
-                        
+                    <div class="exercise-zone hide">
+                        <div class="flex space-between ">
+                            <p class="text-zadanie"></p>
                         </div>
-                        <div class="flex col option-list" id="drag">
                         
-                        </div>
-                        <div id="choiceContent" class="choice">
-                        
-                        </div>
-                        <div class="dragContainer">
+                        <div class="flex container-filling align-center justify-center quest-container">
+                            
+                            <div class="flex col fixDan" id="left-list">
+                            
+                            </div>
+                            <div class="flex col option-list" id="drag">
+                            
+                            </div>
+                            <div id="choiceContent" class="choice">
+                            
+                            </div>
+                            <div class="dragContainer">
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>   
-        </div>
-               
-        <div class="score-container hide">
-            <div id="user-score">Demo Score</div>
-            <button id="restart">Restart</button>
         </div>
 
         <!-- results -->
@@ -205,24 +198,23 @@
         <div class="triangle1_img"><img src="../img/Group 12.png" alt="tri" ></div>
     </div> 
     <div id="ex1" class="modal">
-        <p class="text-zadanie mb-5">Федеральный государственный образовательный стандарт среднего профессионального
+        <p class="modal__header mb-5">Федеральный государственный образовательный стандарт среднего профессионального
             образования по специальности 15.02.16</p>
         <p class="mt-10">Технология машиностроения, утвержден Приказом Минпросвещения России от 14 июня 2022 г. № 444</p>
-        <p class="text-zadanie mb-5">ПОП Профессионалитета</p>
+        <p class="modal__header mb-5">ПОП Профессионалитета</p>
         <p class="mt-10">15.02.16 Технология машиностроения</p>
-        <p class="text-zadanie mb-5">ПМ. 01</p>
+        <p class="modal__header mb-5">ПМ. 01</p>
         <p class="mt-10">Разработка технологических процессов изготовления деталей машин</p>
-        <p class="text-zadanie mt-20 mb-5">МДК 01.01</p>
+        <p class="modal__header mt-20 mb-5">МДК 01.01</p>
         <p class="mt-10"> Разработка технологических процессов изготовления деталей машин с применением систем
             автоматизированного проектирования</p>
-        <p class="text-zadanie mt-20 mb-5">Раздел</p>
+        <p class="modal__header mt-20 mb-5">Раздел</p>
         <p class="mt-10">Технологические процессы изготовления деталей машин </p>
-        <p class="text-zadanie mt-20 mb-5">Тема</p>
+        <p class="modal__header mt-20 mb-5">Тема</p>
         <p class="mt-10">Выбор оборудования, инструмента и технологической оснастки</p>
-    
     </div>
     <div id="ex2" class="modal">
-        <p class="text-zadanie">Ключевые слова</p>
+        <p class="modal__header">Ключевые слова</p>
         <p class="mt-10"><b>Оборудование</b> - любое необходимое производству машины или приборы.</p>
         <p class="mt-10"><b>Технологическая оснастка</b> - средства технологического оснащения, дополняющие технологическое
             оборудование, для выполненияопределенной части технологического процесса.</p>
@@ -231,8 +223,15 @@
         <p class="mt-10"><b>Станочные приспособления</b> - дополнительные оборудования к металлообрабатывающему станку,
             предназначенные для закрепления в нем обрабатываемой заготовки и надежной связи его со станком.</p>
     </div>
-    <div id="resOne" class="modal">
-        
+    <div id="task-description" class="modal">
+        <p class="modal__header">Интерактивная мини-игра</p>
+        <p class="modal__description"> Перед вами 15 заданий различных уровней сложности по 5 группам. 
+            Задания могут содержать вопросы: по выбору одного или нескольких правильных ответов, на установление соответствия, 
+            вставку пропущенных слов. Ваша задача набрать за всю игру не менее 1300 призовых очков.  
+            В этом случае на экране появится сообщение «Поздравляем! Вы успешно завершили данный этап!». 
+            Если вы набрали малое количество очков (менее 1300) – то игру необходимо пройти повторно (до 10 попыток). 
+            Время прохождения игры - 20 мин. Кликните на карточку, чтобы перейти к заданию. Выберите вариант (варианты) 
+            ответа и нажмите кнопку "Ответить"</p>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

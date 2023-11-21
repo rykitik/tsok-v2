@@ -33,7 +33,7 @@ let currentQuestion = null;
 let userScore = localStorage.getItem('userScore') ? Number(localStorage.getItem('userScore')) : 0;;
 let storage = JSON.parse(localStorage.getItem('storage')) || {}
 let queCount = localStorage.getItem('queCount') ? Number(localStorage.getItem('queCount')) : 0;
-let queNumb = localStorage.getItem('queNumb') ? Number(localStorage.getItem('queNumb')) : 1;
+// let queNumb = localStorage.getItem('queNumb') ? Number(localStorage.getItem('queNumb')) : 1;
 let counter = null;
 let time = localStorage.getItem('timerTime') ? Number(localStorage.getItem('timerTime')) : ALLOTED_TIME;
 let attemptNumber = localStorage.getItem('attemptNumber') ? Number(localStorage.getItem('attemptNumber')) : 1;
@@ -48,12 +48,12 @@ if (isTimeStarted) {
   isTimeStarted = false;
   startTimer(time);
 }
+setBallsCountText(userScore);
 
 function startApp() {
   showQuestions(queCount);
-  queCounter(queNumb);
+  // queCounter(queNumb);
 }
-setBallsCountText(userScore);
 
 function startTimer(time) {
   if (isTimeStarted) return;
@@ -91,7 +91,7 @@ function stopTimer() {
   localStorage.removeItem('isTimeStarted');
   localStorage.removeItem('timerTime');
   localStorage.removeItem('queCount');
-  localStorage.removeItem('queNumb');
+  // localStorage.removeItem('queNumb');
   isTimeStarted = false;
 }
 function setBallsCountText(balls) {
@@ -110,8 +110,8 @@ function userScoreAdd(score) {
 //     queCount ++;
 //     queNumb ++;
 //     showQuestions(queCount);
-//     queCounter(queNumb);
-//   } else openResultWindow();
+//     queCounter(queNumb); 
+//   } else openResultWindow(); // TODO: Проврека сделаны ли нужное вопросов
 // }
 function openResultWindow() {
   stopTimer();
@@ -148,7 +148,7 @@ function resetTryes() {
 }
 function tryAgain() {
   queCount = 0;
-  queNumb = 1;
+  // queNumb = 1;
   startApp();
   container1.classList.remove("hide");
   container2.classList.add("hide");
@@ -164,7 +164,7 @@ function tryAgain() {
 function showQuestions(index){
   if (index < 0 || questions.length === index) return;
   localStorage.setItem("queCount", index);
-  if ((Object.keys(storage).length === 0 && queNumb >= 2)) startTimer(time);
+  if ((Object.keys(storage).length === 0 )) startTimer(time); // && queNumb >= 2
   currentQuestion = questions[index];
   option_list.innerHTML=''
   left_list.innerHTML=''
@@ -515,13 +515,13 @@ function ShowResult(){
 }
 
 
-function queCounter(index){
-  if (index < 1) return;
-  localStorage.setItem("queNumb", index);
-  // const ques_counter  = document.querySelector(".counter_exercise");
-  let totalQuesTag = ''+ index +'/'+ questions.length +'';
-  // ques_counter.innerHTML = totalQuesTag;
-}
+// function queCounter(index){
+//   if (index < 1) return;
+//   localStorage.setItem("queNumb", index);
+//   const ques_counter  = document.querySelector(".counter_exercise");
+//   let totalQuesTag = ''+ index +'/'+ questions.length +'';
+//   ques_counter.innerHTML = totalQuesTag;
+// }
 
 function getFileName(src) {
   let srcArray = src.split("/");
