@@ -167,7 +167,6 @@ function tryAgain() {
 }
 // buttonPrev.onclick = ()=>{
 //   if (queNumb === 1) return;
-//   console.log("нажата кнопка");
 //   queCount --;
 //   queNumb --;
 //   showQuestions(queCount);
@@ -265,9 +264,7 @@ function showQuestions(index){
       if (currentQuestion.id in storage) {
         left_list.innerHTML = storage[currentQuestion.id].left
         option_list.innerHTML = storage[currentQuestion.id].options
-        console.log(left_list.children)
         for (let a of left_list.children) {
-          console.log(a)
           a.onclick=()=>{selectOpt(a, true)}
         }
         for (let a of option_list.children) {
@@ -512,7 +509,6 @@ function optionSelected(answer){
   if (!answer.classList.contains('incorrect') && !answer.classList.contains('correct') && !answer.classList.contains('disabled')) {
   let userAns = answer.textContent;
   let correctAns = questions[queCount].correct;
-  console.log(correctAns)
   let allOptions = option_list.children.length;
   if (typeof correctAns == 'object') {
   if (correctAns.includes(userAns)) {

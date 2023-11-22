@@ -11,9 +11,7 @@ const createSelect=(id, defVal, arr, changeFunction)=>{
 			list.remove()
 		} else {
 			document.addEventListener('mouseup',(e)=>{
-				console.log(e.target.parentNode)
 				let list = document.getElementById(id).children[1]
-				console.log(list)
 				if (list && e.target.parentNode!=list && e.target.parentNode!=document.getElementById(id)) {list.remove()}
 			}, {once:true})
 			let options = document.createElement('div')
@@ -22,7 +20,6 @@ const createSelect=(id, defVal, arr, changeFunction)=>{
 				let option = document.createElement('div')
 				option.innerHTML=a
 				option.addEventListener('click',()=>{
-					console.log(a)
 					val.innerHTML=a
 					if (changeFunction) changeFunction()
 					document.getElementById(id).children[1].remove()

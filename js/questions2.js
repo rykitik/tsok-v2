@@ -20,7 +20,6 @@ function showPreviousSlide() {
 
 // Функция для показа следующего слайда
 function showNextSlide() {
-  console.log(1111)
   const slider = document.querySelector('.slider');
   const prevButton = document.querySelector('.prev-button');
   const nextButton = document.querySelector('.next-button');

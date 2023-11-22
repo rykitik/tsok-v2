@@ -223,7 +223,6 @@ function optionSelected(answer) {
 
   if (userAns == correctAns) {
     userScore += 1;
-    console.log(userScore);
     answer.classList.add("correct");
     console.log("Answer is correct");
 
@@ -234,7 +233,7 @@ function optionSelected(answer) {
     //selected the correct answer
     for (let i = 0; i < allOptions; i++) {
       if (option_list.children[i].textContent == correctAns) {
-        option_list.children[i].setAttribute("class", "correct");
+        option_list.children[i].classList.add("correct");
       }
     }
 
@@ -287,8 +286,6 @@ function queCounter(index) {
 
 
 function drawChart() {
-
-  console.log = ("sdfdsf" + userScore);
   let wrong_ans = questions.length - userScore;
   var data = google.visualization.arrayToDataTable([
     ['Task', 'Ответы'],

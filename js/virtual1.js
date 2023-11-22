@@ -38,12 +38,11 @@ buttonNext.onclick = ()=>{
     clearInterval(counter);
   }else{
     container1.classList.add("hide");
-      container2.classList.remove("hide");
+    container2.classList.remove("hide");
     console.log("Question completed");
   }
 }
 buttonPrev.onclick = ()=>{
-  console.log("нажата кнопка");
   que_count --;
   que_numb --;
   showQuestions(que_count);
