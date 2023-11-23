@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap');
 
-
 body{
 margin: 0;
 font-family: 'Montserrat', sans-serif;
@@ -533,7 +532,7 @@ button{
     right: 0;
     text-align: center;
 }
-.option{
+.option {
     display: flex;
     padding: 10px;
     margin-bottom: 10px;
@@ -551,6 +550,14 @@ button{
     cursor: pointer;
     user-select: none;
     transition: .3s linear all;
+}
+.option.hidden, .option.hidden img, .option.hidden #choice  {
+    width: 0px;
+    min-width: 0px;
+    padding: 0;
+    border: 0;
+    font-size: 0px;
+    opacity: 0;
 }
 
 .option span {
@@ -575,17 +582,10 @@ button{
 }
 
 .correct {
-    padding: 10px;
     background-color: #9ee7d5 !important;
-    border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
-    text-align: center;
     cursor: default;
     animation-delay: background-color 1s;
-    animation-duration: 2s;
+    animation-duration: 1s;
 }
 video{
     width: 100%;
@@ -594,17 +594,10 @@ video{
     min-height: none;
 }
 .incorrect {
-    padding: 10px;
     background-color: #e7ad9e !important;
-    border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
-    text-align: center;
     cursor: default;
     animation-delay: background-color 1s;
-    animation-duration: 2s;
+    animation-duration: 1s;
 }
 .disabled{
     pointer-events: none;
@@ -879,16 +872,6 @@ a.close-modal {
     gap: 30px;
 }
 
-.option.hidden, .option.hidden img, .option.hidden #choice {
-    height: 0px;
-    min-height: 0px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    font-size: 0px;
-    opacity: 0;
-}
-
 /*Стили для селектора*/
 .select {
     width: auto;
@@ -979,7 +962,6 @@ a.close-modal {
     color: #FFF;
     user-select: none;
     cursor: grab;
-    /*text-align: center;*/
     align-items: center;
     font-size: 14px !important;
     border: 1px solid rgba(0,0,0,.2);
@@ -987,9 +969,9 @@ a.close-modal {
     padding-left: 0.5rem;
     z-index: 100;
     margin: 5px;
+    line-height: 1;
 }
 .dragContainer {
-    /* position: absolute; */
     display: flex;
     width: 50%;
     flex-direction: column;

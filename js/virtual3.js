@@ -182,7 +182,7 @@ function showGameCards() {
   
   let que_tag = '';
   for (let i = 0; i < questions.length; i++) {
-    que_tag += `<div class="game-card ${ questions[i].id in questStats ? questStats[i] ? 'game-card--correct' : 'game-card--incorrect': ''}" onclick="openQuestion(${i})"><p>${questions[i].cost}</p></div>`
+    que_tag += `<div class="game-card ${ questions[i].id in questStats ? questStats[questions[i].id] ? 'game-card--correct' : 'game-card--incorrect': ''}" onclick="openQuestion(${i})"><p>${questions[i].cost}</p></div>`
   }
   gameCards.innerHTML += que_tag;
 }
@@ -296,7 +296,7 @@ function showQuestions(index){
       }
       choiceContent.innerHTML = offer;
       for (let o in currentQuestion.options) {
-        let arr = currentQuestion.options[o];
+        let arr = shuffle(currentQuestion.options[o]);
         let pss = createSelect('select_' + o, '  ---  ', arr, ()=>{
           if (!document.querySelector('#select_'+o).classList.contains('disabled')) {
             checkChoice(pss.children[0].innerHTML, o)
@@ -312,7 +312,7 @@ function showQuestions(index){
         }
       }
     } break
-    case 'dragdrop': { // TODO: Fix drag and drop
+    case 'dragdrop': { // TODO: Fix drag and drop NOT WORK
       let id=0
       for (let d of questions[index].droppable) {
         let div = document.createElement('div')
@@ -320,6 +320,11 @@ function showQuestions(index){
         div.classList.add('dropRow')
         div.innerHTML='<div class="dropText">'+d+'</div>'
         div.append(drop)
+        div.style.top=220+(id*50)+'px'
+        div.style.left=100+'px'
+        try {
+          div.style=questions[index].drop_style[id]
+        } catch (e) {}
         option_list.append(div)
         ++id
       }
@@ -421,13 +426,12 @@ function showQuestions(index){
 }
 function checkChoice(p, o) {
   let isCorrect = false;
-  for (key in currentQuestion.correct) {
-    if (currentQuestion.correct[key] === p) isCorrect = true;
-  }
+  if (currentQuestion.correct[o] === p) isCorrect = true;
   if (isCorrect) {
     document.querySelector('#select_' + o).classList.add('correct')
   } else {
     document.querySelector('#select_' + o).classList.add('incorrect')
+    addQuestionAnswerStatus(currentQuestion.id, false);
   }
   document.querySelector('#select_' + o).classList.add('disabled')
   document.querySelector('#select_' + o).style='padding:0; margin:0;'
@@ -471,7 +475,7 @@ function checkAnswer() {
       storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
       localStorage.setItem("storage", JSON.stringify(storage));
     }
-    setTimeout(addOpts, 400);
+    setTimeout(addOpts, 500);
 
     let answer = {};
     let optionImg = opts[1]?.children[0]?.children[0]?.src;
