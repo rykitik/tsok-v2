@@ -511,7 +511,6 @@ button{
 }
 .option-list{
     width: 50%;
-    min-width: 200px;
 }
 .active{
     opacity: 0.8;
