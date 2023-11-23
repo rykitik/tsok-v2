@@ -84,11 +84,15 @@ function showQuestions(index) {
   tab_exercise_container.children[index].setAttribute("class", "active_tab")
   let que_tag = '<span>' + questions[index].question + '</span>';
   let option_tag = '';
-  for (let i = 0; i < questions[index].options.length; i++) {
-    if (questions[index].nextButton) {
-      option_tag += '<div class="option"><span>' + questions[index].options[i] + '</span></div>';
+  try {
+    for (let i = 0; i < questions[index].options.length; i++) {
+      if (questions[index].nextButton) {
+        option_tag += '<div class="option"><span>' + questions[index].options[i] + '</span></div>';
+      }
+      img_tag = questions[index].img;
     }
-    img_tag = questions[index].img;
+  } catch (e) {
+    console.log(e)
   }
   if (questions[index].dnd) {
     que_text.innerHTML = que_tag;
@@ -156,6 +160,11 @@ function showQuestions(index) {
         div.classList.add('dropRow')
         div.innerHTML='<div class="dropText">'+d+'</div>'
         div.append(drop)
+        div.style.top=220+(id*50)+'px'
+        div.style.left=100+'px'
+        try {
+          div.style=questions[index].drop_style[id]
+        } catch (e) {}
         option_list.append(div)
         ++id
       }
