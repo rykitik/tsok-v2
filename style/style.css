@@ -695,6 +695,7 @@ a.close-modal {
     margin-bottom: 20px;
     margin-left: 0px;
     max-width: 1120px;
+    z-index: 3;
 }
 
 .modal__description {
