@@ -5,7 +5,7 @@ const container1 = document.querySelector(".container1");
 const container2 = document.querySelector(".container2");
 const time_after = document.querySelector(".time_after");
 const img = document.querySelector(".img-exercise1");
-
+const img2 = document.querySelector(".img-container");
 const buttonPrev = document.querySelector(".prevbutton");
 
 
@@ -15,7 +15,6 @@ showQuestions(0);
 queCounter(1);
 startTimer(160);
 google.charts.load('current', { 'packages': ['corechart'] });
-
 
 let que_count = 0;
 let que_numb = 1;
@@ -84,18 +83,23 @@ function showQuestions(index) {
   tab_exercise_container.children[index].setAttribute("class", "active_tab")
   let que_tag = '<span>' + questions[index].question + '</span>';
   let option_tag = '';
+  let img_tag = '';
   try {
     for (let i = 0; i < questions[index].options.length; i++) {
       if (questions[index].nextButton) {
         option_tag += '<div class="option"><span>' + questions[index].options[i] + '</span></div>';
       }
-      img_tag = questions[index].img;
+    }
+    if (questions[index]?.img) {
+      img_tag = '<br><img src="../img/2_2/' + questions[index].img + '.jpg" alt=""/>';
+      img2.innerHTML = img_tag;
     }
   } catch (e) {
     console.log(e)
   }
   if (questions[index].dnd) {
     que_text.innerHTML = que_tag;
+    img2.innerHTML = img_tag;
     let id=0
     if (questions[index].line) {
       let div = document.createElement('div')
@@ -203,6 +207,7 @@ function showQuestions(index) {
   } else {
     que_text.innerHTML = que_tag;
     option_list.innerHTML = option_tag;
+    img2.innerHTML = img_tag;
     for (let el of document.querySelectorAll('.option')) {
       el.onclick=()=>{
         optionSelected(el)
@@ -223,36 +228,60 @@ function showQuestions(index) {
 }
 
 
-
+let myanswers = []
 function optionSelected(answer) {
   clearInterval(counter);
   let userAns = answer.textContent;
   let correctAns = questions[que_count].correct;
   let allOptions = option_list.children.length;
-
-  if (userAns == correctAns) {
-    userScore += 1;
-    answer.classList.add("correct");
-    console.log("Answer is correct");
-
-  } else {
-
-    answer.classList.add("incorrect");
-    console.log("Answer is wrong");
-    //selected the correct answer
-    for (let i = 0; i < allOptions; i++) {
-      if (option_list.children[i].textContent == correctAns) {
-        option_list.children[i].classList.add("correct");
-      }
+  if (typeof correctAns == 'object') {
+    if (correctAns.includes(userAns)) {
+      answer.classList.add("correct");
+      console.log("Answer is correct");
+      
+    } else {
+      answer.classList.add("incorrect");
+      console.log("Answer is wrong");
     }
 
+    myanswers.push(userAns)
+    if (myanswers.length>=correctAns.length) {
+      for (let i = 0; i < allOptions; i++) {
+        option_list.children[i].classList.add("disabled");
+      }
+      let isCorrect = true;
+      for (let a of option_list.querySelectorAll('.option')) {
+        if (a.classList.contains('incorrect')) {
+          isCorrect = false
+          break
+        }
+      }
+      if (isCorrect) { 
+        userScore += 1;
+      }
+  
+      myanswers=[]
+    }
+  } else {
+    if (userAns == correctAns) {
+      userScore += 1;
+      answer.classList.add("correct");
+      console.log("Answer is correct");
+    } else {
+      answer.classList.add("incorrect");
+      console.log("Answer is wrong");
+      //selected the correct answer
+      for (let i = 0; i < allOptions; i++) {
+        if (option_list.children[i].textContent == correctAns) {
+          option_list.children[i].classList.add("correct");
+        }
+      }
+    }
+    for (let i = 0; i < allOptions; i++) {
+      option_list.children[i].classList.add("disabled");
+    }
   }
-  //once user selected disabled all options
-  for (let i = 0; i < allOptions; i++) {
-    option_list.children[i].classList.add("disabled");
-
-  }
-  buttonNext.classList.remove("hide");
+  // buttonNext.classList.remove("hide");
 }
 
 function startTimer(time) {

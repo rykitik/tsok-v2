@@ -48,6 +48,10 @@
 	    cursor: grab;
     }
     #makeMeDroppable { float: right; width: 300px; height: 300px; border: 1px solid #999; }
+    .img-container {
+        min-height: 100%;
+        min-width: 100%;
+    }
 </style>
 
 <style type="text/css">
@@ -101,14 +105,20 @@
                     </div>
                     
                     <div class="flex container-filling align-center justify-center">
-                        <div class="img-exercise big-img"><img src="" alt="" class="img-exercise1 "></div>
+                        <div class="img-exercise1 big-img"><img src="" alt="" class="img-exercise1 "></div>
                         <div class="flex col option-list">
 
                         </div>
                         <div class="dragContainer"></div>
-                        
                     </div>
-                       
+                    
+                    <div class="flex container-filling align-center justify-center">
+                        <span style="font-weight:normal">
+                            <div class="img-container" style="text-align:center">
+                            </div>
+                        </span>
+                    </div>
+
                     </div>
                      <!-- <div class="arrows"><button class="hide" id="next-button"><img src="../img/ArrowRight.png" alt="ArrowRight"></button></div></div> -->
                     <div class="arrows1"><button class="prevbutton"><img src="../img/ArrowLeft.png"></button><button id="next-button"><img src="../img/ArrowRight.png" alt="ArrowRight"></button></div>
