@@ -464,48 +464,55 @@ function selectOpt(opt, isLeft) {
 }
 function checkAnswer() {
   let opts = document.querySelectorAll('.selected')
-  if (opts.length==2) {
-    opts[0].classList.add('hidden');
-    opts[1].classList.add('hidden');
-    function addOpts() {
-      left_list.append(opts[0])
-      option_list.append(opts[1]);
-      opts[0].classList.remove('hidden');
-      opts[1].classList.remove('hidden');
-      storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
-      localStorage.setItem("storage", JSON.stringify(storage));
-    }
-    setTimeout(addOpts, 500);
+  if (opts.length != 2) return;
+  
+  opts[0].classList.add('hidden');
+  opts[1].classList.add('hidden');
+  function addOpts() {
+    left_list.append(opts[0])
+    option_list.append(opts[1]);
+    opts[0].classList.remove('hidden');
+    opts[1].classList.remove('hidden');
+    storage[currentQuestion.id] = {left: left_list.innerHTML, options: option_list.innerHTML}
+    localStorage.setItem("storage", JSON.stringify(storage));
+  }
+  setTimeout(addOpts, 500);
 
-    let answer = {};
-    let optionImg = opts[1]?.children[0]?.children[0]?.src;
-    let secondOption = optionImg ? getFileName(optionImg) : opts[1].innerText
-    answer[opts[0].innerText] = secondOption;
-    let isCorrect = currentQuestion.correct.some(obj => {
-      return JSON.stringify(obj) === JSON.stringify(answer);
-    });
-    let className = isCorrect ? 'correct' : 'incorrect';
-    opts[0].classList.remove('selected');
-    opts[1].classList.remove('selected');
-    opts[0].classList.add(className);
-    opts[1].classList.add(className);
-    let isQuestionCorrect = true
-    let els = document.querySelectorAll('.option')
-    for (let el of els) {
-      if (el.classList.contains('incorrect') || !el.classList.contains('correct')) {
-        isQuestionCorrect=false
-        break
-      }
+  let answer = {};
+  let optionImg = opts[1]?.children[0]?.children[0]?.src;
+  let secondOption = optionImg ? getFileName(optionImg) : opts[1].innerText
+  answer[opts[0].innerText] = secondOption;
+  let isCorrect = currentQuestion.correct.some(obj => {
+    return JSON.stringify(obj) === JSON.stringify(answer);
+  });
+  
+  let className = isCorrect ? 'correct' : 'incorrect';
+  opts[0].classList.remove('selected');
+  opts[1].classList.remove('selected');
+  opts[0].classList.add(className);
+  opts[1].classList.add(className);
+  let isQuestionCorrect = true;
+  let els = [...document.querySelectorAll('.fixDan >.option')];
+  var allHaveCorrectOrIncorrect = els.every(function(el) {
+    return el.classList.contains('correct') || el.classList.contains('incorrect');
+  });
+  let allEls = document.querySelectorAll('.option');
+  for (let el of els) {
+    if (el.classList.contains('incorrect') || !el.classList.contains('correct')) {
+      isQuestionCorrect=false;
+      break
     }
-    if (isQuestionCorrect) {
-      for (let el of els) {
-        el.classList.add('disabled')
-      }
-      userScoreAdd(currentQuestion);
-      addQuestionAnswerStatus(currentQuestion.id, true);
-    } else {
-      addQuestionAnswerStatus(currentQuestion.id, false);
+  }
+  if (allHaveCorrectOrIncorrect) {
+    for (let elem of allEls) {
+      elem.classList.add('disabled');
     }
+  }
+  if (isQuestionCorrect) {
+    userScoreAdd(currentQuestion);
+    addQuestionAnswerStatus(currentQuestion.id, true);
+  } else {
+    addQuestionAnswerStatus(currentQuestion.id, false);
   }
 }
 let myanswers = []
