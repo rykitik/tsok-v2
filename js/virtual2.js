@@ -26,11 +26,11 @@ var userScore = 0;
 const result_box = document.querySelector(".correct_answers");
 
 function tabsShow() {
-  let tab_tag = "";
+  let tabHtml = "";
   for (let i = 0; i < questions.length; i++) {
-    tab_tag += '<div class="tab"></div>';
+    tabHtml += '<div class="tab"></div>';
   }
-  tab_exercise_container.innerHTML = tab_tag;
+  tab_exercise_container.innerHTML = tabHtml;
 }
 
 const tab = document.querySelector(".tab");
@@ -281,7 +281,7 @@ function optionSelected(answer) {
       option_list.children[i].classList.add("disabled");
     }
   }
-  // buttonNext.classList.remove("hide");
+  buttonNext.classList.remove("hide");
 }
 
 function startTimer(time) {

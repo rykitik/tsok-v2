@@ -1,23 +1,7 @@
 // CONSTANTS
 const ALLOTED_TIME = 1200;    // Время на выполнение всех заданий
 const ATTEMPT_MAX_COUNT = 10;     // Количество попыток
-const shuffle = (array) => {
-  let m = array.length, t, i;
 
-  // Пока есть элементы для перемешивания
-  while (m) {
-
-    // Взять оставшийся элемент
-    i = Math.floor(Math.random() * m--);
-
-    // И поменять его местами с текущим элементом
-    t = array[m];
-    array[m] = array[i];
-    array[i] = t;
-  }
-
-  return array;
-}
 // ELEMENTS
 const option_list = document.querySelector(".option-list");
 const left_list = document.querySelector("#left-list")
@@ -35,7 +19,6 @@ let userScore = localStorage.getItem('userScore') ? Number(localStorage.getItem(
 let storage = JSON.parse(localStorage.getItem('storage')) || {};
 let questStats = JSON.parse(localStorage.getItem('questStats')) || {};;
 let queCount = localStorage.getItem('queCount') ? Number(localStorage.getItem('queCount')) : 0;
-// let queNumb = localStorage.getItem('queNumb') ? Number(localStorage.getItem('queNumb')) : 1;
 let counter = null;
 let time = localStorage.getItem('timerTime') ? Number(localStorage.getItem('timerTime')) : ALLOTED_TIME;
 let attemptNumber = localStorage.getItem('attemptNumber') ? Number(localStorage.getItem('attemptNumber')) : 1;
@@ -55,8 +38,8 @@ google.charts.load('current', {'packages':['corechart']});
 
 function startApp() {
   showGameCards();
-  // queCounter(queNumb);
 }
+
 
 function startTimer(time) {
   if (isTimeStarted) return;
@@ -94,11 +77,10 @@ function stopTimer() {
   localStorage.removeItem('isTimeStarted');
   localStorage.removeItem('timerTime');
   localStorage.removeItem('queCount');
-  // localStorage.removeItem('queNumb');
   isTimeStarted = false;
 }
 function setBallsCountText(balls) {
-  ballsCount.innerHTML = balls + " баллов";
+  ballsCount.textContent = `${balls} баллов`;
 }
 function userScoreAdd(currentQuestion) {
   let resultScore = userScore + currentQuestion.cost;
@@ -112,15 +94,6 @@ function addQuestionAnswerStatus(id,status) {
   localStorage.setItem("questStats", JSON.stringify(questStats));
 }
 
-//if next btn clicked
-// buttonNext.onclick = ()=>{
-//   if(queCount < questions.length - 1){
-//     queCount ++;
-//     queNumb ++;
-//     showQuestions(queCount);
-//     queCounter(queNumb); 
-//   } else openResultWindow();
-// }
 function openResultWindow() {
   google.charts.setOnLoadCallback(drawChart(questStats));
   timeAfter.innerHTML = timeCount.textContent;
@@ -160,18 +133,10 @@ function resetTryes() {
 }
 function tryAgain() {
   queCount = 0;
-  // queNumb = 1;
   startApp();
   container1.classList.remove("hide");
   container2.classList.add("hide");
 }
-// buttonPrev.onclick = ()=>{
-//   if (queNumb === 1) return;
-//   queCount --;
-//   queNumb --;
-//   showQuestions(queCount);
-//   queCounter(queNumb);
-// }
 
 function showGameCards() {
   const gameCards = document.querySelector(".game-cards");
@@ -201,7 +166,7 @@ function showQuestions(index){
   if (index < 0 || questions.length === index) return;
   localStorage.setItem("queCount", index);
   queCount = index;
-  if ((Object.keys(storage).length === 0 )) startTimer(time); // && queNumb >= 2
+  if ((Object.keys(storage).length === 0 )) startTimer(time);
   currentQuestion = questions[index];
   option_list.innerHTML=''
   left_list.innerHTML=''
@@ -563,7 +528,7 @@ function optionSelected(answer){
     answer.classList.add("incorrect");
     console.log("Answer is wrong");
   }
-//once user selected disabled all options
+
   option_list.querySelectorAll('.option').forEach(a => {
     a.classList.add('disabled');
   });
@@ -573,13 +538,9 @@ function optionSelected(answer){
   }
 }
 
-// function queCounter(index){
-//   if (index < 1) return;
-//   localStorage.setItem("queNumb", index);
-//   const ques_counter  = document.querySelector(".counter_exercise");
-//   let totalQuesTag = ''+ index +'/'+ questions.length +'';
-//   ques_counter.innerHTML = totalQuesTag;
-// }
+
+// Utility functions
+
 
 function drawChart(questStats) { 
   let score = 0;
@@ -606,4 +567,15 @@ function drawChart(questStats) {
 function getFileName(src) {
   let srcArray = src.split("/");
   return srcArray[srcArray.length-1].split(".")[0];
+}
+
+function shuffle(array) {
+  let remainingElements = array.length, temp, i;
+  while (remainingElements) {
+    i = Math.floor(Math.random() * remainingElements--);
+    temp = array[remainingElements];
+    array[remainingElements] = array[i];
+    array[i] = temp;
+  }
+  return array;
 }
