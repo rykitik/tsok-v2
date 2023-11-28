@@ -171,7 +171,7 @@ function showQuestions(index){
   currentQuestion = questions[index];
   option_list.innerHTML=''
   left_list.innerHTML=''
-  text_сontainer.innerHTML= storage[index] ? storage[index] : '';
+  text_сontainer.innerHTML= storage[index] && currentQuestion?.isSelectText? storage[index] : '';
   choiceContent.innerHTML=''
   const que_text = document.querySelector(".text-zadanie");
   
@@ -257,17 +257,17 @@ function showQuestions(index){
       }
     } break
     case 'optionText': {
-      for (let i = 0; i  < questions[index].options.length; i++) {
+      for (let i = 0; i  < currentQuestion.options.length; i++) {
         let newSpan = document.createElement('span');
-        const textOption =  createTextOptionElement(i, false , questions[index]?.correct[i]?.length, questions[index]?.correct[i]?.length, "...");
-        newSpan.textContent = questions[index].options[i];
+        const textOption =  createTextOptionElement(i, false , currentQuestion?.correct[i]?.length, currentQuestion?.correct[i]?.length, "...");
+        newSpan.textContent = currentQuestion.options[i];
         if (!storage[index]) {
           text_сontainer.appendChild(newSpan);
-          if (i < questions[index]?.options?.length - 1) {
+          if (i < currentQuestion?.options?.length - 1) {
             text_сontainer.appendChild(textOption);
           }
         }
-        if (i < questions[index]?.options?.length - 1) {
+        if (i < currentQuestion?.options?.length - 1) {
           const textOptionBtn = text_сontainer.querySelector("#text_answer_btn_" + i);
           textOptionBtn?.addEventListener('click', function() {
             const input = document.querySelector('#text_answer_' + i);
@@ -301,7 +301,7 @@ function showQuestions(index){
     } break
     case 'dragdrop': { // TODO: Fix drag and drop NOT WORK
       let id=0
-      for (let d of questions[index].droppable) {
+      for (let d of currentQuestion.droppable) {
         let div = document.createElement('div')
         let drop = createDropElement(id)
         div.classList.add('dropRow')
@@ -310,7 +310,7 @@ function showQuestions(index){
         div.style.top=220+(id*50)+'px'
         div.style.left=100+'px'
         try {
-          div.style=questions[index].drop_style[id]
+          div.style = currentQuestion.drop_style[id]
         } catch (e) {}
         option_list.append(div)
         ++id
@@ -319,12 +319,12 @@ function showQuestions(index){
       dragsElement = document.querySelector('.dragContainer')
       
       let dragArr = []
-      for (let d of questions[index].items) {
+      for (let d of currentQuestion.items) {
         let drag = createDragElement(id,null,(drag, drop)=>{
           let dragId = drag.id.split('_')[1]
           let dropId = drop.id.split('_')[1]
           console.log(dragId, dropId)
-          if (questions[index].answers.includes(dragId+'-'+dropId)) { //если выбор правильный
+          if (currentQuestion.answers.includes(dragId+'-'+dropId)) { //если выбор правильный
             drag.children[0].classList.add('bgCorrect')
             drag.children[0].classList.remove('bgInCorrect')
           } else {
@@ -351,7 +351,7 @@ function showQuestions(index){
     case 'dragline': {
       let div = document.createElement('div')
       div.style.width=1100+'px'
-      for (let d of questions[index].droppable) {
+      for (let d of currentQuestion.droppable) {
         let drop = createDropElement(id)
         div.append(d)
         div.append(drop)
@@ -361,12 +361,12 @@ function showQuestions(index){
       let div1 = document.createElement('div')
       let dragArr = []
       let linkArr = {}
-      for (let d of questions[index].items) {
+      for (let d of currentQuestion.items) {
         let drag = createDragElement(id,null,(drag, drop)=>{
           let dragId = drag.id.split('_')[1]
           let dropId = drop.id.split('_')[1]
           console.log(dragId, dropId)
-          if (questions[index].answers.includes(dragId+'-'+dropId)) { //если выбор правильный
+          if (currentQuestion.answers.includes(dragId+'-'+dropId)) { //если выбор правильный
             drag.classList.add('bgCorrect')
             drag.classList.remove('bgInCorrect')
           } else {
@@ -391,7 +391,7 @@ function showQuestions(index){
         drag.style.top=400+(id*50)+'px'
         drag.style.left=100+'px'
         drag.style.padding=0
-        drag.innerHTML='<span class="ps-3 fw-light" style="padding-right: 15px">'+questions[index].items[id]+'</span>'
+        drag.innerHTML='<span class="ps-3 fw-light" style="padding-right: 15px">' + currentQuestion.items[id] + '</span>'
         dragArr.push(drag)
         ++id
       }
@@ -414,7 +414,7 @@ function showQuestions(index){
 function checkTextOptionAnswer (input, index, i) {
   let newSpan = document.createElement('span');
   let isAnswerRight = true;
-  let isCorrect = input.value?.toLowerCase()?.trim() === questions[index]?.correct[i]?.toLowerCase()?.trim();
+  let isCorrect = input.value?.toLowerCase()?.trim() === currentQuestion?.correct[i]?.toLowerCase()?.trim();
   if (!isCorrect) {
     isAnswerRight = false;
     addQuestionAnswerStatus(currentQuestion.id, false);
@@ -425,7 +425,6 @@ function checkTextOptionAnswer (input, index, i) {
   input.parentNode.parentNode.removeChild(input.parentNode);
   storage[index] = text_сontainer.innerHTML;
   localStorage.setItem("storage", JSON.stringify(storage));
-  debugger
   if (isAnswerRight) isAnswerRight = text_сontainer.querySelector(".text-option-button") ? false : true;
   if (isAnswerRight) {
     userScoreAdd(currentQuestion);
