@@ -973,7 +973,7 @@ a.close-modal {
     border: 1px solid rgba(0,0,0,.2);
     border-radius: 25px;
     padding-left: 0.5rem;
-    z-index: 100;
+    z-index: 2;
     margin: 5px;
     line-height: 1;
 }
