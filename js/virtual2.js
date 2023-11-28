@@ -20,7 +20,6 @@ let que_count = 0;
 let que_numb = 1;
 let counter;
 let timeValue = 100;
-/* var userScore = 0; */
 var userScore = 0;
 
 const result_box = document.querySelector(".correct_answers");
@@ -67,10 +66,10 @@ buttonNext.onclick = () => {
 }
 
 buttonPrev.onclick = () => {
+  if (que_count === 0) return;
   document.querySelector('.text-zadanie').innerHTML=''
   document.querySelector('.option-list').innerHTML=''
   document.querySelector('.dragContainer').innerHTML=''
-  console.log("нажата кнопка");
   que_count--;
   que_numb--;
   showQuestions(que_count);

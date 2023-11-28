@@ -1,60 +1,6 @@
-let slideIndex = 0;
-function setButtons() {
-  // Устанавливаем обработчики событий для кнопок
-  const prevButton = document.querySelector('.prev-button');
-  const nextButton = document.querySelector('.next-button');
-prevButton.addEventListener('click', showPreviousSlide);
-nextButton.addEventListener('click', showNextSlide);
-}
-// Функция для показа предыдущего слайда
-function showPreviousSlide() {
-  // Получаем элементы слайдера
-  const slider = document.querySelector('.slider');
-  const prevButton = document.querySelector('.prev-button');
-  const nextButton = document.querySelector('.next-button');
-  const slides = Array.from(slider.querySelectorAll('img'));
-  const slideCount = slides.length;
-  slideIndex = (slideIndex - 1 + slideCount) % slideCount;
-  updateSlider();
-}
-
-// Функция для показа следующего слайда
-function showNextSlide() {
-  const slider = document.querySelector('.slider');
-  const prevButton = document.querySelector('.prev-button');
-  const nextButton = document.querySelector('.next-button');
-  const slides = Array.from(slider.querySelectorAll('img'));
-  const slideCount = slides.length;
-  slideIndex = (slideIndex + 1) % slideCount;
-  updateSlider();
-}
-
-// Функция для обновления отображения слайдера
-function updateSlider() {
-  const slider = document.querySelector('.slider');
-  const prevButton = document.querySelector('.prev-button');
-  const nextButton = document.querySelector('.next-button');
-  const slides = Array.from(slider.querySelectorAll('img'));
-  const slideCount = slides.length;
-  slides.forEach((slide, index) => {
-    if (index === slideIndex) {
-      slide.style.display = 'block';
-    } else {
-      slide.style.display = 'none';
-    }
-  });
-}
-function start() {
-  updateSlider()
-  setButtons()
-}
-
-// Инициализация слайдера
-// updateSlider();
 const questions = [
   {
     id: "20",
-    // img:"../img/t_3/img2.PNG",
     question: "Задание. <p style=font-weight:normal><br>Вам предстоит ознакомиться с материалом по теме ВЫБОР ОБОРУДОВАНИЯ, ИНСТРУМЕНТА И ТЕХНОЛОГИЧЕСКОЙ ОСНАСТКИ и выполнить 10 практических заданий. <br>Задания включают вопросы: по выбору правильного ответа, на установление соответствия, вставку пропущенных слов. <br>Время выполнения заданий не ограничено.",
     options: ["продолжить"],
     correct: "продолжить",
@@ -63,19 +9,18 @@ const questions = [
   },  
   {
     id: "0",
-    question: "2. Задание>",
-    isSelectText: true,
-    options: ["Погода была милой и", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда"],
-    correct: ["ответ", "праздничный утренник", "радость", "ответ", "ответ", "ответ"],
-    nextButton: false
-  },
-  {
-    id: "1",
-    // img:"../img/t_3/img2.PNG",
     question: "1. Изучите основные виды токарных станков. Нажмите кнопку продолжить, если ознакомились.<p style=font-weight:normal><br>К основным видам токарных станков относятся: <br><div class=slider-container><div class=slider><img src=../img/t_3/2_1.PNG><img src=../img/t_3/2_2.PNG><img src=../img/t_3/2_3.PNG><img src=../img/t_3/2_4.PNG><img src=../img/t_3/2_5.PNG><img src=../img/t_3/2_6.PNG></div><button class=prev-button>&lt;</button><button class=next-button>&gt</button></div>",
     options: ["продолжить"],
     correct: "продолжить",
     init:  start,
+    nextButton: false
+  },
+  {
+    id: "1",
+    question: "2. Задание>",
+    isSelectText: true,
+    options: ["Погода была милой и", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда", "радовала как никогда"],
+    correct: ["ответ", "праздничный утренник", "радость", "ответ", "ответ", "ответ"],
     nextButton: false
   },
   {
@@ -188,7 +133,6 @@ const questions = [
   },
   {
     id: "11",
-    type: 'one_of',
     question: "12. Выберите тип станка для токарной операции по изготовлению заданной детали в условиях серийного производства<br><br>",
     options: ["Токарно-винторезный станок", "Токарно-револьверный станок", "Токарно-карусельный станок", "Токарно-фрезерный обрабатывающий центр", "Автомат продольного точения", 'Токарный станок с ЧПУ'],
     correct: "Токарный станок с ЧПУ",
@@ -196,13 +140,11 @@ const questions = [
   },
   {
     id: "12",
-    type: 'one_of',
     question: "13. Выберите тип технологического приспособления для токарной операции по изготовлению заданной детали <br><br>",
     options: ["Центр",'Поводковый патрон','Кулачковый патрон','Цанговый патрон','Токарная оправка','Люнет'],
     correct: "Кулачковый патрон",
     nextButton:true
   },
-
   {
     id: "13",
     question: "14. Выберите типы режущих инструментов для токарной операции по изготовлению заданной детали<br><br><br> ",
@@ -241,10 +183,54 @@ const questions = [
     nextButton: false
   },
 ];
-const exercise =[
-  {
-    id:"0",
-    text:"<p class='text-exercise'>"+"<br> <b>Режущий инструмент </b> – инструмент, предназначенный для изменения формы и размеров заготовки путём удаления части материала в виде стружки с целью получения готовой детали или полуфабриката.</p>"
-    
-  }
-];
+
+let slideIndex = 0;
+function setButtons() {
+  // Устанавливаем обработчики событий для кнопок
+  const prevButton = document.querySelector('.prev-button');
+  const nextButton = document.querySelector('.next-button');
+prevButton.addEventListener('click', showPreviousSlide);
+nextButton.addEventListener('click', showNextSlide);
+}
+// Функция для показа предыдущего слайда
+function showPreviousSlide() {
+  // Получаем элементы слайдера
+  const slider = document.querySelector('.slider');
+  const prevButton = document.querySelector('.prev-button');
+  const nextButton = document.querySelector('.next-button');
+  const slides = Array.from(slider.querySelectorAll('img'));
+  const slideCount = slides.length;
+  slideIndex = (slideIndex - 1 + slideCount) % slideCount;
+  updateSlider();
+}
+
+// Функция для показа следующего слайда
+function showNextSlide() {
+  const slider = document.querySelector('.slider');
+  const prevButton = document.querySelector('.prev-button');
+  const nextButton = document.querySelector('.next-button');
+  const slides = Array.from(slider.querySelectorAll('img'));
+  const slideCount = slides.length;
+  slideIndex = (slideIndex + 1) % slideCount;
+  updateSlider();
+}
+
+// Функция для обновления отображения слайдера
+function updateSlider() {
+  const slider = document.querySelector('.slider');
+  const prevButton = document.querySelector('.prev-button');
+  const nextButton = document.querySelector('.next-button');
+  const slides = Array.from(slider.querySelectorAll('img'));
+  const slideCount = slides.length;
+  slides.forEach((slide, index) => {
+    if (index === slideIndex) {
+      slide.style.display = 'block';
+    } else {
+      slide.style.display = 'none';
+    }
+  });
+}
+function start() {
+  updateSlider() // Инициализация слайдера
+  setButtons()
+}
