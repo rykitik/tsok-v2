@@ -207,7 +207,7 @@ function showQuestions(index) {
   } else if (questions[index].isSelectText) {
       que_text.innerHTML = que_tag;
       img2.innerHTML = img_tag;
-      
+      textContainer.innerHTML = "";
       for (let i = 0; i  < questions[index].options.length; i++) {
         let newSpan = document.createElement('span');
         const textOption =  createTextOptionElement(i, false , questions[index]?.correct[i]?.length, questions[index]?.correct[i]?.length, "...");
