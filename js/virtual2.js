@@ -101,22 +101,22 @@ function showQuestions(index) {
     que_text.innerHTML = que_tag;
     img2.innerHTML = img_tag;
     textContainer.innerHTML = "";
-    let id=0
+    let id = 0;
     if (questions[index].line) {
       let div = document.createElement('div')
       div.style.width=1100+'px'
-      for (let d of questions[index].droppable) {
-        let drop = createDropElement(id)
-        div.append(d)
-        div.append(drop)
-        ++id
+      for (let i=0; i < questions[index].droppable.length; i++) {
+        let drop = createDropElement(i)
+        div.append(questions[index].droppable[i])
+        if (i < questions[index].droppable.length - 1) {
+          div.append(drop)
+        }
       }
-      id=0
       let div1 = document.createElement('div')
       let dragArr = []
       let linkArr = {}
-      for (let d of questions[index].items) {
-        let drag = createDragElement(id,null,(drag, drop)=>{
+      for (let i=0; i < questions[index].items.length; i++) {
+        let drag = createDragElement(i,null,(drag, drop)=>{
           let dragId = drag.id.split('_')[1]
           let dropId = drop.id.split('_')[1]
           console.log(dragId, dropId)
@@ -142,10 +142,10 @@ function showQuestions(index) {
             }
           }
         })
-        drag.style.top=400+(id*50)+'px'
+        drag.style.top=400+(i*50)+'px'
         drag.style.left=100+'px'
         drag.style.padding=0
-        drag.innerHTML='<span class="ps-3 fw-light" style="padding-right: 15px">'+questions[index].items[id]+'</span>'
+        drag.innerHTML='<span class="ps-3 fw-light" style="padding-right: 15px">'+questions[index].items[i]+'</span>'
         dragArr.push(drag)
         ++id
       }
