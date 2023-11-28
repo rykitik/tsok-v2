@@ -54,6 +54,14 @@ const questions = [
     correct: "102 В",
     cost: 250,
   },
+  {
+    id: 0,
+    type: "optionText",
+    question: "<p style=font-size:18px> Задание с текстом (100 баллов). <br><br>",
+    options: ["Первый заяц", "был детнинец, ", "."],
+    correct: ["недопонятый гений", "Глупый"],
+    cost: 100,
+  },
 ]
 
 
