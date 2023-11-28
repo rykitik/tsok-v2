@@ -4,9 +4,9 @@ const buttonNext = document.getElementById("next-button");
 const container1 = document.querySelector(".container1");
 const container2 = document.querySelector(".container2");
 const time_after = document.querySelector(".time_after");
-const img = document.querySelector(".img-exercise1");
 const img2 = document.querySelector(".img-container");
 const buttonPrev = document.querySelector(".prevbutton");
+const textContainer = document.querySelector('.text-options-container');
 
 
 const tab_exercise_container = document.querySelector(".tab_exercise_container");
@@ -100,6 +100,7 @@ function showQuestions(index) {
   if (questions[index].dnd) {
     que_text.innerHTML = que_tag;
     img2.innerHTML = img_tag;
+    textContainer.innerHTML = "";
     let id=0
     if (questions[index].line) {
       let div = document.createElement('div')
@@ -204,9 +205,35 @@ function showQuestions(index) {
       dragsElement.style.width=dragsElement.offsetWidth+'px'
       dragsElement.style.height=dragsElement.offsetHeight+'px'
     }
+  } else if (questions[index].isSelectText) {
+      que_text.innerHTML = que_tag;
+      img2.innerHTML = img_tag;
+      
+      for (let i = 0; i  < questions[index].options.length; i++) {
+        let newSpan = document.createElement('span');
+        const textOption =  createTextOptionElement(i, false , questions[index]?.correct[i]?.length, questions[index]?.correct[i]?.length, "...");
+        newSpan.textContent = questions[index].options[i];
+        
+        textContainer.appendChild(newSpan);
+        if (i < questions[index]?.options?.length - 1)
+          textContainer.appendChild(textOption);
+      
+        const textOptionBtn = textOption.querySelector(".text-option-button");
+        textOptionBtn.addEventListener('click', function() {
+          const input = document.querySelector('#text_answer_' + i);
+          let newSpan = document.createElement('span');
+
+          let correctClass = input?.value?.toLowerCase()?.trim() === questions[index]?.correct[i]?.toLowerCase()?.trim() ? "text-correct" : "text-incorrect";
+          newSpan.classList.add(correctClass);
+          newSpan.textContent = input.value;
+          textOption.parentNode.insertBefore(newSpan, textOption);
+          textOption.parentNode.removeChild(textOption);
+        });
+      }
   } else {
     que_text.innerHTML = que_tag;
     option_list.innerHTML = option_tag;
+    textContainer.innerHTML = "";
     img2.innerHTML = img_tag;
     for (let el of document.querySelectorAll('.option')) {
       el.onclick=()=>{
@@ -215,11 +242,6 @@ function showQuestions(index) {
     }
   }
 
-  // const option = document.querySelectorAll(".option");
-  // for (let i = 0; i < option.length; i++){
-  //   option[i].setAttribute("onclick", "optionSelected(this)");
-  // }
-  // if (questions[index].init) questions[index].init()
     try {
       start()
     } catch(e) {

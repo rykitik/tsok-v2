@@ -1090,6 +1090,10 @@ a.close-modal {
     justify-content: center;
 }
 
+.quest-text-container {
+
+}
+
 .exercise-btn {
     display: flex;
     align-items: center;
@@ -1120,4 +1124,40 @@ a.close-modal {
     gap: 30px;
     align-items: center;
     justify-content: center;
+}
+
+/* Text options  */
+.text-options-container {
+    padding-top: 10px;
+    width: 1100px! important;
+    display:inline-block;
+}
+.text-options-container span {
+    padding: 0 3px;
+    width: 100%;
+    line-height: 37px !important;
+}
+
+.text-correct {
+    color: green;
+    font-weight: 600;
+}
+
+.text-incorrect {
+    font-weight: 600;
+    color: red;
+}
+
+.text-option-container {
+    margin: 25px 0;
+    display: inline;
+}
+  
+
+.text-option-container input { 
+    text-align: center;
+    font-size: 16px;
+}
+.text-option-container input[type="button"] {
+    font-size: 14px;
 }

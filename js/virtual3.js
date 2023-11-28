@@ -12,6 +12,7 @@ const container1 = document.querySelector(".container1");
 const container2 = document.querySelector(".container2");
 const text_zadanie = document.querySelector(".text-zadanie");
 const exercise_zone = document.querySelector(".exercise-zone");
+const text_сontainer = document.querySelector('.text-options-container');
 const game = document.querySelector(".game-bg"); 
 // VARIABLES
 let currentQuestion = null;
@@ -170,6 +171,7 @@ function showQuestions(index){
   currentQuestion = questions[index];
   option_list.innerHTML=''
   left_list.innerHTML=''
+  text_сontainer.innerHTML= storage[index] ? storage[index] : '';
   choiceContent.innerHTML=''
   const que_text = document.querySelector(".text-zadanie");
   
@@ -251,6 +253,26 @@ function showQuestions(index){
           opt.innerHTML='<span id="choice"><img class=option_img src=../img/3_3/'+a+'.jpg></span>'
           opt.onclick=()=>{selectOpt(opt, false)}
           option_list.append(opt)
+        }
+      }
+    } break
+    case 'optionText': {
+      for (let i = 0; i  < questions[index].options.length; i++) {
+        let newSpan = document.createElement('span');
+        const textOption =  createTextOptionElement(i, false , questions[index]?.correct[i]?.length, questions[index]?.correct[i]?.length, "...");
+        newSpan.textContent = questions[index].options[i];
+        if (!storage[index]) {
+          text_сontainer.appendChild(newSpan);
+          if (i < questions[index]?.options?.length - 1) {
+            text_сontainer.appendChild(textOption);
+          }
+        }
+        if (i < questions[index]?.options?.length - 1) {
+          const textOptionBtn = text_сontainer.querySelector("#text_answer_btn_" + i);
+          textOptionBtn?.addEventListener('click', function() {
+            const input = document.querySelector('#text_answer_' + i);
+            checkTextOptionAnswer(input, index, i);
+          });
         }
       }
     } break
@@ -388,6 +410,35 @@ function showQuestions(index){
       console.warn('Такого типа задания не существует');
     }
   }
+}
+function checkTextOptionAnswer (input, index, i) {
+  let newSpan = document.createElement('span');
+  let isAnswerRight = true;
+  let isCorrect = input.value?.toLowerCase()?.trim() === questions[index]?.correct[i]?.toLowerCase()?.trim();
+  if (!isCorrect) {
+    isAnswerRight = false;
+    addQuestionAnswerStatus(currentQuestion.id, false);
+  }
+  newSpan.classList.add(isCorrect ? "text-correct" : "text-incorrect");
+  newSpan.textContent = input.value;
+  input.parentNode.parentNode.insertBefore(newSpan, input.parentNode);
+  input.parentNode.parentNode.removeChild(input.parentNode);
+  storage[index] = text_сontainer.innerHTML;
+  localStorage.setItem("storage", JSON.stringify(storage));
+  debugger
+  if (isAnswerRight) isAnswerRight = text_сontainer.querySelector(".text-option-button") ? false : true;
+  if (isAnswerRight) {
+    userScoreAdd(currentQuestion);
+    addQuestionAnswerStatus(currentQuestion.id, true);
+  } else {
+    addQuestionAnswerStatus(currentQuestion.id, false);
+  }
+  // if (Object.keys(currentQuestion.correct).length === Object.keys(storage[currentQuestion.id]).length) {
+  //   userScoreAdd(currentQuestion);
+  //   addQuestionAnswerStatus(currentQuestion.id, true);
+  // } else {
+  //   addQuestionAnswerStatus(currentQuestion.id, false);
+  // }
 }
 function checkChoice(p, o) {
   let isCorrect = false;
