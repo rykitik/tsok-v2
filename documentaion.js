@@ -69,7 +69,7 @@ const questions = [
   {
     id: 11,
     type: 'one_of',
-    question: `<p style=font-size:18px>Определите показание прибора. (250 баллов). <br><br><p style=font-weight:normal;font-size:18px>Выберите единственно правильный ответ.</p><br><div style="width: 150%;display: flex;justify-content: center;"> <img src="../img/3_3/pribor_2.png" alt="diagram_signals.jpg"> </div><br><br>`,
+    question: `<p style=font-size:18px>Определите показание прибора. (250 баллов). <br><br><p style=font-weight:normal;font-size:18px>Выберите единственно правильный ответ.</p><br><div style="width: 100%;display: flex;justify-content: center;"> <img src="../img/3_3/pribor_2.png" alt="diagram_signals.jpg"> </div><br><br>`,
     options: ["15 В", "17 В", "90 В В", "102 В"],
     correct: "102 В",
     cost: 250,
