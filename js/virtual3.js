@@ -171,7 +171,7 @@ function showQuestions(index){
   currentQuestion = questions[index];
   option_list.innerHTML=''
   left_list.innerHTML=''
-  text_сontainer.innerHTML= storage[index] && currentQuestion?.isSelectText? storage[index] : '';
+  text_сontainer.innerHTML= storage[index] && currentQuestion?.type === "optionText" ? storage[index] : '';
   choiceContent.innerHTML=''
   const que_text = document.querySelector(".text-zadanie");
   
