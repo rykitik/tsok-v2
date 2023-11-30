@@ -7,9 +7,11 @@ const time_after = document.querySelector(".time_after");
 const img2 = document.querySelector(".img-container");
 const buttonPrev = document.querySelector(".prevbutton");
 const textContainer = document.querySelector('.text-options-container');
-
-
+const mistake_count = document.querySelector(".mistake-count");
+const correct_tasks_count = document.querySelector(".correct-tasks-count");
+const result_box = document.querySelector(".correct_answers");
 const tab_exercise_container = document.querySelector(".tab_exercise_container");
+
 tabsShow();
 showQuestions(0);
 queCounter(1);
@@ -20,9 +22,19 @@ let que_count = 0;
 let que_numb = 1;
 let counter;
 let timeValue = 100;
-var userScore = 0;
+let userScore = 0;
+let userStats = localStorage.getItem("userStats") ? JSON.parse(localStorage.getItem("userStats")) : { correct: 0, wrong: 0 } ;
 
-const result_box = document.querySelector(".correct_answers");
+function updateUserStats(correct, wrong) {
+  userStats.correct += correct;
+  userStats.wrong += wrong;
+  localStorage.setItem("userStats", JSON.stringify(userStats));
+}
+
+function showUserStats() {
+  mistake_count.textContent = userStats.wrong;
+  correct_tasks_count.textContent = userStats.correct;
+}
 
 function tabsShow() {
   let tabHtml = "";
@@ -331,9 +343,8 @@ function startTimer(time) {
 }
 
 function ShowResult() {
-
   result_box.innerHTML = userScore;
-
+  showUserStats();
 }
 
 
