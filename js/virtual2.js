@@ -16,6 +16,7 @@ tabsShow();
 showQuestions(0);
 queCounter(1);
 startTimer(160);
+google.charts.load('current', { 'packages': ['corechart'] });
 
 let que_count = 0;
 let que_numb = 1;
