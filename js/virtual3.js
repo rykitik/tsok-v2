@@ -28,12 +28,14 @@ let attemptNumber = localStorage.getItem('attemptNumber') ? Number(localStorage.
 isTimeStarted = localStorage.getItem('isTimeStarted') || false;
 
 // START APP
-startApp();
+document.addEventListener('DOMContentLoaded', () => 
+  startApp());
 
 if (isTimeStarted) {
   isTimeStarted = false;
   startTimer(time);
 }
+
 setBallsCountText(userScore);
 google.charts.load('current', {'packages':['corechart']});
 
