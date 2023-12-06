@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Машиностроение: Виртуальный тренажер</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/sunny/jquery-ui.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script type="text/javascript">
+     
+    </script>
+  </head>
+</head>
+<style>
+    .w-8 { 
+        width: 8% !important;
+    }
+
+    .h-65 { 
+        height: 65% !important;
+    }
+
+    #circle-dnd { 
+        border: 4px solid #3B5571;
+        background-color: #A2BEDD;
+    }
+
+    /* span {
+        width: 1000px;
+    } */
+
+    .element-dnd {
+        width: 30%;
+	    left: 308px;
+	    top: 118px;
+	    height: 45px;
+        font-size: 14px !important;
+	    background: #6287AA;
+        color: #FFF;
+	    text-align: center;
+	    font-size: 20px;
+	    cursor: grab;
+    }
+    #makeMeDroppable { float: right; width: 300px; height: 300px; border: 1px solid #999; }
+    .img-container {
+        min-height: 100%;
+        min-width: 100%;
+    }
+</style>
+
+<style type="text/css">
+    
+
+</style>
+
+<body>
+    <header class="flex col">
+        <div class="container flex row">
+            <div class="logo" style="width: 100px; margin-top: 20px;"><img src="img/logo1.svg" alt="logo"></div>
+            <div class="flex col ml-90 w100">
+                <div class="header-first_content flex w100 space-between">
+                    <div class="title"><h2 class="white">Машиностроение</h2></div>
+                    <div class="buttons flex align-center mt-10">
+                        <a href="#ex1" class="btn-nav btn-contacts" rel="modal:open">Информация о контенте</a>
+                        <a href="#ex2" class="btn-nav btn-words" rel="modal:open">Ключевые слова</a>
+                    </div>
+                    
+                </div>
+                <div class="header-second_content">
+                    <h3 class="subtitle_header">Выбор оборудования, инструмента и технологической оснастки</h3>
+                 </div>
+            </div>
+        </div>
+            <div class="header-second"></div>      
+    </header>
+<div class="bg_color_block flex col ">
+        <div class="flex justify-center align-center">
+            <div class="content1 flex col max-content w100">
+                <a href="../main/index.html"><div class="flex align-center justify-center mt-30"><img src="img/right alignment.png" alt="arrow" class="mr-10"><a href="../main/index.html" class="text_home"> На главную</a></div></a>
+            
+            <div class="container1">
+                <div class="container_header">
+                    <div class="flex align-center space-between"><p class="container_title"> Виртуальный тренажер</p> <div class="counter_exercise" id="pages"><!-- 2/8 --></div></div>
+                    <div class="flex tab_exercise_container">
+                    </div>
+                </div>
+                <div class="container-exercise display-container">
+
+                    <div id="block-zadanie">
+                        <p class="text-zadanie">
+                        </p>
+                    </div>
+                    
+                    <div class="flex container-filling align-center justify-center">
+                        <div class="flex col option-list">
+                        </div>
+                        <div class="dragContainer"></div>
+                    </div>
+                    <div>
+                        <div class="text-options-container">
+
+                        </div>
+                    </div>
+                    <div class="flex container-filling align-center justify-center">
+                        <span style="font-weight:normal">
+                            <div class="img-container" style="text-align:center">
+                            </div>
+                        </span>
+                    </div>
+
+                    </div>
+                    <div class="arrows1"><button class="prevbutton"><img src="img/ArrowLeft.png"></button><button id="next-button"><img src="img/ArrowRight.png" alt="ArrowRight"></button></div>
+                </div>
+            </div>
+        </div>
+        <div class="time-counter hide"></div>
+            <div class="flex justify-center align-center">
+                <div class="container2 hide">
+                  <div class="container_header">
+                      <div class="flex align-center justify-center"><p class="container_title text-center">  </p> <div class="counter_exercise" id="pages"><!-- 2/8 --></div></div>
+                  </div>
+                      <div class="flex center-results col mt-30 align-center justify-center">
+                        <p class="text-center">Вы завершили прохождение виртуального тренажера</p>
+                        <div class="box_1 mb-10 mt-10">
+                            <p class="mb-10 box_1_text">Количество допущенных ошибок:</p>
+                            <p class=" mb-30 box_number"><span style="color: red;" id="mistake-count">2</span></p>
+                        </div>
+                        <div class="box_1 mb-10">
+                            <p class="mb-10 box_1_text">Заданий без ошибок сделано:</p>
+                            <p class=" mb-30 box_number"><span style="color: green;" id="correct-tasks-count">1</span></p>
+                        </div>
+                        <div class="box_1 mb-10">
+                            <p class="mb-10 box_1_text">Проведенное в тренажере:</p>
+                            <p class="time_after box_number">0:0:00</p>
+                        </div>
+                        <p class="text-center mt-20"><b><a href="../main/index.html">Нажмите, чтобы вернуться на главную</a></b></p>
+                    </div>
+                </div>
+            </div>                       
+        </div>
+    </div>
+</div>  
+
+
+
+        
+    <div class="flex triangle">
+        <div class="triangle1_img"><img src="img/Group 12.png" alt="tri" ></div>
+    </div>
+
+</div>
+
+<!-- modal -->
+<div id="ex1" class="modal">
+    <p class="text-zadanie_1" style="margin: 10px auto 5px; font-family: 'Montserrat', sans-serif;">Федеральный государственный образовательный стандарт среднего профессионального
+        образования по специальности 15.02.16</p>
+    <p class="mt-10" style="font-family: 'Montserrat', sans-serif;">Технология машиностроения, утвержден Приказом Минпросвещения России от 14 июня 2022 г. № 444</p>
+    <p class="text-zadanie_1" style="margin: 10px auto 5px; font-family: 'Montserrat', sans-serif;">ПОП Профессионалитета</p>
+    <p class="mt-10" style="font-family: 'Montserrat', sans-serif;">15.02.16 Технология машиностроения</p>
+    <p class="text-zadanie_1" style="margin: 10px auto 5px; font-family: 'Montserrat', sans-serif;">ПМ. 01</p>
+    <p class="mt-10" style="font-family: 'Montserrat', sans-serif;">Разработка технологических процессов изготовления деталей машин</p>
+    <p class="text-zadanie_1" style="margin: 10px auto 5px; font-family: 'Montserrat', sans-serif;">МДК 01.01</p>
+    <p class="mt-10" style="font-family: 'Montserrat', sans-serif;"> Разработка технологических процессов изготовления деталей машин с применением систем
+        автоматизированного проектирования</p>
+    <p class="text-zadanie_1" style="margin: 10px auto 5px; font-family: 'Montserrat', sans-serif;">Раздел</p>
+    <p class="mt-10" style="font-family: 'Montserrat', sans-serif;">Технологические процессы изготовления деталей машин </p>
+    <p class="text-zadanie_1" style="margin: 10px auto 5px; font-family: 'Montserrat', sans-serif;">Тема</p>
+    <p class="mt-10" style="font-family: 'Montserrat', sans-serif;">Выбор оборудования, инструмента и технологической оснастки</p>
+
+</div>
+<div id="ex2" class="modal">
+    <p class="text-zadanie_1" style="font-family: 'Montserrat', sans-serif;">Ключевые слова</p>
+    <p class="mt-10" style="font-family: 'Montserrat', sans-serif;"><b>Оборудование</b> - любое необходимое производству машины или приборы.</p>
+    <p class="mt-10" style="font-family: 'Montserrat', sans-serif;"><b>Технологическая оснастка</b> - средства технологического оснащения, дополняющие технологическое
+        оборудование, для выполненияопределенной части технологического процесса.</p>
+    <p class="mt-10" style="font-family: 'Montserrat', sans-serif;"><b>Измерительный инструмент</b> - специальное устройство для точного определения размеров, а также
+        других геометрических характеристик деталей и предметов.</p>
+    <p class="mt-10" style="font-family: 'Montserrat', sans-serif;"><b>Станочные приспособления</b> - дополнительные оборудования к металлообрабатывающему станку,
+        предназначенные для закрепления в нем обрабатываемой заготовки и надежной связи его со станком.</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+<script src="js/components/dragAndDrop.js"></script>
+<script src="js/components/textOption.js"></script>
+<script src="js/questions2.js"></script>
+<script type="text/javascript" src="js/virtual2.js"></script>
+</body>
+</html>
