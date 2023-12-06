@@ -254,6 +254,7 @@
     <script>
         let attemptNumber = localStorage.getItem("attemptNumber");
         localStorage.clear();
+        sessionStorage.clear();
         if (attemptNumber) {
             localStorage.setItem("attemptNumber", attemptNumber);
         }

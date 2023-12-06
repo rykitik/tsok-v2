@@ -4,7 +4,6 @@ const questions = [
     question: "Задание. <p style=font-weight:normal><br>Вам предстоит ознакомиться с материалом по теме ВЫБОР ОБОРУДОВАНИЯ, ИНСТРУМЕНТА И ТЕХНОЛОГИЧЕСКОЙ ОСНАСТКИ и выполнить 10 практических заданий. <br>Задания включают вопросы: по выбору правильного ответа, на установление соответствия, вставку пропущенных слов. <br>Время выполнения заданий не ограничено.",
     options: ["продолжить"],
     correct: "продолжить",
-    init:  start,
     nextButton: false
   },  
   {
@@ -12,7 +11,6 @@ const questions = [
     question: "1. Изучите основные виды токарных станков. Нажмите кнопку продолжить, если ознакомились.<p style=font-weight:normal><br>К основным видам токарных станков относятся: <br><div class=slider-container><div class=slider><img src=../img/t_3/2_1.PNG><img src=../img/t_3/2_2.PNG><img src=../img/t_3/2_3.PNG><img src=../img/t_3/2_4.PNG><img src=../img/t_3/2_5.PNG><img src=../img/t_3/2_6.PNG></div><button class=prev-button>&lt;</button><button class=next-button>&gt</button></div>",
     options: ["продолжить"],
     correct: "продолжить",
-    init:  start,
     nextButton: false
   },
   {

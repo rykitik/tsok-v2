@@ -7,33 +7,99 @@ const time_after = document.querySelector(".time_after");
 const img2 = document.querySelector(".img-container");
 const buttonPrev = document.querySelector(".prevbutton");
 const textContainer = document.querySelector('.text-options-container');
-const mistake_count = document.querySelector(".mistake-count");
-const correct_tasks_count = document.querySelector(".correct-tasks-count");
 const result_box = document.querySelector(".correct_answers");
 const tab_exercise_container = document.querySelector(".tab_exercise_container");
 
 tabsShow();
 showQuestions(0);
 queCounter(1);
-startTimer(160);
-google.charts.load('current', { 'packages': ['corechart'] });
+startStopwatch();
 
 let que_count = 0;
 let que_numb = 1;
 let counter;
 let timeValue = 100;
 let userScore = 0;
-let userStats = localStorage.getItem("userStats") ? JSON.parse(localStorage.getItem("userStats")) : { correct: 0, wrong: 0 } ;
 
-function updateUserStats(correct, wrong) {
-  userStats.correct += correct;
-  userStats.wrong += wrong;
-  localStorage.setItem("userStats", JSON.stringify(userStats));
+class ScoreCounter {
+  constructor() {
+    this.errors = 0;
+    this.answers = {}; // Обьект для хранения ID отвеченных заданий
+  }
+
+  incrementErrors() {
+    this.errors++;
+    this.saveToSessionStorage(); // Сохраняем изменения в sessionStorage
+  }
+
+  getErrorCount() {
+    return this.errors;
+  }
+
+  recordAnswer(answerId, isCorrect) {
+    if (Object.keys(this.answers).includes(answerId)) return null;
+    if (this.answers[answerId] === false) return null;
+    this.answers[answerId] = isCorrect;
+    this.saveToSessionStorage();
+  }
+
+  getPerfectScoreCount() {
+    let correctAnswersCount = 0
+    for (let key in this.answers ) {
+      if (this.answers[key] === true) {
+        correctAnswersCount++;
+      }
+    }
+    return correctAnswersCount;
+  }
+
+  reset() {
+    this.errors = 0;
+    this.answers = [];
+    this.saveToSessionStorage(); // Сохраняем изменения в sessionStorage
+  }
+
+  // Сохранение в sessionStorage
+  saveToSessionStorage() {
+    const scoreData = {
+      errors: this.errors,
+      answers: this.answers,
+    };
+    sessionStorage.setItem('scoreData', JSON.stringify(scoreData));
+  }
+
+  // Получение из sessionStorage
+  static loadFromSessionStorage() {
+    const savedData = sessionStorage.getItem('scoreData');
+    if (savedData) {
+      const { errors, answers } = JSON.parse(savedData);
+      const scoreCounter = new ScoreCounter();
+      scoreCounter.errors = errors;
+      scoreCounter.answers = answers;
+      return scoreCounter;
+    }
+    return new ScoreCounter();
+  }
+
+  showScoreCounter() {
+    const correctTasksCount = this.getPerfectScoreCount();
+    const errorCount = this.getErrorCount();
+    const mistake_count = document.querySelector("#mistake-count");
+    const correct_tasks_count = document.querySelector("#correct-tasks-count");
+    mistake_count.textContent = errorCount;
+    correct_tasks_count.textContent = correctTasksCount;
+    this.reset();
+  }
 }
 
-function showUserStats() {
-  mistake_count.textContent = userStats.wrong;
-  correct_tasks_count.textContent = userStats.correct;
+const loadedScoreCounter = ScoreCounter.loadFromSessionStorage();
+
+function recordIncorrectAnswer(questionID) {
+  loadedScoreCounter.incrementErrors();
+  loadedScoreCounter.recordAnswer(questionID, false);
+}
+function recordCorrectAnswer(questionID) {
+  loadedScoreCounter.recordAnswer(questionID, true);
 }
 
 function tabsShow() {
@@ -61,17 +127,14 @@ buttonNext.onclick = () => {
     que_numb++;
     showQuestions(que_count);
     queCounter(que_numb);
-    clearInterval(counter);
     // buttonNext.classList.add("hide");
   } else {
-
+    clearInterval(window.counter);
     container1.classList.add("hide");
     container2.classList.remove("hide");
-    clearInterval(counter);
     time_after.innerHTML = timeCount.textContent;
-    ShowResult();
-    google.charts.setOnLoadCallback(drawChart);
-
+    loadedScoreCounter.showScoreCounter();
+    sessionStorage.clear();
     console.log("Question completed");
   }
 
@@ -134,7 +197,13 @@ function showQuestions(index) {
           if (questions[index].answers.includes(dragId+'-'+dropId)) { //если выбор правильный
             drag.classList.add('bgCorrect')
             drag.classList.remove('bgInCorrect')
+            const  drags = document.querySelectorAll(".drag");
+            const  allElementsHaveCorrectClass  = Array.from(drags).every(drag => {
+              return drag.classList.contains('bgCorrect');
+            });
+            if (allElementsHaveCorrectClass) recordCorrectAnswer(index);
           } else {
+            recordIncorrectAnswer(index)
             drag.classList.add('bgInCorrect')
             drag.classList.remove('bgCorrect')
           }
@@ -195,7 +264,13 @@ function showQuestions(index) {
           if (questions[index].answers.includes(dragId+'-'+dropId)) { //если выбор правильный
             drag.children[0].classList.add('bgCorrect')
             drag.children[0].classList.remove('bgInCorrect')
+            const  circles = document.querySelectorAll("#circle")
+            const  allElementsHaveCorrectClass  = Array.from(circles).every(circle => {
+              return circle.classList.contains('bgCorrect');
+            });
+            if (allElementsHaveCorrectClass) recordCorrectAnswer(index);
           } else {
+            recordIncorrectAnswer(index)
             drag.children[0].classList.add('bgInCorrect')
             drag.children[0].classList.remove('bgCorrect')
           }
@@ -235,6 +310,8 @@ function showQuestions(index) {
           let newSpan = document.createElement('span');
 
           let correctClass = input?.value?.toLowerCase()?.trim() === questions[index]?.correct[i]?.toLowerCase()?.trim() ? "text-correct" : "text-incorrect";
+          if (correctClass === "text-incorrect") recordIncorrectAnswer(index)
+          if (correctClass === "text-correct") recordCorrectAnswer(index)
           newSpan.classList.add(correctClass);
           newSpan.textContent = input.value;
           textOption.parentNode.insertBefore(newSpan, textOption);
@@ -252,28 +329,27 @@ function showQuestions(index) {
       }
     }
   }
-
-    try {
-      start()
-    } catch(e) {
-      // console.log(e)
-    }
+  try {
+    start()
+  } catch(e) {
+    // console.error(e)
+  }
 }
 
 
 let myanswers = []
 function optionSelected(answer) {
-  clearInterval(counter);
   let userAns = answer.textContent;
   let correctAns = questions[que_count].correct;
   let allOptions = option_list.children.length;
   if (typeof correctAns == 'object') {
     if (correctAns.includes(userAns)) {
       answer.classList.add("correct");
-      console.log("Answer is correct");
-      
+      recordCorrectAnswer(que_count)
+      console.log("Answer is correct");   
     } else {
       answer.classList.add("incorrect");
+      recordIncorrectAnswer(que_count)
       console.log("Answer is wrong");
     }
 
@@ -292,7 +368,6 @@ function optionSelected(answer) {
       if (isCorrect) { 
         userScore += 1;
       }
-  
       myanswers=[]
     }
   } else {
@@ -300,7 +375,9 @@ function optionSelected(answer) {
       userScore += 1;
       answer.classList.add("correct");
       console.log("Answer is correct");
+      recordCorrectAnswer(que_count)
     } else {
+      recordIncorrectAnswer(que_count)
       answer.classList.add("incorrect");
       console.log("Answer is wrong");
       //selected the correct answer
@@ -317,59 +394,46 @@ function optionSelected(answer) {
   buttonNext.classList.remove("hide");
 }
 
-function startTimer(time) {
-  let counter = setInterval(timer, 1000);
+function startStopwatch() {
+  let startTime = sessionStorage.getItem('startTime'); // Получаем сохраненное время из sessionStorage
+
+  let time = startTime ? parseInt(startTime, 10) : 0; // Если есть сохраненное время, используем его; иначе начинаем с нуля
+
+  window.counter = setInterval(timer, 1000);
 
   function timer() {
     try {
-      var minutes = Math.floor(time / 60);
+      var hours = Math.floor(time / 3600);
+      var minutes = Math.floor((time % 3600) / 60);
       var seconds = time % 60;
-      if (seconds > 9)
-        timeCount.innerHTML = minutes + ":" + seconds, 200, 190;
-      else
-        timeCount.innerHTML = minutes + ":0" + seconds, 200, 190;
-      /* timeCount.innerHTML = time; */
-      time--;
-      if (time < 0) {
+      
+      // Форматирование времени в формат ЧЧ:ММ:СС
+      var formattedTime = String(hours).padStart(2, '0') + ":" + String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
+
+      // Отображение форматированного времени
+      timeCount.innerHTML = formattedTime;
+
+      time++;
+
+      // Сохраняем текущее время в sessionStorage
+      sessionStorage.setItem('startTime', time);
+
+      // Пример остановки таймера через 24 часа (время в секундах)
+      if (time > 86400) {
+        clearInterval(window.counter);
+        // Действия после завершения времени (пример: скрыть контейнеры)
         container1.classList.add("hide");
         container2.classList.remove("hide");
-
-        clearInterval(counter);
+        sessionStorage.clear();
       }
     } catch (e) {
-
+      console.error(e);
     }
   }
 }
-
-function ShowResult() {
-  result_box.innerHTML = userScore;
-  showUserStats();
-}
-
 
 function queCounter(index) {
   const ques_counter = document.querySelector(".counter_exercise");
   let totalQuesTag = '' + index + '/' + questions.length + '';
   ques_counter.innerHTML = totalQuesTag;
-}
-
-
-function drawChart() {
-  let wrong_ans = questions.length - userScore;
-  var data = google.visualization.arrayToDataTable([
-    ['Task', 'Ответы'],
-    ['Верные', userScore],
-    ['Неверные', wrong_ans],
-
-  ]);
-
-  var options = {
-    title: 'График ответов',
-    colors: ['#43698F', '#A2BEDD'],
-  };
-
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-  chart.draw(data, options);
 }
