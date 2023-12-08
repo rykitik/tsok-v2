@@ -165,7 +165,7 @@ function showQuestions(index) {
       }
     }
     if (questions[index]?.img) {
-      img_tag = '<br><img src="../img/2_2/' + questions[index].img + '.jpg" alt=""/>';
+      img_tag = '<br><img src="img/2_2/' + questions[index].img + '.jpg" alt=""/>';
       img2.innerHTML = img_tag;
     }
   } catch (e) {
