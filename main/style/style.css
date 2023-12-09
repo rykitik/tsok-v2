@@ -521,6 +521,11 @@ button{
     display: none !important;
 }
 .option-list{
+    width: 60%;
+    margin: auto;
+    min-width: 200px;
+}
+.option-list2{
     align-self: normal;
     width: 100%;
     display: flex;
@@ -570,7 +575,7 @@ button{
     padding: 10px;
     margin-bottom: 10px;
     min-height: 60px;
-    max-width: 80%;
+    min-width: 100%;
     background-color: #ffffff;
     border: 3px solid #A2BEDD;
     border-radius: 15px;
@@ -601,8 +606,19 @@ button{
     box-sizing: border-box; 
 }
 
+.option2 #choice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 200px;
+}
 .option_img {
-    width: 18%;
+    min-width: 160px;
+    min-height: 100%;
+    flex-shrink: 0;
+    object-fit: contain;
+    width: 100%;
 }
 
 #left-list li{
