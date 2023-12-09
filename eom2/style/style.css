@@ -2,7 +2,7 @@
 
 body{
 margin: 0;
-font-family: 'Montserrat', sans-serif;
+font-family: 'Montserrat', sans-serif !important;
 position: relative;
 }
 a{
@@ -180,7 +180,7 @@ footer{
     position: absolute;
     color: #A2BEDD;
     font-weight: bold;
-    font-size: 34px;
+    font-size: 24px;
     z-index: 3;
     padding-top: 0px;
 }
@@ -521,8 +521,18 @@ button{
     display: none !important;
 }
 .option-list{
-    width: 50%;
+    width: 60%;
+    margin: auto;
     min-width: 200px;
+}
+.option-list2{
+    align-self: normal;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    flex-direction: row;
+    gap: 10px;
 }
 .active{
     opacity: 0.8;
@@ -564,8 +574,8 @@ button{
     display: flex;
     padding: 10px;
     margin-bottom: 10px;
-    min-height: 100px;
-    min-width: 100px;
+    min-height: 60px;
+    min-width: 100%;
     background-color: #ffffff;
     border: 3px solid #A2BEDD;
     border-radius: 15px;
@@ -596,15 +606,72 @@ button{
     box-sizing: border-box; 
 }
 
+.option2 #choice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 200px;
+}
 .option_img {
-    width: 18%;
+    min-width: 160px;
+    min-height: 100%;
+    flex-shrink: 0;
+    object-fit: contain;
+    width: 100%;
 }
 
 #left-list li{
     border: 1px solid black;
     width: 100px;
 }
+.option2 {
+    display: flex;
+    padding: 10px;
+    margin-bottom: 10px;
+    min-height: 60px;
+    background-color: #ffffff;
+    border: 3px solid #A2BEDD;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    transition: .3s linear all;
 
+    max-width: 300px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 200px;
+    max-width: 300px;
+    position: relative;
+    height: 100%;
+    width: 200px;
+}
+
+.option2 #choice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 200px;
+}
+
+.option2.hidden, .option2.hidden img, .option2.hidden #choice  {
+    width: 0px;
+    min-width: 0px;
+    padding: 0;
+    border: 0;
+    font-size: 0px;
+    opacity: 0;
+}
 .hide {
     display: none;
 }
@@ -889,9 +956,8 @@ a.close-modal {
     padding: 10px;
 }
 .box_1_text{
-    font-weight: 600;
     color: #43698F;
-    font-size: 22px;
+    font-size: 18px;
     text-align: center;
 }
 .box_number{
@@ -957,7 +1023,11 @@ a.close-modal {
 }
 .fixDan {
     align-self: normal;
-    justify-content: space-around;
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    box-sizing: border-box;
 }
 
 /*drag and drop styles*/
@@ -1004,11 +1074,7 @@ a.close-modal {
     line-height: 1;
 }
 .dragContainer {
-    display: flex;
-    width: 50%;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: flex-end;
+    width: 100%;
 }
 
 .dragContainer2 {
@@ -1148,7 +1214,7 @@ a.close-modal {
 .optionTasks {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 30px;
     align-items: center;
     justify-content: center;
@@ -1188,4 +1254,39 @@ a.close-modal {
 }
 .text-option-container input[type="button"] {
     font-size: 14px;
+}
+
+.word {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #43698F;
+    margin: 3px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+.droppable {
+    display: inline-block;
+    box-sizing: border-box;
+    border: 1px solid #43698F;
+    text-align: center;
+    padding: 5px;
+    min-width: 70px;
+    min-height: 30px;
+    border-radius: 15px;
+    margin: 1px 5px;
+}
+  
+.flex.container-filling.align-center.justify-center {
+    display: block !important;
+    width: 100%;
+    margin: auto;
+}
+
+.dragContainer.correct {
+    padding: 15px 0px 15px 15px;
+    border-radius: 15px;
+}
+.dragContainer.incorrect { 
+    padding: 15px 0px 15px 15px;
+    border-radius: 15px;
 }

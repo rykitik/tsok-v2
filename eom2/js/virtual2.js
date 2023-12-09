@@ -1,4 +1,6 @@
 const option_list = document.querySelector(".option-list");
+const option_list2 = document.querySelector(".option-list2");
+const left_list = document.querySelector("#left-list")
 const timeCount = document.querySelector(".time-counter");
 const buttonNext = document.getElementById("next-button");
 const container1 = document.querySelector(".container1");
@@ -9,17 +11,19 @@ const buttonPrev = document.querySelector(".prevbutton");
 const textContainer = document.querySelector('.text-options-container');
 const result_box = document.querySelector(".correct_answers");
 const tab_exercise_container = document.querySelector(".tab_exercise_container");
+const dragContainer = document.querySelector('.dragContainer')
 
-tabsShow();
-showQuestions(0);
-queCounter(1);
-startStopwatch();
-
+let currentQuestion = null;
 let que_count = 0;
 let que_numb = 1;
 let counter;
 let timeValue = 100;
 let userScore = 0;
+
+tabsShow();
+showQuestions(0);
+queCounter(1);
+startStopwatch();
 
 class ScoreCounter {
   constructor() {
@@ -111,17 +115,11 @@ function tabsShow() {
 }
 
 const tab = document.querySelector(".tab");
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
 //if next btn clicked
 buttonNext.onclick = () => {
   document.querySelector('.text-zadanie').innerHTML=''
   document.querySelector('.option-list').innerHTML=''
-  document.querySelector('.dragContainer').innerHTML=''
+  document.querySelector('.option-list2').innerHTML=''
   if (que_count < questions.length - 1) {
     que_count++;
     que_numb++;
@@ -144,7 +142,7 @@ buttonPrev.onclick = () => {
   if (que_count === 0) return;
   document.querySelector('.text-zadanie').innerHTML=''
   document.querySelector('.option-list').innerHTML=''
-  document.querySelector('.dragContainer').innerHTML=''
+  document.querySelector('.option-list2').innerHTML=''
   que_count--;
   que_numb--;
   showQuestions(que_count);
@@ -155,153 +153,111 @@ function showQuestions(index) {
   const que_text = document.querySelector(".text-zadanie");
 
   tab_exercise_container.children[index].setAttribute("class", "active_tab")
-  let que_tag = '<span>' + questions[index].question + '</span>';
+  currentQuestion = questions[index];
+  let que_tag = '<span>' + currentQuestion.question + '</span>';
   let option_tag = '';
   let img_tag = '';
+  left_list.innerHTML=''
   try {
-    for (let i = 0; i < questions[index].options.length; i++) {
-      if (questions[index].nextButton) {
-        option_tag += '<div class="option"><span>' + questions[index].options[i] + '</span></div>';
+    for (let i = 0; i < currentQuestion.options.length; i++) {
+      if (currentQuestion.nextButton) {
+        option_tag += `<div class="option${currentQuestion.type === "matchingImg" || currentQuestion.type === "matching"? '2': ''}"><span> ${currentQuestion.options[i]} </span></div>`;
       }
     }
-    if (questions[index]?.img) {
-      img_tag = '<br><img src="img/2_2/' + questions[index].img + '.jpg" alt=""/>';
+    if (currentQuestion?.img) {
+      img_tag = '<br><img src="../img/2_2/' + currentQuestion.img + '.jpg" alt=""/>';
       img2.innerHTML = img_tag;
     }
   } catch (e) {
     console.log(e)
   }
-  if (questions[index].dnd) {
+  if (currentQuestion.line) {
     que_text.innerHTML = que_tag;
     img2.innerHTML = img_tag;
     textContainer.innerHTML = "";
-    let id = 0;
-    if (questions[index].line) {
-      let div = document.createElement('div')
-      div.style.width=1100+'px'
-      for (let i=0; i < questions[index].droppable.length; i++) {
-        let drop = createDropElement(i)
-        div.append(questions[index].droppable[i])
-        if (i < questions[index].droppable.length - 1) {
-          div.append(drop)
+    // Создаем предложение на основе элементов вопроса
+    let sentence = currentQuestion.droppable.reduce((acc, placeholder, index) => {
+      const items = currentQuestion.items;
+      if (items.length === index) return acc;
+      return acc + `${placeholder}<span class="droppable" id="dropArea${index}" data-index="${index}" data-answer="${currentQuestion.answers[index]}"></span>`;
+    }, '');
+  
+    // Выводим вопрос на страницу
+    dragContainer.innerHTML = `<p>${sentence}</p>`;
+    // Добавляем слова для вставки
+    currentQuestion.items.forEach((item, index) => {
+      const wordContainer = document.createElement('div');
+      wordContainer.classList.add('word');
+      wordContainer.draggable = true;
+      wordContainer.textContent = item;
+      wordContainer.dataset.index = index;
+      dragContainer.appendChild(wordContainer);
+    });
+    const draggableWords = document.querySelectorAll('.word');
+    const droppableAreas = document.querySelectorAll('.droppable');
+  
+    let draggedWord = null;
+  
+    // Обработчики событий для слов
+    draggableWords.forEach(word => {
+      word.addEventListener('dragstart', function(event) {
+        draggedWord = event.target;
+      });
+    });
+  
+    // Обработчики событий для областей вставки слов
+    droppableAreas.forEach(area => {
+      area.addEventListener('dragover', function(event) {
+        event.preventDefault();
+      });
+  
+      area.addEventListener('drop', function(event) {
+        event.preventDefault();
+        if (!area.textContent.trim()) {
+          area.textContent = draggedWord.textContent;
+          draggedWord.style.display = 'none';
+          draggedWord = null;
+          checkAnswers();
+        }
+      });
+    });
+  
+    // Проверка ответов
+    function checkAnswers() {
+      const allAreas = document.querySelectorAll('.droppable');
+      const filledAreas = Array.from(allAreas).filter(area => area.textContent.trim());
+      
+      if (filledAreas.length === allAreas.length) {
+        const correctAnswers = Array.from(allAreas).every(area => {
+          const index = area.dataset.index;
+          const answer = area.dataset.answer.split('-')[1];
+          return index === answer && area.textContent.trim() === currentQuestion.items[index];
+        });
+  
+        if (correctAnswers) {
+          recordCorrectAnswer(index)
+          dragContainer.innerHTML += '<b>✔ Правильно!</b>';
+          dragContainer.classList.add('correct');
+        } else {
+          recordIncorrectAnswer(index)
+          dragContainer.innerHTML += '<b>✖ Неправильно. Попробуйте еще раз!</b>';
+          dragContainer.classList.add('incorrect');
         }
       }
-      let div1 = document.createElement('div')
-      let dragArr = []
-      let linkArr = {}
-      for (let i=0; i < questions[index].items.length; i++) {
-        let drag = createDragElement(i,null,(drag, drop)=>{
-          let dragId = drag.id.split('_')[1]
-          let dropId = drop.id.split('_')[1]
-          console.log(dragId, dropId)
-          if (questions[index].answers.includes(dragId+'-'+dropId)) { //если выбор правильный
-            drag.classList.add('bgCorrect')
-            drag.classList.remove('bgInCorrect')
-            const  drags = document.querySelectorAll(".drag");
-            const  allElementsHaveCorrectClass  = Array.from(drags).every(drag => {
-              return drag.classList.contains('bgCorrect');
-            });
-            if (allElementsHaveCorrectClass) recordCorrectAnswer(index);
-          } else {
-            recordIncorrectAnswer(index)
-            drag.classList.add('bgInCorrect')
-            drag.classList.remove('bgCorrect')
-          }
-          drag.style.width='auto'
-          drop.style.width=drag.offsetWidth-15+'px'
-          for (let i in linkArr) {
-            if (linkArr[i]==dragId) delete linkArr[i]
-          }
-          linkArr[dropId]=dragId
-          for (let i in linkArr) {
-            if (linkArr[i] != dragElement.object.id.split('_')[1]) {
-              let drag1 = document.querySelector('#drag_'+linkArr[i])
-              let drop1 = document.querySelector('#drop_'+i)
-              drag1.style.left = (drop1.offsetLeft-14)+'px'
-              drag1.style.top = (drop1.offsetTop+drop1.offsetHeight/2 - (drag1.offsetHeight/2)) -5 +'px'
-            }
-          }
-        })
-        drag.style.top=400+(i*50)+'px'
-        drag.style.left=100+'px'
-        drag.style.padding=0
-        drag.innerHTML='<span class="ps-3 fw-light" style="padding-right: 15px">'+questions[index].items[i]+'</span>'
-        dragArr.push(drag)
-        ++id
-      }
-      shuffle(dragArr)
-      id=0
-      for (let d of dragArr) {
-        d.style.top=400+(id*50)+'px'
-        div1.append(d)
-        ++id
-      }
-      option_list.append(div)
-      option_list.append(div1)
-    } else {
-      for (let d of questions[index].droppable) {
-        let div = document.createElement('div')
-        let drop = createDropElement(id)
-        div.classList.add('dropRow')
-        div.innerHTML='<div class="dropText">'+d+'</div>'
-        div.append(drop)
-        div.style.top=220+(id*50)+'px'
-        div.style.left=100+'px'
-        try {
-          div.style=questions[index].drop_style[id]
-        } catch (e) {}
-        option_list.append(div)
-        ++id
-      }
-      id=0
-      dragsElement = document.querySelector('.dragContainer')
-      let dragArr = []
-      for (let d of questions[index].items) {
-        let drag = createDragElement(id,null,(drag, drop)=>{
-          let dragId = drag.id.split('_')[1]
-          let dropId = drop.id.split('_')[1]
-          console.log(dragId, dropId)
-          if (questions[index].answers.includes(dragId+'-'+dropId)) { //если выбор правильный
-            drag.children[0].classList.add('bgCorrect')
-            drag.children[0].classList.remove('bgInCorrect')
-            const  circles = document.querySelectorAll("#circle")
-            const  allElementsHaveCorrectClass  = Array.from(circles).every(circle => {
-              return circle.classList.contains('bgCorrect');
-            });
-            if (allElementsHaveCorrectClass) recordCorrectAnswer(index);
-          } else {
-            recordIncorrectAnswer(index)
-            drag.children[0].classList.add('bgInCorrect')
-            drag.children[0].classList.remove('bgCorrect')
-          }
-        })
-        drag.style.top=220+(id*50)+'px'
-        drag.style.left=800+'px'
-        drag.innerHTML='<div id="circle"></div><span class="ps-3 fw-light">'+d+'</span>'
-        dragArr.push(drag)
-        ++id
-      }
-      shuffle(dragArr)
-      id=0
-      for (let d of dragArr) {
-        d.style.top=220+(id*50)+'px'
-        dragsElement.append(d)
-        id++
-      }
-      dragsElement.style.width=dragsElement.offsetWidth+'px'
-      dragsElement.style.height=dragsElement.offsetHeight+'px'
     }
-  } else if (questions[index].isSelectText) {
+  } else if (currentQuestion.isSelectText) {
       que_text.innerHTML = que_tag;
       img2.innerHTML = img_tag;
       textContainer.innerHTML = "";
-      for (let i = 0; i  < questions[index].options.length; i++) {
+      dragContainer.innerHTML = "";
+      dragContainer.setAttribute('class', 'dragContainer');
+      for (let i = 0; i  < currentQuestion.options.length; i++) {
         let newSpan = document.createElement('span');
-        const textOption =  createTextOptionElement(i, false , questions[index]?.correct[i]?.length, questions[index]?.correct[i]?.length, "...");
-        newSpan.textContent = questions[index].options[i];
+        const textOption =  createTextOptionElement(i, false , currentQuestion?.correct[i]?.length, currentQuestion?.correct[i]?.length, "...");
+        newSpan.textContent = currentQuestion.options[i];
         
         textContainer.appendChild(newSpan);
-        if (i < questions[index]?.options?.length - 1)
+        if (i < currentQuestion?.options?.length - 1)
           textContainer.appendChild(textOption);
       
         const textOptionBtn = textOption.querySelector(".text-option-button");
@@ -309,7 +265,7 @@ function showQuestions(index) {
           const input = document.querySelector('#text_answer_' + i);
           let newSpan = document.createElement('span');
 
-          let correctClass = input?.value?.toLowerCase()?.trim() === questions[index]?.correct[i]?.toLowerCase()?.trim() ? "text-correct" : "text-incorrect";
+          let correctClass = input?.value?.toLowerCase()?.trim() === currentQuestion?.correct[i]?.toLowerCase()?.trim() ? "text-correct" : "text-incorrect";
           if (correctClass === "text-incorrect") recordIncorrectAnswer(index)
           if (correctClass === "text-correct") recordCorrectAnswer(index)
           newSpan.classList.add(correctClass);
@@ -318,12 +274,56 @@ function showQuestions(index) {
           textOption.parentNode.removeChild(textOption);
         });
       }
+  } else if (currentQuestion.type === "matchingImg") {
+    que_text.innerHTML = que_tag;
+    img2.innerHTML = img_tag;
+    textContainer.innerHTML = "";
+    let leftQuestions = shuffle(currentQuestion.left)
+    for (let a of leftQuestions) {
+      let opt = document.createElement('div')
+      opt.setAttribute('class','option2')
+      opt.innerHTML='<span>'+a+'</span>'
+      opt.onclick=()=>{selectOpt(opt, true)}
+      left_list.append(opt)
+    }
+    let options = shuffle(currentQuestion.options)
+    for (let a of options) {
+      let opt = document.createElement('div')
+      opt.setAttribute('class','option2')
+      opt.innerHTML='<span id="choice"><img class=option_img src=img/2_2/'+a+'.jpg></span>'
+      opt.onclick=()=>{selectOpt(opt, false)}
+      option_list2.append(opt)
+    }
+  }
+  else if(currentQuestion.type === "matching") {
+    que_text.innerHTML = que_tag;
+    img2.innerHTML = img_tag;
+    textContainer.innerHTML = "";
+    let leftQuestions = shuffle(currentQuestion.left)
+    for (let a of leftQuestions) {
+      let opt = document.createElement('div')
+      opt.setAttribute('class','option2')
+      opt.innerHTML='<span>'+a+'</span>'
+      opt.onclick=()=>{selectOpt(opt, true)}
+      left_list.append(opt)
+    }
+    let options = shuffle(currentQuestion.options)
+    for (let a of options) {
+      let opt = document.createElement('div')
+      opt.setAttribute('class','option2')
+      opt.innerHTML='<span>'+a+'</span>'
+      opt.onclick=()=>{selectOpt(opt, false)}
+      option_list2.append(opt)
+    }
   } else {
     que_text.innerHTML = que_tag;
     option_list.innerHTML = option_tag;
+    option_list2.innerHTML = "";
     textContainer.innerHTML = "";
+    dragContainer.innerHTML = "";
+    dragContainer.setAttribute('class', 'dragContainer');
     img2.innerHTML = img_tag;
-    for (let el of document.querySelectorAll('.option')) {
+    for (let el of document.querySelectorAll('.option2')) {
       el.onclick=()=>{
         optionSelected(el)
       }
@@ -394,6 +394,67 @@ function optionSelected(answer) {
   buttonNext.classList.remove("hide");
 }
 
+let lastOpt  = { left: null, right: null };
+
+function selectOpt(opt, isLeft) {
+  const selectedClass = isLeft ? 'left' : 'right';
+  if (!opt.classList.contains('correct') && !opt.classList.contains('incorrect')) {
+    if (lastOpt[selectedClass]) lastOpt[selectedClass].classList.remove('selected');
+    lastOpt[selectedClass] = opt;
+    opt.classList.add('selected');
+    checkAnswer();
+  }
+}
+function checkAnswer() {
+  let opts = document.querySelectorAll('.selected')
+  if (opts.length != 2) return;
+  opts[0].classList.add('hidden');
+  opts[1].classList.add('hidden');
+  function addOpts() {
+    left_list.append(opts[0])
+    option_list2.append(opts[1]);
+    opts[0].classList.remove('hidden');
+    opts[1].classList.remove('hidden');
+  }
+  setTimeout(addOpts, 500);
+  
+  let answer = {};
+  let optionImg = opts[1]?.children[0]?.children[0]?.src;
+  let secondOption = optionImg ? getFileName(optionImg) : opts[1].innerText
+  answer[opts[0].innerText] = secondOption;
+  let isCorrect = currentQuestion.correct.some(obj => {
+    return JSON.stringify(obj) === JSON.stringify(answer);
+  });
+  
+  let className = isCorrect ? 'correct' : 'incorrect';
+  opts[0].classList.remove('selected');
+  opts[1].classList.remove('selected');
+  opts[0].classList.add(className);
+  opts[1].classList.add(className);
+  let isQuestionCorrect = true;
+  let els = [...document.querySelectorAll('.fixDan >.option2')];
+  var allHaveCorrectOrIncorrect = els.every(function(el) {
+    return el.classList.contains('correct') || el.classList.contains('incorrect');
+  });
+  let allEls = document.querySelectorAll('.option2');
+  for (let el of els) {
+    if (el.classList.contains('incorrect') || !el.classList.contains('correct')) {
+      isQuestionCorrect=false;
+      break
+    }
+  }
+  if (allHaveCorrectOrIncorrect) {
+    for (let elem of allEls) {
+      elem.classList.add('disabled');
+    }
+  }
+  if (isQuestionCorrect) {
+    loadedScoreCounter.recordAnswer(currentQuestion.id, true);
+  } else if (!isCorrect){
+    loadedScoreCounter.incrementErrors();
+    loadedScoreCounter.recordAnswer(currentQuestion.id, false);
+  }
+}
 function startStopwatch() {
   let startTime = sessionStorage.getItem('startTime'); // Получаем сохраненное время из sessionStorage
 
@@ -436,4 +497,20 @@ function queCounter(index) {
   const ques_counter = document.querySelector(".counter_exercise");
   let totalQuesTag = '' + index + '/' + questions.length + '';
   ques_counter.innerHTML = totalQuesTag;
+}
+
+function getFileName(src) {
+  let srcArray = src.split("/");
+  return srcArray[srcArray.length-1].split(".")[0];
+}
+
+function shuffle(array) {
+  let remainingElements = array.length, temp, i;
+  while (remainingElements) {
+    i = Math.floor(Math.random() * remainingElements--);
+    temp = array[remainingElements];
+    array[remainingElements] = array[i];
+    array[i] = temp;
+  }
+  return array;
 }
