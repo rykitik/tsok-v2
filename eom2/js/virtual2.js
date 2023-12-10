@@ -449,7 +449,24 @@ function checkAnswer() {
       elem.classList.add('disabled');
     }
   }
-  if (isQuestionCorrect) {
+  let isQuestionCorrect2 = true;
+  let els2 = [...document.querySelectorAll('.option-list2 >.option2')];
+  var allHaveCorrectOrIncorrect = els2.every(function(el) {
+    return el.classList.contains('correct') || el.classList.contains('incorrect');
+  });
+  let allEls2 = document.querySelectorAll('.option2');
+  for (let el of els2) {
+    if (el.classList.contains('incorrect') || !el.classList.contains('correct')) {
+      isQuestionCorrect2=false;
+      break
+    }
+  }
+  if (allHaveCorrectOrIncorrect) {
+    for (let elem of allEls2) {
+      elem.classList.add('disabled');
+    }
+  } 
+  if (isQuestionCorrect || isQuestionCorrect2) {
     loadedScoreCounter.recordAnswer(currentQuestion.id, true);
   } else if (!isCorrect){
     loadedScoreCounter.incrementErrors();
