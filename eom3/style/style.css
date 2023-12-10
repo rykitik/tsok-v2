@@ -2,7 +2,7 @@
 
 body{
 margin: 0;
-font-family: 'Montserrat', sans-serif;
+font-family: 'Montserrat', sans-serif !important;
 position: relative;
 }
 a{
@@ -180,7 +180,7 @@ footer{
     position: absolute;
     color: #A2BEDD;
     font-weight: bold;
-    font-size: 34px;
+    font-size: 24px;
     z-index: 3;
     padding-top: 0px;
 }
@@ -889,9 +889,8 @@ a.close-modal {
     padding: 10px;
 }
 .box_1_text{
-    font-weight: 600;
     color: #43698F;
-    font-size: 22px;
+    font-size: 18px;
     text-align: center;
 }
 .box_number{
@@ -1004,11 +1003,7 @@ a.close-modal {
     line-height: 1;
 }
 .dragContainer {
-    display: flex;
-    width: 50%;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: flex-end;
+    width: 100%;
 }
 
 .dragContainer2 {
@@ -1188,4 +1183,39 @@ a.close-modal {
 }
 .text-option-container input[type="button"] {
     font-size: 14px;
+}
+
+.word {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #43698F;
+    margin: 3px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+.droppable {
+    display: inline-block;
+    box-sizing: border-box;
+    border: 1px solid #43698F;
+    text-align: center;
+    padding: 5px;
+    min-width: 70px;
+    min-height: 30px;
+    border-radius: 15px;
+    margin: 1px 5px;
+}
+  
+.flex.container-filling.align-center.justify-center {
+    display: block !important;
+    width: 100%;
+    margin: auto;
+}
+
+.dragContainer.correct {
+    padding: 15px 0px 15px 15px;
+    border-radius: 15px;
+}
+.dragContainer.incorrect { 
+    padding: 15px 0px 15px 15px;
+    border-radius: 15px;
 }
