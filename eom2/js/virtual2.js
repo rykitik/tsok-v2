@@ -325,7 +325,7 @@ function showQuestions(index) {
     dragContainer.innerHTML = "";
     dragContainer.setAttribute('class', 'dragContainer');
     img2.innerHTML = img_tag;
-    for (let el of document.querySelectorAll('.option2')) {
+    for (let el of document.querySelectorAll('.option')) {
       el.onclick=()=>{
         optionSelected(el)
       }
@@ -341,7 +341,7 @@ function showQuestions(index) {
 
 let myanswers = []
 function optionSelected(answer) {
-  let userAns = answer.textContent;
+  let userAns = answer.textContent.trim();
   let correctAns = questions[que_count].correct;
   let allOptions = option_list.children.length;
   if (typeof correctAns == 'object') {
@@ -354,7 +354,6 @@ function optionSelected(answer) {
       recordIncorrectAnswer(que_count)
       console.log("Answer is wrong");
     }
-
     myanswers.push(userAns)
     if (myanswers.length>=correctAns.length) {
       for (let i = 0; i < allOptions; i++) {
