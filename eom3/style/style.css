@@ -521,8 +521,18 @@ button{
     display: none !important;
 }
 .option-list{
-    width: 50%;
+    width: 60%;
+    margin: auto;
     min-width: 200px;
+}
+.option-list2{
+    align-self: normal;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    flex-direction: row;
+    gap: 10px;
 }
 .active{
     opacity: 0.8;
@@ -564,8 +574,8 @@ button{
     display: flex;
     padding: 10px;
     margin-bottom: 10px;
-    min-height: 100px;
-    min-width: 100px;
+    min-height: 60px;
+    min-width: 100%;
     background-color: #ffffff;
     border: 3px solid #A2BEDD;
     border-radius: 15px;
@@ -596,15 +606,72 @@ button{
     box-sizing: border-box; 
 }
 
+.option2 #choice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 200px;
+}
 .option_img {
-    width: 18%;
+    min-width: 160px;
+    min-height: 100%;
+    flex-shrink: 0;
+    object-fit: contain;
+    width: 100%;
 }
 
 #left-list li{
     border: 1px solid black;
     width: 100px;
 }
+.option2 {
+    display: flex;
+    padding: 10px;
+    margin-bottom: 10px;
+    min-height: 60px;
+    background-color: #ffffff;
+    border: 3px solid #A2BEDD;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    transition: .3s linear all;
 
+    max-width: 300px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 200px;
+    max-width: 300px;
+    position: relative;
+    height: 100%;
+    width: 200px;
+}
+
+.option2 #choice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 200px;
+}
+
+.option2.hidden, .option2.hidden img, .option2.hidden #choice  {
+    width: 0px;
+    min-width: 0px;
+    padding: 0;
+    border: 0;
+    font-size: 0px;
+    opacity: 0;
+}
 .hide {
     display: none;
 }
@@ -956,7 +1023,11 @@ a.close-modal {
 }
 .fixDan {
     align-self: normal;
-    justify-content: space-around;
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    box-sizing: border-box;
 }
 
 /*drag and drop styles*/
@@ -1143,7 +1214,7 @@ a.close-modal {
 .optionTasks {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 30px;
     align-items: center;
     justify-content: center;
