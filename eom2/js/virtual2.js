@@ -275,6 +275,7 @@ function showQuestions(index) {
         });
       }
   } else if (currentQuestion.type === "matchingImg") {
+    dragContainer.innerHTML = "";
     que_text.innerHTML = que_tag;
     img2.innerHTML = img_tag;
     textContainer.innerHTML = "";
@@ -296,6 +297,7 @@ function showQuestions(index) {
     }
   }
   else if(currentQuestion.type === "matching") {
+    dragContainer.innerHTML = "";
     que_text.innerHTML = que_tag;
     img2.innerHTML = img_tag;
     textContainer.innerHTML = "";
