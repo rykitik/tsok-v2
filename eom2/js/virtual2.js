@@ -175,6 +175,8 @@ function showQuestions(index) {
     que_text.innerHTML = que_tag;
     img2.innerHTML = img_tag;
     textContainer.innerHTML = "";
+    dragContainer.innerHTML ="";
+    dragContainer.setAttribute('class', 'dragContainer');
     // Создаем предложение на основе элементов вопроса
     let sentence = currentQuestion.droppable.reduce((acc, placeholder, index) => {
       const items = currentQuestion.items;
