@@ -165,7 +165,7 @@ function showQuestions(index) {
       }
     }
     if (currentQuestion?.img) {
-      img_tag = '<br><img src="../img/2_2/' + currentQuestion.img + '.jpg" alt=""/>';
+      img_tag = '<br><img src="img/2_2/' + currentQuestion.img + '.jpg" alt=""/>';
       img2.innerHTML = img_tag;
     }
   } catch (e) {
@@ -229,11 +229,9 @@ function showQuestions(index) {
       
       if (filledAreas.length === allAreas.length) {
         const correctAnswers = Array.from(allAreas).every(area => {
-          const index = area.dataset.index;
           const answer = area.dataset.answer.split('-')[1];
-          return index === answer && area.textContent.trim() === currentQuestion.items[answer];
+          return area.textContent.trim() === currentQuestion.items[answer];
         });
-        debugger
         if (correctAnswers) {
           recordCorrectAnswer(index)
           dragContainer.innerHTML += '<b>✔ Правильно!</b>';
