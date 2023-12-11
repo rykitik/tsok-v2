@@ -231,9 +231,9 @@ function showQuestions(index) {
         const correctAnswers = Array.from(allAreas).every(area => {
           const index = area.dataset.index;
           const answer = area.dataset.answer.split('-')[1];
-          return index === answer && area.textContent.trim() === currentQuestion.items[index];
+          return index === answer && area.textContent.trim() === currentQuestion.items[answer];
         });
-  
+        debugger
         if (correctAnswers) {
           recordCorrectAnswer(index)
           dragContainer.innerHTML += '<b>✔ Правильно!</b>';
