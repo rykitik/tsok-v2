@@ -179,8 +179,7 @@ function showQuestions(index) {
     dragContainer.setAttribute('class', 'dragContainer');
     // Создаем предложение на основе элементов вопроса
     let sentence = currentQuestion.droppable.reduce((acc, placeholder, index) => {
-      const items = currentQuestion.items;
-      if (items.length === index) return acc;
+      if (currentQuestion.droppable.length === index + 1) return acc + placeholder;
       return acc + `${placeholder}<span class="droppable" id="dropArea${index}" data-index="${index}" data-answer="${currentQuestion.answers[index]}"></span>`;
     }, '');
   
@@ -276,6 +275,7 @@ function showQuestions(index) {
       }
   } else if (currentQuestion.type === "matchingImg") {
     dragContainer.innerHTML = "";
+    dragContainer.setAttribute('class', 'dragContainer');
     que_text.innerHTML = que_tag;
     img2.innerHTML = img_tag;
     textContainer.innerHTML = "";
@@ -298,6 +298,7 @@ function showQuestions(index) {
   }
   else if(currentQuestion.type === "matching") {
     dragContainer.innerHTML = "";
+    dragContainer.setAttribute('class', 'dragContainer');
     que_text.innerHTML = que_tag;
     img2.innerHTML = img_tag;
     textContainer.innerHTML = "";
