@@ -345,6 +345,7 @@ function optionSelected(answer) {
   let userAns = answer.textContent.trim();
   let correctAns = questions[que_count].correct;
   let allOptions = option_list.children.length;
+  if (!myanswers.includes(userAns)) myanswers.push(userAns)
   if (typeof correctAns == 'object') {
     if (correctAns.includes(userAns)) {
       answer.classList.add("correct");
@@ -358,7 +359,6 @@ function optionSelected(answer) {
       myanswers=[];
       console.log("Answer is wrong");
     }
-    if (!myanswers.includes(userAns)) myanswers.push(userAns)
     if (myanswers.length>=correctAns.length) {
       disableAllOptions()
       myanswers=[];
