@@ -355,12 +355,13 @@ function optionSelected(answer) {
       recordIncorrectAnswer(que_count);
       showCorrectAns();
       disableAllOptions()
+      myanswers=[];
       console.log("Answer is wrong");
     }
     if (!myanswers.includes(userAns)) myanswers.push(userAns)
     if (myanswers.length>=correctAns.length) {
       disableAllOptions()
-      myanswers=[]
+      myanswers=[];
     }
   } else {
     if (userAns == correctAns) {
