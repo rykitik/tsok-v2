@@ -2,8 +2,17 @@
 
 body{
 margin: 0;
+padding: 0;
 font-family: 'Montserrat', sans-serif !important;
 position: relative;
+display: flex;
+flex-direction: column;
+justify-content:space-between;
+height: 100vh;
+}
+
+img {
+    margin: 0;
 }
 a{
     text-decoration: none !important;
@@ -40,6 +49,7 @@ header{
    align-items: center;
    width: 100%;
    height: 104px;
+flex: 0 0 auto;
 }
 .header-first{
     width: 100%;
@@ -98,11 +108,15 @@ header{
 footer{
     background-color: #4B6E94;
     min-height: 156px;
+    margin: 0;
+    flex: 0 0 auto;
     
 }
 .main-block{
-    margin-top: 150px;
+    margin-top: 90px;
     column-gap: 90px;
+    
+    flex: 1 0 auto;
 }
 .train-block{
     width: 300px;
@@ -399,6 +413,7 @@ padding-left: 28px;
 }
 .container-exercise{
     padding: 30px 50px;
+    padding-bottom: 75px;
     height: fit-content;
 }
 .cotnainer-exercide_header{
