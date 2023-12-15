@@ -352,29 +352,18 @@ function optionSelected(answer) {
       console.log("Answer is correct");   
     } else {
       answer.classList.add("incorrect");
-      recordIncorrectAnswer(que_count)
+      recordIncorrectAnswer(que_count);
+      showCorrectAns();
+      disableAllOptions()
       console.log("Answer is wrong");
     }
-    myanswers.push(userAns)
+    if (!myanswers.includes(userAns)) myanswers.push(userAns)
     if (myanswers.length>=correctAns.length) {
-      for (let i = 0; i < allOptions; i++) {
-        option_list.children[i].classList.add("disabled");
-      }
-      let isCorrect = true;
-      for (let a of option_list.querySelectorAll('.option')) {
-        if (a.classList.contains('incorrect')) {
-          isCorrect = false
-          break
-        }
-      }
-      if (isCorrect) { 
-        userScore += 1;
-      }
+      disableAllOptions()
       myanswers=[]
     }
   } else {
     if (userAns == correctAns) {
-      userScore += 1;
       answer.classList.add("correct");
       console.log("Answer is correct");
       recordCorrectAnswer(que_count)
@@ -383,17 +372,33 @@ function optionSelected(answer) {
       answer.classList.add("incorrect");
       console.log("Answer is wrong");
       //selected the correct answer
-      for (let i = 0; i < allOptions; i++) {
-        if (option_list.children[i].textContent == correctAns) {
-          option_list.children[i].classList.add("correct");
-        }
-      }
+      showCorrectAns();
     }
+    disableAllOptions()
+  }
+  buttonNext.classList.remove("hide");
+
+  function disableAllOptions() {
     for (let i = 0; i < allOptions; i++) {
       option_list.children[i].classList.add("disabled");
     }
   }
-  buttonNext.classList.remove("hide");
+
+  function showCorrectAns(){
+    if (typeof correctAns == 'object') {
+      for (let i = 0; i < allOptions; i++) {
+        if (correctAns.includes(option_list.children[i].textContent.trim())) {
+          option_list.children[i].classList.add("correct");
+        }
+      }
+    } else {
+      for (let i = 0; i < allOptions; i++) {
+        if (option_list.children[i].textContent.trim() == correctAns.trim()) {
+          option_list.children[i].classList.add("correct");
+        }
+      }
+    }
+  }
 }
 
 let lastOpt  = { left: null, right: null };

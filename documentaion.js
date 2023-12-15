@@ -1,6 +1,6 @@
 const questions = [
 
-  // Для добавления картинок есть следующие папки: ../img/1_2/ - для ЭОМ 1, ../img/2_2/ - для ЭОМ 2,  ../img/3_3/ - для ЭОМ 3, ../img/t_3/ - для слайдеров.
+  // Для добавления картинок есть следующие папки: img/1_2/ - для ЭОМ 1, img/2_2/ - для ЭОМ 2,  img/3_3/ - для ЭОМ 3, img/t_3/ - для слайдеров.
 
     // ЭОМ 3 // 
 
@@ -27,7 +27,7 @@ const questions = [
   {
     id: 2,
     type: "matching",
-    question: "<p style=font-size:18px>3.	Установите точность поверхностей 1, 2 и 3 по чертежу (100 баллов). <br><br><p style=font-weight:normal;font-size:18px> Кликайте на вариант в верхней и соответствующий ему вариант в нижней строке. <br>Выбранные ответы перемещаются вправо. <br>Верные окрашиваются в зеленый, неверные в красный цвет. Баллы начисляются за полностью верный ответ.<br><br><div style='width: 100%;display: flex;justify-content: center;'> <img style='width: 100%;' src='../img/3_3/img8.jpg' alt='img7'> </div><br>",
+    question: "<p style=font-size:18px>3.	Установите точность поверхностей 1, 2 и 3 по чертежу (100 баллов). <br><br><p style=font-weight:normal;font-size:18px> Кликайте на вариант в верхней и соответствующий ему вариант в нижней строке. <br>Выбранные ответы перемещаются вправо. <br>Верные окрашиваются в зеленый, неверные в красный цвет. Баллы начисляются за полностью верный ответ.<br><br><div style='width: 100%;display: flex;justify-content: center;'> <img style='width: 100%;' src='img/3_3/img8.jpg' alt='img7'> </div><br>",
     left: ['Поверхность 1','Поверхность 2','Поверхность 3'],
     options: ["Шероховатость Ra 1,25",
               "Шероховатость Ra 6,3", 
@@ -83,7 +83,7 @@ const questions = [
   {
     id: 11,
     type: 'one_of',
-    question: `<p style=font-size:18px>Определите показание прибора. (250 баллов). <br><br><p style=font-weight:normal;font-size:18px>Выберите единственно правильный ответ.</p><br><div style="width: 100%;display: flex;justify-content: center;"> <img src="../img/3_3/pribor_2.png" alt="diagram_signals.jpg"> </div><br><br>`,
+    question: `<p style=font-size:18px>Определите показание прибора. (250 баллов). <br><br><p style=font-weight:normal;font-size:18px>Выберите единственно правильный ответ.</p><br><div style="width: 100%;display: flex;justify-content: center;"> <img src="img/3_3/pribor_2.png" alt="diagram_signals.jpg"> </div><br><br>`,
     options: ["15 В", "17 В", "90 В В", "102 В"],
     correct: "102 В",
     cost: 250,
@@ -121,17 +121,17 @@ const questions = [
     init:  start,
     nextButton: false
   },
-  // Просто страница с картинкой. <br> - перенос строки. <img src='../img/2_2/img1.jpg'> - картинка. <p style=font-weight:normal> Текст </p> - текст без жирного выделени
+  // Просто страница с картинкой. <br> - перенос строки. <img src='img/2_2/img1.jpg'> - картинка. <p style=font-weight:normal> Текст </p> - текст без жирного выделени
   {
     id: "10",
-    question: "11. Ознакомьтесь с содержанием токарной операции по изготовлению заданной детали<br><img src='../img/2_2/img1.jpg'>",
+    question: "11. Ознакомьтесь с содержанием токарной операции по изготовлению заданной детали<br><img src='img/2_2/img1.jpg'>",
     options: ["продолжить"],
     correct: "продолжить",
   },
   // Слайдер
   {
     id: "0",
-    question: "1. Изучите основные виды токарных станков. Нажмите кнопку продолжить, если ознакомились.<p style=font-weight:normal><br>К основным видам токарных станков относятся: <br><div class=slider-container><div class=slider><img src=../img/t_3/2_1.PNG><img src=../img/t_3/2_2.PNG><img src=../img/t_3/2_3.PNG><img src=../img/t_3/2_4.PNG><img src=../img/t_3/2_5.PNG><img src=../img/t_3/2_6.PNG></div><button class=prev-button>&lt;</button><button class=next-button>&gt</button></div>",
+    question: "1. Изучите основные виды токарных станков. Нажмите кнопку продолжить, если ознакомились.<p style=font-weight:normal><br>К основным видам токарных станков относятся: <br><div class=slider-container><div class=slider><img src=img/t_3/2_1.PNG><img src=img/t_3/2_2.PNG><img src=img/t_3/2_3.PNG><img src=img/t_3/2_4.PNG><img src=img/t_3/2_5.PNG><img src=img/t_3/2_6.PNG></div><button class=prev-button>&lt;</button><button class=next-button>&gt</button></div>",
     options: ["продолжить"],
     correct: "продолжить",
     init:  start,
@@ -149,7 +149,7 @@ const questions = [
   // Ввести ответ текстом с клавиатуры [Картинка сверху] - ФОРМАТ КАРТИНКИ ТОЛЬКО JPG 
   {
     id: "0",
-    question: "1. Внимательно посмотрите на рисунок и выполните задание. <br/><br/><p style=font-weight:normal> На рисунке дано устройство силового трансформатора. Дайте определение следующим деталям силового трансформатора: </p> <br> <img src='../img/2_2/img1.jpg'>",
+    question: "1. Внимательно посмотрите на рисунок и выполните задание. <br/><br/><p style=font-weight:normal> На рисунке дано устройство силового трансформатора. Дайте определение следующим деталям силового трансформатора: </p> <br> <img src='img/2_2/img1.jpg'>",
     isSelectText: true,
     options: ["Радиатор – это система", "; Обмотки НН – обмотка", ";"],
     correct: ["охлаждения", "низшего напряжения"],
@@ -174,7 +174,7 @@ const questions = [
     options: ["img6", "img7", "img8", "img9"],
     correct: [{'Резец': 'img6'}, {'Фреза': 'img7'}, {'Сверло':'img8'}, {'Метчик':'img9'}],
   },
-  // Сопоставление с изображением + картинка сверху
+  // Сопоставление с изображением
   {
     id: "",
     type: "matching",
